@@ -1,6 +1,11 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
-app.listen(3001, () => {
-    console.log("HEY FROM SERVER");
-}); 
+const db = require('./models');
+
+
+db.sequelize.sync().then(() => {
+    app.listen(3001, () => {
+        console.log("HEY FROM SERVER");
+    }); 
+})
