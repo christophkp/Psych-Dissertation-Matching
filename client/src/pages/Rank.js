@@ -1,7 +1,9 @@
 import React from 'react'
 
-export default function Rank() {
+function Rank() {
   return (
     <div>Rank</div>
   )
 }
+
+export default Rank

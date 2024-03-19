@@ -1,7 +1,9 @@
 import React from 'react'
 
-export default function MeetingRequest() {
+function MeetingRequest() {
   return (
     <div>MeetingRequest</div>
   )
 }
+
+export default MeetingRequest

@@ -11,20 +11,23 @@ import MeetingRequest from './pages/MeetingRequest';
 function App() {
   return (
     <div className="App">
+
+
       <Router>
-        <div className="navbar">
+          <div className="navbar">
           <Link to="/"> Home </Link>
           <Link to="/schedule"> Schedule </Link>
           <Link to="/rank"> Rank </Link>
           <Link to="/meetingRequest"> Meeting Request </Link>
+          <Link to="/registration"> register </Link>
+
         </div>
         <Routes>
           <Route path="/" element={ <Home /> } />
           <Route path="/schedule" element={ <Schedule /> } />
           <Route path="/rank" element={ <Rank /> } />
           <Route path="/meetingRequest" element={ <MeetingRequest /> } />
-          <Route path="/register" element={ <Registration /> } />
-
+          <Route path="/registration" element={ <Registration /> } />
         </Routes>
       </Router>
     </div>
