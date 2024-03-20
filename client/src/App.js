@@ -7,27 +7,23 @@ import Registration from './pages/Registration';
 
 import MeetingRequest from './pages/MeetingRequest';
 
+import {NavbarComponent} from './components/Navbar'
+
 
 function App() {
   return (
     <div className="App">
-
-
       <Router>
-          <div className="navbar">
-          <Link to="/"> Home </Link>
-          <Link to="/schedule"> Schedule </Link>
-          <Link to="/rank"> Rank </Link>
-          <Link to="/meetingRequest"> Meeting Request </Link>
-          <Link to="/registration"> register </Link>
+        
+          <NavbarComponent />
+        
 
-        </div>
         <Routes>
-          <Route path="/" element={ <Home /> } />
-          <Route path="/schedule" element={ <Schedule /> } />
-          <Route path="/rank" element={ <Rank /> } />
-          <Route path="/meetingRequest" element={ <MeetingRequest /> } />
-          <Route path="/registration" element={ <Registration /> } />
+          <Route path="/" element={<Home />} />
+          <Route path="/schedule" element={<Schedule />} />
+          <Route path="/rank" element={<Rank />} />
+          <Route path="/meetingRequest" element={<MeetingRequest />} />
+          <Route path="/registration" element={<Registration />} />
         </Routes>
       </Router>
     </div>
