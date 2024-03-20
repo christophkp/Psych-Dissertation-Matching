@@ -1,9 +1,10 @@
 import React from 'react'
+import BasicExample from "../components/ExampleCard"
 
 
 function Home() {
   return (
-    <div>test</div>
+    <div><BasicExample/></div>
   )
 }
 
