@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
+// import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
 
 export const NavbarComponent = () => {
@@ -9,7 +9,9 @@ export const NavbarComponent = () => {
     <div>
       <Navbar expand="lg" variant="dark" style={{ backgroundColor: "#013220" }}>
         <Container>
-          <Navbar.Brand>PDM</Navbar.Brand>
+          <Link to="/" className="nav-link">
+            <Navbar.Brand>PDM</Navbar.Brand>
+          </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
@@ -47,7 +49,7 @@ export const NavbarComponent = () => {
             </NavDropdown> */}
             </Nav>
             <Nav className="ms-auto">
-              <Link to="/" className="nav-link">
+              <Link to="/settings" className="nav-link px-3">
                 Profile
               </Link>
             </Nav>
