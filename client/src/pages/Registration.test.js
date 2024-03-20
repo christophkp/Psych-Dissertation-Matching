@@ -134,4 +134,4 @@ test('test to make sure if the post fails, that its error is caught', async() =>
     await new Promise(resolve => setTimeout(resolve, 100)); 
 
     expect(console.log).toHaveBeenCalledWith('Error message');
-})
+});
