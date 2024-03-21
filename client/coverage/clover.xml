@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1710955826368" clover="3.2.0">
-  <project timestamp="1710955826368" name="All files">
+<coverage generated="1710997885861" clover="3.2.0">
+  <project timestamp="1710997885861" name="All files">
     <metrics statements="45" coveredstatements="18" conditionals="6" coveredconditionals="2" methods="20" coveredmethods="6" elements="71" coveredelements="26" complexity="0" loc="45" ncloc="45" packages="3" files="11" classes="11"/>
     <package name="src">
       <metrics statements="12" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="0"/>
@@ -68,10 +68,10 @@
         <line num="21" count="3" type="stmt"/>
         <line num="28" count="1" type="stmt"/>
         <line num="33" count="22" type="stmt"/>
-        <line num="60" count="4" type="stmt"/>
-        <line num="75" count="4" type="stmt"/>
-        <line num="90" count="4" type="stmt"/>
-        <line num="105" count="4" type="stmt"/>
+        <line num="62" count="4" type="stmt"/>
+        <line num="77" count="4" type="stmt"/>
+        <line num="92" count="4" type="stmt"/>
+        <line num="107" count="4" type="stmt"/>
       </file>
       <file name="Schedule.js" path="/Users/oliverkochpaiz/Desktop/Psych-Dissertation-Matching/client/src/pages/Schedule.js">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>

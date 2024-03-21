@@ -12,10 +12,10 @@ test('test to make verify that each input is initially an empty string', () => {
             <Registration />
         </MemoryRouter>
     );
-    const firstName = screen.getByLabelText('First Name:');
-    const lastName = screen.getByLabelText('Last Name:');
-    const username = screen.getByLabelText('Email:');
-    const password = screen.getByLabelText('Password:');
+    const firstName = screen.getByLabelText('First Name');
+    const lastName = screen.getByLabelText('Last Name');
+    const username = screen.getByLabelText('Email');
+    const password = screen.getByLabelText('Password');
     expect(firstName.value).toMatch("");
     expect(lastName.value).toMatch("");
     expect(username.value).toMatch("");
@@ -31,10 +31,10 @@ test('test to make sure that invalid input adds the was-validated class', () => 
     const registerButton = screen.getByText("Register");
     const form = screen.getByTestId('registration-form');
 
-    const firstName = screen.getByLabelText('First Name:');
-    const lastName = screen.getByLabelText('Last Name:');
-    const username = screen.getByLabelText('Email:');
-    const password = screen.getByLabelText('Password:');
+    const firstName = screen.getByLabelText('First Name');
+    const lastName = screen.getByLabelText('Last Name');
+    const username = screen.getByLabelText('Email');
+    const password = screen.getByLabelText('Password');
 
     fireEvent.change(firstName, { target: { value: '' } });
     fireEvent.change(lastName, { target: { value: '' } });
@@ -56,10 +56,10 @@ test('test to make sure that valid input doesnt add the was-validated class', ()
     const registerButton = screen.getByText("Register");
     const form = screen.getByTestId('registration-form');
 
-    const firstName = screen.getByLabelText('First Name:');
-    const lastName = screen.getByLabelText('Last Name:');
-    const username = screen.getByLabelText('Email:');
-    const password = screen.getByLabelText('Password:');
+    const firstName = screen.getByLabelText('First Name');
+    const lastName = screen.getByLabelText('Last Name');
+    const username = screen.getByLabelText('Email');
+    const password = screen.getByLabelText('Password');
 
     fireEvent.change(firstName, { target: { value: 'test' } });
     fireEvent.change(lastName, { target: { value: 'test' } });
@@ -82,10 +82,10 @@ test('test to make sure the axios post request gets called with valid input', ()
     const mockedData = { firstName: 'John', lastName: 'Doe', username: 'john@example.com', password: 'password' };
     const registerButton = screen.getByText("Register");
 
-    fireEvent.change(screen.getByLabelText('First Name:'), { target: { value: mockedData.firstName } });
-    fireEvent.change(screen.getByLabelText('Last Name:'), { target: { value: mockedData.lastName } });
-    fireEvent.change(screen.getByLabelText('Email:'), { target: { value: mockedData.username } });
-    fireEvent.change(screen.getByLabelText('Password:'), { target: { value: mockedData.password } });
+    fireEvent.change(screen.getByLabelText('First Name'), { target: { value: mockedData.firstName } });
+    fireEvent.change(screen.getByLabelText('Last Name'), { target: { value: mockedData.lastName } });
+    fireEvent.change(screen.getByLabelText('Email'), { target: { value: mockedData.username } });
+    fireEvent.change(screen.getByLabelText('Password'), { target: { value: mockedData.password } });
 
     fireEvent.click(registerButton);
     expect(mockAxios.post).toHaveBeenCalledWith('http://localhost:3001/auth/register', mockedData);
@@ -102,10 +102,10 @@ test('test to make sure the axios post request doesnt get called with invalid in
     const mockedData = { firstName: 'John', lastName: 'Doe', username: 'john', password: 'password' };
     const registerButton = screen.getByText("Register");
 
-    fireEvent.change(screen.getByLabelText('First Name:'), { target: { value: mockedData.firstName } });
-    fireEvent.change(screen.getByLabelText('Last Name:'), { target: { value: mockedData.lastName } });
-    fireEvent.change(screen.getByLabelText('Email:'), { target: { value: mockedData.username } });
-    fireEvent.change(screen.getByLabelText('Password:'), { target: { value: mockedData.password } });
+    fireEvent.change(screen.getByLabelText('First Name'), { target: { value: mockedData.firstName } });
+    fireEvent.change(screen.getByLabelText('Last Name'), { target: { value: mockedData.lastName } });
+    fireEvent.change(screen.getByLabelText('Email'), { target: { value: mockedData.username } });
+    fireEvent.change(screen.getByLabelText('Password'), { target: { value: mockedData.password } });
 
     fireEvent.click(registerButton);
     expect(mockAxios.post).toHaveBeenCalledTimes(0);
@@ -124,10 +124,10 @@ test('test to make sure if the post fails, that its error is caught', async() =>
 
     mockAxios.post.mockRejectedValue({ response: { data: { Error: 'Error message' } } });
 
-    fireEvent.change(screen.getByLabelText('First Name:'), { target: { value: mockedData.firstName } });
-    fireEvent.change(screen.getByLabelText('Last Name:'), { target: { value: mockedData.lastName } });
-    fireEvent.change(screen.getByLabelText('Email:'), { target: { value: mockedData.username } });
-    fireEvent.change(screen.getByLabelText('Password:'), { target: { value: mockedData.password } });
+    fireEvent.change(screen.getByLabelText('First Name'), { target: { value: mockedData.firstName } });
+    fireEvent.change(screen.getByLabelText('Last Name'), { target: { value: mockedData.lastName } });
+    fireEvent.change(screen.getByLabelText('Email'), { target: { value: mockedData.username } });
+    fireEvent.change(screen.getByLabelText('Password'), { target: { value: mockedData.password } });
 
     fireEvent.click(registerButton);
 

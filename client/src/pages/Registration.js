@@ -35,13 +35,15 @@ function Registration() {
       <div className="row d-flex justify-content-center align-items-center">
         <div className="col-12 col-md-9 col-lg-7 col-xl-6">
           <div
-            className="card gradient-custom"
-            style={{ borderRadius: "10px" }}
+            className="card w-75 mx-auto"
+            style={{ borderRadius: "10px"}}
           >
             <div className="card-body p-5">
-              <h2 className="text-uppercase text-center mb-5">
+              <h3 className="text-uppercase text-center mb-3 ">
                 Create an account
-              </h2>
+              </h3>
+
+              <hr></hr>
               <div className="d-flex justify-content-center">
                 <form
                   id="registration-form"
@@ -51,7 +53,7 @@ function Registration() {
                   noValidate
                 >
                   <div className="form-group">
-                    <label htmlFor="validationCustom01">First Name: </label>
+                    <label htmlFor="validationCustom01">First Name </label>
                     <input
                       type="text"
                       className="form-control"
@@ -66,7 +68,7 @@ function Registration() {
                     </div>
                   </div>
                   <div className="form-group">
-                    <label htmlFor="lastName">Last Name: </label>
+                    <label htmlFor="lastName">Last Name </label>
                     <input
                       type="text"
                       className="form-control"
@@ -81,7 +83,7 @@ function Registration() {
                     </div>
                   </div>
                   <div className="form-group">
-                    <label htmlFor="email">Email: </label>
+                    <label htmlFor="email">Email </label>
                     <input
                       type="email"
                       className="form-control"
@@ -96,7 +98,7 @@ function Registration() {
                     </div>
                   </div>
                   <div className="form-group">
-                    <label htmlFor="password">Password: </label>
+                    <label htmlFor="password">Password </label>
                     <input
                       type="text"
                       className="form-control"
@@ -114,7 +116,7 @@ function Registration() {
                   <div className="d-flex justify-content-center mt-3">
                     <button
                       type="submit"
-                      className="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
+                      className="btn btn-success btn-block btn-lg"
                     >
                       Register
                     </button>
