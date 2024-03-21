@@ -25,7 +25,7 @@ function Registration() {
           password,
         });
       } catch (err) {
-        console.log(err.response.data.Error);
+        console.log(err?.response?.data.Error);
       }
     }
   };
