@@ -1,66 +1,12 @@
-import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useState } from "react";
+import Button from "react-bootstrap/Form";
 
-export const Settings = () => {
-  const [toggleEditInfo, setToggleEditInfo] = useState(false);
-  const [toggleEditResearch, setToggleEditResearch] = useState(false);
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-  const handleInfoEditClick = () => {
-    setToggleEditInfo((prev) => !prev);
-  };
+export const UserSettings = () => {
+  const [info, setInfo] = useState([]);
+  const [research, setResearch] = useState("");
 
-  const handleResearchEditClick = () => {
-    setToggleEditResearch((prev) => !prev);
-  };
-
-  return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <Form className="mt-5" style={{ maxWidth: "600px", width: "100%" }}>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-          <Form.Label style={{ display: "flex", alignItems: "center" }}>
-            Information:
-            <Button
-              variant="secondary"
-              onClick={handleInfoEditClick}
-              style={{ marginLeft: "auto" }}
-            >
-              <i class="bi bi-pencil-square"></i>
-            </Button>
-          </Form.Label>
-
-          <Form.Control
-            readOnly={!toggleEditInfo}
-            as="textarea"
-            rows={3}
-            style={{ width: "100%" }}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea2">
-          <Form.Label style={{ display: "flex", alignItems: "center" }}>
-            Research:
-            <Button
-              variant="secondary"
-              onClick={handleResearchEditClick}
-              style={{ marginLeft: "auto" }}
-            >
-              <i class="bi bi-pencil-square"></i>
-            </Button>
-          </Form.Label>
-          <Form.Control
-            readOnly={!toggleEditResearch}
-            as="textarea"
-            rows={3}
-            style={{ width: "100%" }}
-          />
-        </Form.Group>
-        <div className="d-flex justify-content-end">
-          <Button variant="primary" type="submit">
-            Save Changes
-          </Button>
-        </div>
-      </Form>
-    </div>
-  );
+  return <h1>he</h1>
 };

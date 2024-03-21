@@ -13,7 +13,6 @@ app.use("/auth", usersRouter);
 
 
 
-
 db.sequelize.sync().then(() => {
     app.listen(3001, () => {
         console.log("HEY FROM SERVER");

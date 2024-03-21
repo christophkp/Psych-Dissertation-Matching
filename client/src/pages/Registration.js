@@ -31,13 +31,13 @@ function Registration() {
   };
 
   return (
-    <div className="container h-100 mt-3">
+    <div
+      className="container h-100 mt-3"
+      
+    >
       <div className="row d-flex justify-content-center align-items-center">
         <div className="col-12 col-md-9 col-lg-7 col-xl-6">
-          <div
-            className="card w-75 mx-auto"
-            style={{ borderRadius: "10px"}}
-          >
+          <div className="card w-75 mx-auto" style={{ borderRadius: "10px" }}>
             <div className="card-body p-5">
               <h3 className="text-uppercase text-center mb-3 ">
                 Create an account
@@ -51,6 +51,7 @@ function Registration() {
                   data-testid="registration-form"
                   onSubmit={handleSubmit}
                   noValidate
+                  
                 >
                   <div className="form-group">
                     <label htmlFor="validationCustom01">First Name </label>

@@ -4,8 +4,8 @@ import Home from "./pages/Home";
 import Schedule from "./pages/Schedule";
 import Rank from "./pages/Rank";
 import Registration from "./pages/Registration";
-import {Settings} from "./pages/UserSettings";
-import Login from "./pages/Login";
+import {UserSettings} from "./pages/UserSettings";
+import {Login} from "./pages/Login";
 
 import MeetingRequest from "./pages/MeetingRequest";
 
@@ -23,7 +23,7 @@ function App() {
           <Route path="/rank" element={<Rank />} />
           <Route path="/meetingRequest" element={<MeetingRequest />} />
           <Route path="/registration" element={<Registration />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/settings" element={<UserSettings />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </Router>
