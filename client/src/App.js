@@ -5,7 +5,7 @@ import Schedule from "./pages/Schedule";
 import Rank from "./pages/Rank";
 import Registration from "./pages/Registration";
 import {Settings} from "./pages/UserSettings";
-
+import Login from "./pages/Login";
 
 import MeetingRequest from "./pages/MeetingRequest";
 
@@ -24,6 +24,7 @@ function App() {
           <Route path="/meetingRequest" element={<MeetingRequest />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </Router>
     </div>
