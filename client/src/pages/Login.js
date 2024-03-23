@@ -1,16 +1,16 @@
 import { Button, Form } from "react-bootstrap";
-import { useState } from "react";
+import { useRef } from "react";
 import axios from "axios";
 
 export const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const username = useRef();
+  const password = useRef();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios.post("http://localhost:3001/auth/login", {
-      username,
-      password,
+      username: username.current.value,
+      password: password.current.value,
     });
   };
 
@@ -34,9 +34,7 @@ export const Login = () => {
             type="email"
             placeholder="Enter email"
             required
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
+            ref={username}
           />
         </Form.Group>
         <Form.Group controlId="formBasicPassword">
@@ -45,9 +43,7 @@ export const Login = () => {
             type="password"
             placeholder="Password"
             required
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
+            ref={password}
           />
         </Form.Group>
         <Button variant="primary" type="submit" className="w-100">
