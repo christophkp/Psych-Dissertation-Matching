@@ -24,4 +24,9 @@ async function authRegister(req, res) {
     }
 };
 
-module.exports = { authRegister };
+async function getFaculty(req, res) {
+    const faculty = await Users.findAll({ where: {role: "student"}});
+    res.json(faculty);
+}
+
+module.exports = { authRegister, getFaculty };
