@@ -88,7 +88,7 @@ test('test to make sure the axios post request gets called with valid input', ()
     fireEvent.change(screen.getByLabelText('Password'), { target: { value: mockedData.password } });
 
     fireEvent.click(registerButton);
-    expect(mockAxios.post).toHaveBeenCalledWith('http://localhost:3001/auth/register', mockedData);
+    expect(mockAxios.post).toHaveBeenCalledWith('http://localhost:3001/register', mockedData);
     expect(mockAxios.post).toHaveBeenCalledTimes(1);
 });
 

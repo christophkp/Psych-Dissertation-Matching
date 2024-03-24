@@ -8,7 +8,7 @@ export const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.post("http://localhost:3001/auth/login", {
+    axios.post("http://localhost:3001/login", {
       username: username.current.value,
       password: password.current.value,
     });

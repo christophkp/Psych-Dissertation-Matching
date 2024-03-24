@@ -1,10 +1,16 @@
-import React from 'react'
-import BasicExample from "../components/ExampleCard"
-
+import  { useState } from 'react'
 
 function Home() {
+  const [listofFaculty, setListOfFaculty] = useState([]);
+
+
+
+
+
+
+
   return (
-    <div><BasicExample/></div>
+    <div>home</div>
   )
 }
 

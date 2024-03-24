@@ -18,7 +18,7 @@ function Registration() {
       form.classList.add("was-validated");
     } else {
       try {
-        await axios.post("http://localhost:3001/auth/register", {
+        await axios.post("http://localhost:3001/register", {
           firstName,
           lastName,
           username,

@@ -7,8 +7,9 @@ const db = require('./models');
 app.use(express.json());
 app.use(cors());
 
+
 const usersRouter = require('./routes/Users');
-app.use("/auth", usersRouter);
+app.use("/", usersRouter);
 
 
 
