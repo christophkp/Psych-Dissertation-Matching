@@ -1,17 +1,34 @@
 import { Button, Form } from "react-bootstrap";
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 
 export const Login = () => {
   const username = useRef();
   const password = useRef();
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.post("http://localhost:3001/login", {
-      username: username.current.value,
-      password: password.current.value,
-    });
+    try {
+      const response = await axios.post("http://localhost:3001/login", {
+        username: username.current.value,
+        password: password.current.value,
+      });
+      console.log(response.data.message);
+      setErrorMessage(response.data.message);
+    } catch (error) {
+        //error handling from axios docs
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log("Error", error.message);
+      }
+      console.log(error.config);
+    }
   };
 
   return (
@@ -46,6 +63,8 @@ export const Login = () => {
             ref={password}
           />
         </Form.Group>
+        {errorMessage}
+
         <Button variant="primary" type="submit" className="w-100">
           Login
         </Button>
