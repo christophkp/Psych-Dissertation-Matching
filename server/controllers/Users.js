@@ -25,8 +25,15 @@ async function authRegister(req, res) {
 };
 
 async function getFaculty(req, res) {
-    const faculty = await Users.findAll({ where: {role: "student"}});
-    res.json(faculty);
-}
+    try{
+        const faculty = await Users.findAll({ where: {role: "faculty"}});
+        res.json(faculty);
+    }catch(err){
+        res.status(500);
+        res.json({Error: err});
+    }
+};
+
+
 
 module.exports = { authRegister, getFaculty };
