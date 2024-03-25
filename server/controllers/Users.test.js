@@ -1,4 +1,4 @@
-const {authRegister} = require('./Users');
+const {authRegister, getFaculty} = require('./Users');
 const { Users } = require('../models');
 const bcrypt = require('bcrypt');
 
@@ -56,11 +56,34 @@ test('test to check if a unique user password is hashed, created with the hashed
     expect(res.json).toHaveBeenCalledTimes(1);
 });
 
-test('test to catch an error', async () => {
+test('test to catch an error inside authRegister', async () => {
     Users.findOne.mockImplementationOnce(() => null);
     bcrypt.hash.mockReturnValueOnce('hashedPass');
     Users.create.mockRejectedValueOnce(new Error('Throw Error'));
     await authRegister(req, res);
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledTimes(1);
+});
+
+test('test to ensure if faculty are found, they are sent in res back to the client', async () => {
+    Users.findAll.mockResolvedValueOnce({
+        firstName: 'testname',
+        lastName: 'lastname',
+        username: 'testusername@gmail.com',
+        password: 'hashedPass'
+    });
+    await getFaculty(req, res);
+
+    expect(res.json).toHaveBeenCalledTimes(1);
+    expect(res.json).toHaveBeenCalledWith({firstName: 'testname',
+    lastName: 'lastname',
+    username: 'testusername@gmail.com',
+    password: 'hashedPass' });
+});
+
+test('test to ensure errors are caught inside getFaculty and the appropriate responses are set', async () => {
+    Users.findAll.mockRejectedValueOnce(new Error('Throw Error'));
+    await getFaculty(req, res);
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledTimes(1);
 });

@@ -9,10 +9,9 @@ function Home() {
       axios.get('http://localhost:3001/faculty').then((response) => {
         setListOfFaculty(response.data);
       }).catch((err) => {
-        console.log(err);
+        console.log(err?.response?.data.Error);
       });
   }, []);
-
   return (
     <div className="container">
       <div className="row">

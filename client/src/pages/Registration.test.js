@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
 import Registration from './Registration';
 import '@testing-library/jest-dom';
@@ -120,7 +120,7 @@ test('test to make sure if the post fails, that its error is caught', async() =>
     );
     const mockedData = { firstName: 'John', lastName: 'Doe', username: 'john@gmail.com', password: 'password' };
     const registerButton = screen.getByText("Register");
-    console.log = jest.fn();
+    const logSpy = jest.spyOn(global.console, 'log');
 
     mockAxios.post.mockRejectedValue({ response: { data: { Error: 'Error message' } } });
 
@@ -131,7 +131,6 @@ test('test to make sure if the post fails, that its error is caught', async() =>
 
     fireEvent.click(registerButton);
 
-    await new Promise(resolve => setTimeout(resolve, 100)); 
 
-    expect(console.log).toHaveBeenCalledWith('Error message');
+    await waitFor(() => expect(logSpy).toHaveBeenCalledWith('Error message'))
 });

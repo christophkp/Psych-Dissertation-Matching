@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1711350646325" clover="3.2.0">
-  <project timestamp="1711350646325" name="All files">
-    <metrics statements="66" coveredstatements="18" conditionals="10" coveredconditionals="2" methods="22" coveredmethods="6" elements="98" coveredelements="26" complexity="0" loc="66" ncloc="66" packages="3" files="12" classes="12"/>
+<coverage generated="1711390627066" clover="3.2.0">
+  <project timestamp="1711390627066" name="All files">
+    <metrics statements="66" coveredstatements="25" conditionals="10" coveredconditionals="2" methods="22" coveredmethods="11" elements="98" coveredelements="38" complexity="0" loc="66" ncloc="66" packages="3" files="12" classes="12"/>
     <package name="src">
       <metrics statements="12" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="0"/>
       <file name="App.js" path="/Users/oliverkochpaiz/Desktop/Psych-Dissertation-Matching/client/src/App.js">
@@ -39,16 +39,16 @@
       </file>
     </package>
     <package name="src.pages">
-      <metrics statements="51" coveredstatements="18" conditionals="6" coveredconditionals="2" methods="17" coveredmethods="6"/>
+      <metrics statements="51" coveredstatements="25" conditionals="6" coveredconditionals="2" methods="17" coveredmethods="11"/>
       <file name="Home.js" path="/Users/oliverkochpaiz/Desktop/Psych-Dissertation-Matching/client/src/pages/Home.js">
-        <metrics statements="7" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="0"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
       </file>
       <file name="Login.js" path="/Users/oliverkochpaiz/Desktop/Psych-Dissertation-Matching/client/src/pages/Login.js">
         <metrics statements="19" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="2" coveredmethods="0"/>
