@@ -7,7 +7,7 @@ import Registration from "./pages/Registration";
 import {UserSettings} from "./pages/UserSettings";
 import {Login} from "./pages/Login";
 
-import MeetingRequest from "./pages/MeetingRequest";
+import {MeetingRequest} from "./pages/MeetingRequest";
 
 import { NavbarComponent } from "./components/Navbar";
 

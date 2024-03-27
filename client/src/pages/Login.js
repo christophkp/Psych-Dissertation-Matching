@@ -17,7 +17,7 @@ export const Login = () => {
       console.log(response.data.message);
       setErrorMessage(response.data.message);
     } catch (error) {
-        //error handling from axios docs
+      //error handling from axios docs
       if (error.response) {
         console.log(error.response.data);
         console.log(error.response.status);
