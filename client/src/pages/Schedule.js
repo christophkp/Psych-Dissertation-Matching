@@ -82,7 +82,7 @@ function Schedule() {
             <h3> Meeting Details </h3>
             <p>Date: {month} {date.getDate()}, {year}</p>
             <p>Time: {selectedTime}</p>
-            <p>Professor: {selectedItem.firstName} {selectedItem.lastName} </p>
+            <p>Professor: {selectedItem.firstName} {selectedItem.lastName} {selectedItem.id}</p>
             <button type="submit" class="btn btn-primary" onClick={handleSubmit}>Schedule</button>
           </div>
         </div>
