@@ -32,7 +32,7 @@ export const Login = () => {
           border: "1px solid black",
           borderRadius: "20px",
           padding: "95px",
-          
+          marginBottom: "70px",
         }}
       >
         <Form onSubmit={handleSubmit}>

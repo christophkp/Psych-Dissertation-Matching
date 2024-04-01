@@ -3,9 +3,12 @@ const app = express();
 const cors = require("cors");
 
 const db = require("./models");
+const cookieParser = require("cookie-parser");
 
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
+
 
 const usersRouter = require("./routes/Users");
 app.use("/", usersRouter);

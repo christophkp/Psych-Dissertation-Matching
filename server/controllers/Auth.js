@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const { Users } = require("../models");
 const bcrypt = require("bcrypt");
 
@@ -12,9 +13,17 @@ async function login(req, res) {
     if (!user) {
       return res.status(401).json({ message: "Incorrect Username/Password" });
     } else {
-      const passwordMatch = bcrypt.compare(password, user.password);
+      const passwordMatch = await bcrypt.compare(password, user.password);
       if (passwordMatch) {
-        return res.status(200).json({ message: "Login successful" });
+        //move secret to env file later
+        const token = jwt.sign({ id: user.id }, "jwtSecret");
+
+        res.cookie("access_token", token, {
+            httpOnly: true,
+            maxAge: 30 * 86400000,
+          })
+          .status(200)
+          .json({ username: user.username });
       } else {
         return res.status(401).json({ message: "Incorrect Username/Password" });
       }
