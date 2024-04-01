@@ -18,9 +18,12 @@ async function login(req, res) {
         //move secret to env file later
         const token = jwt.sign({ id: user.id }, "jwtSecret");
 
-        res.cookie("access_token", token, {
+        res
+          .cookie("access_token", token, {
             httpOnly: true,
             maxAge: 30 * 86400000,
+            secure: true,
+            path: "/",
           })
           .status(200)
           .json({ username: user.username });

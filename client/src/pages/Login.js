@@ -11,10 +11,16 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3001/auth/login", {
-        username: username.current.value,
-        password: password.current.value,
-      });
+      const response = await axios.post(
+        "http://localhost:3001/auth/login",
+        {
+          username: username.current.value,
+          password: password.current.value,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       console.log(response.data.message);
     } catch (error) {
       if (error.response) {
