@@ -1,6 +1,7 @@
 import { Button, Form } from "react-bootstrap";
 import { useState, useRef } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export const Login = () => {
   const username = useRef();
@@ -23,43 +24,70 @@ export const Login = () => {
   };
 
   return (
-    <div className="d-flex align-items-center justify-content-center vh-100">
-      <Form
-        className="p-4"
-        onSubmit={handleSubmit}
+    <div className="d-flex justify-content-center align-items-center vh-100">
+      <div
         style={{
-          backgroundColor: "#013220",
-          color: "#ffffff",
-          width: "400px",
-          borderRadius: "10px",
-          height: "400px",
+          width: "500px",
+          height: "600px",
+          border: "1px solid black",
+          borderRadius: "20px",
+          padding: "95px",
+          
         }}
       >
-        <h2 className="text-center mb-4">Login</h2>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            required
-            ref={username}
-          />
-        </Form.Group>
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            required
-            ref={password}
-          />
-        </Form.Group>
-        {errorMessage}
+        <Form onSubmit={handleSubmit}>
+          <h2
+            className="mb-5 text-center"
+            style={{ borderBottom: "1px solid black", paddingBottom: "20px" }}
+          >
+            Login
+          </h2>
 
-        <Button variant="primary" type="submit" className="w-100">
-          Login
-        </Button>
-      </Form>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              required
+              ref={username}
+              onChange={() => setErrorMessage("")}
+            />
+            {/* <Form.Text className="text-muted">
+          We'll never share your email with anyone else.
+        </Form.Text> */}
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              required
+              ref={password}
+              onChange={() => setErrorMessage("")}
+            />
+          </Form.Group>
+          {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Check type="checkbox" label="Remember Me" />
+          </Form.Group> */}
+          <p className={errorMessage ? "text-danger text-center" : "d-none"}>
+            {errorMessage}
+          </p>
+          <div className="d-flex justify-content-center mt-4">
+            <Button
+              size="lg"
+              variant="success"
+              type="submit"
+              style={{ width: "125px" }}
+            >
+              Login
+            </Button>
+          </div>
+          <p className="text-muted text-center" style={{ marginTop: "90px" }}>
+            Don't have an account? <Link to="/registration">Register here</Link>
+          </p>
+        </Form>
+      </div>
     </div>
   );
 };
