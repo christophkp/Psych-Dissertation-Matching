@@ -8,10 +8,10 @@ module.exports = (sequelize, DataTypes) => {
       faculty: {
         type: DataTypes.STRING,
         allowNull: false,
-
-      }
-     
+      },
     });
+
+
 
     return Meetings;
 }

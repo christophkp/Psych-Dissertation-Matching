@@ -46,6 +46,9 @@ function Schedule() {
       alert("Please select a faculty member.");
       return;
     }
+    else{
+      axios.post("")
+    }
   }
   
   return (
@@ -63,7 +66,7 @@ function Schedule() {
         </div>
         <div className="col-md-5">
           <Calender onChange={setDate}/>
-          <div className="border border-dark p-3 mt-3" style={{ maxHeight: '285px', overflowY: "auto", borderRadius: "8px",  boxShadow: "0 12px 24px rgba(0, 0, 0, 0.2)"}}>
+          <div className="border border-dark p-3 mt-3" style={{ maxHeight: '300px', overflowY: "auto", borderRadius: "8px",  boxShadow: "0 12px 24px rgba(0, 0, 0, 0.2)"}}>
             <h5 className='text-center mb-3'>Select a time on {month} {date.getDate()}, {year}</h5>
             {timeSlots.map((time, index) => {
               return(

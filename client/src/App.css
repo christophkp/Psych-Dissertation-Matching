@@ -1,7 +1,7 @@
 /* This is used to overwrite the default css provided by react-calendar to fit our theme*/
 .react-calendar {
   width: 100% !important;
-  height: 50% !important;
+  max-height: 300px !important;
   border-radius: 8px;
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
   font-family: Arial, Helvetica, sans-serif;
