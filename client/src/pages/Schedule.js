@@ -11,15 +11,17 @@ function Schedule() {
   "firstName": "Professor",
   "lastName": "Name",
   });
-  const [selectedTime, setSelectedTime] = useState("8:00 AM");
+  const [selectedTime, setSelectedTime] = useState("8:00 AM - 9:00 AM");
 
   const [date, setDate] = useState(new Date());
   const month = date.toLocaleString('default', { month: 'long' });
   const year = date.toLocaleString('default', { year: 'numeric' });
   const timeSlots = [
-    '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM',
-    '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM',
-    '6:00 PM', '7:00 PM', '8:00 PM'];
+    '8:00 AM - 9:00 AM', '9:00 AM - 10:00 AM', '10:00 AM - 11:00 AM', '11:00 AM - 12:00 PM',
+    '1:00 PM - 2:00 PM', '2:00 PM - 3:00 PM', '3:00 PM - 4:00 PM', '4:00 PM - 5:00 PM',
+    '5:00 PM - 6:00 PM', '6:00 PM - 7:00 PM', '7:00 PM - 8:00 PM', '8:00 PM - 9:00 PM',
+  ];
+  
   
 
   useEffect(() => {
@@ -50,6 +52,7 @@ function Schedule() {
     <div className="container mt-3">
       <div className="row">
         <div className="col-md-3 border border-dark d-flex flex-wrap text-center" style={{ maxHeight: "600px", overflowY: "auto", borderRadius: "8px",  boxShadow: "0 12px 24px rgba(0, 0, 0, 0.2)"}}>
+        <h3 className="flex-basis-100 w-100">Faculty List</h3>
           {listofFaculty.map((value, key) => {
             return(
               <div key={key} style={{ width: "50%", cursor: "pointer" }} onClick={() => handleItemClick(value)}>
