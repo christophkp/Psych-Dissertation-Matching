@@ -5,9 +5,14 @@ const cors = require("cors");
 const db = require("./models");
 const cookieParser = require("cookie-parser");
 
-app.use(express.json());
-app.use(cors());
 app.use(cookieParser());
+app.use(express.json());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
 
 const usersRouter = require("./routes/Users");

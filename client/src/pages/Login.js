@@ -21,7 +21,7 @@ export const Login = () => {
           withCredentials: true,
         }
       );
-      console.log(response.data.message);
+      console.log(response.data.username);
     } catch (error) {
       if (error.response) {
         setErrorMessage(error.response.data.message);
