@@ -27,7 +27,7 @@ function Schedule() {
   
 
   useEffect(() => {
-    axios.get('http://localhost:3001/faculty').then((response) => {
+    axios.get('http://localhost:3001/faculty', { withCredentials: true }).then((response) => {
       setListOfFaculty(response.data);
     }).catch((err) => {
       console.log(err?.response?.data.Error);
