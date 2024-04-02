@@ -25,11 +25,14 @@ function Schedule() {
   
 
   useEffect(() => {
-    axios.get('http://localhost:3001/faculty').then((response) => {
-      setListOfFaculty(response.data);
-    }).catch((err) => {
-      console.log(err?.response?.data.Error);
-    });
+    axios
+      .get("http://localhost:3001/faculty", { withCredentials: true })
+      .then((response) => {
+        setListOfFaculty(response.data);
+      })
+      .catch((err) => {
+        console.log(err?.response?.data.Error);
+      });
   }, []);
 
   const handleItemClick = (value) => {
