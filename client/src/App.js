@@ -11,12 +11,14 @@ import {MeetingRequest} from "./pages/MeetingRequest";
 
 import { NavbarComponent } from "./components/Navbar";
 
+import { ToastContainer } from 'react-toastify';
+
 function App() {
   return (
     <div className="App">
       <Router>
         <NavbarComponent />
-
+        <ToastContainer toastStyle={{ marginTop: '50px' }}/>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/schedule" element={<Schedule />} />

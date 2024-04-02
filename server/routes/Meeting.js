@@ -1,9 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const {  } = require("../controllers/Users");
+const { scheduleMeeting } = require("../controllers/Meeting")
 
-
-
+router.post('/schedule', scheduleMeeting);
 
 
 module.exports = router;

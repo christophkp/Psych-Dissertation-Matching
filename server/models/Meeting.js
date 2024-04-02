@@ -5,14 +5,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         allowNull: false,
       },
-      faculty: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       status: {
         type: DataTypes.STRING,
-        allowNull: false,
-        defaultValue: 'pending',
+        defaultValue: 'Pending',
     },
     });
 

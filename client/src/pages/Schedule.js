@@ -3,6 +3,8 @@ import axios from 'axios'
 import img from "../assets/pfp.png"
 import Calender from "react-calendar"
 import 'react-calendar/dist/Calendar.css';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Schedule() {
   const [listofFaculty, setListOfFaculty] = useState([]);
@@ -25,7 +27,7 @@ function Schedule() {
   
 
   useEffect(() => {
-    axios.get('http://localhost:3001/faculty').then((response) => {
+    axios.get('http://localhost:3001/faculty', { withCredentials: true }).then((response) => {
       setListOfFaculty(response.data);
     }).catch((err) => {
       console.log(err?.response?.data.Error);
@@ -39,15 +41,24 @@ function Schedule() {
     setSelectedTime(time);
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault(); 
     
     if (selectedItem.firstName === "Professor") {
-      alert("Please select a faculty member.");
+      toast.error('Please select a faculty');
       return;
     }
     else{
-      axios.post("")
+      try{
+        await axios.post("http://localhost:3001/meetings/schedule", {
+          date,
+          facultyId: selectedItem.id
+        })
+        toast.success('Meeting scheduled successfully!');
+      }
+      catch(err){
+        toast.error('An error occurred while scheduling the meeting.');
+      }
     }
   }
   
@@ -82,8 +93,8 @@ function Schedule() {
             <h3> Meeting Details </h3>
             <p>Date: {month} {date.getDate()}, {year}</p>
             <p>Time: {selectedTime}</p>
-            <p>Professor: {selectedItem.firstName} {selectedItem.lastName} {selectedItem.id}</p>
-            <button type="submit" class="btn btn-primary" onClick={handleSubmit}>Schedule</button>
+            <p>Professor: {selectedItem.firstName} {selectedItem.lastName}</p>
+            <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Schedule</button>
           </div>
         </div>
       </div>
