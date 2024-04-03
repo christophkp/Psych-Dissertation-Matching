@@ -12,7 +12,6 @@ async function scheduleMeeting(req, res) {
         res.json(meeting);
     } catch(error){
         res.status(500);
-        res.json({Error: "Error Scheduling Meeting"});
     }
 };
 
