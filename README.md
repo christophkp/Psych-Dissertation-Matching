@@ -30,7 +30,7 @@ npm -v
 ```
 - If you can see the current version for node + npm, you have successfully installed node
 
-Install Dependencies:
+<h3>Install Dependencies:</h3>
 
 - Change to the client directory by pasting the following code into the project's terminal
 
