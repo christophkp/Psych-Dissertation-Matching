@@ -19,7 +19,7 @@ async function authRegister(req, res) {
     res.json({ User: "User Registered Successfully" });
   } catch (err) {
     res.status(500);
-    res.json({ Error: err });
+    res.json({ Error: "Error Registering User" });
   }
 }
 
@@ -29,7 +29,7 @@ async function getFaculty(req, res) {
     res.json(faculty);
   } catch (err) {
     res.status(500);
-    res.json({ Error: err });
+    res.json({ Error: "Error Retrieving Faculty" });
   }
 }
 

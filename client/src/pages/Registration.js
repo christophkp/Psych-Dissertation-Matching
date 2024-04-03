@@ -30,7 +30,6 @@ function Registration() {
         toast.success('Registration Success');
         navigate('/login');
       } catch (err) {
-        console.log(err?.response?.data.Error);
         toast.error(err?.response?.data.Error);
       }
     }

@@ -52,12 +52,15 @@ function Schedule() {
       try{
         await axios.post("http://localhost:3001/meetings/schedule", {
           date,
+          time: selectedTime,
           facultyId: selectedItem.id
-        })
+        }, {
+          withCredentials: true
+        });
         toast.success('Meeting scheduled successfully!');
       }
       catch(err){
-        toast.error('An error occurred while scheduling the meeting.');
+        toast.error(err?.response?.data.Error);
       }
     }
   }
