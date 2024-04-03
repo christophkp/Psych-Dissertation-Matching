@@ -3,6 +3,7 @@ import Home from './Home';
 import '@testing-library/jest-dom';
 import mockAxios from 'axios'
 jest.mock('axios');
+import {ToastContainer} from "react-toastify";
 
 test('test to check that faculties information is rendered', async() => {
 
@@ -24,13 +25,16 @@ test('test to check that faculties information is rendered', async() => {
 });
 
 test('test to check that errors getting faculty is caught', async() => {
-    const logSpy = jest.spyOn(global.console, 'log');
 
     mockAxios.get.mockRejectedValue({ response: { data: { Error: 'Error message' } } });
   
-    render(<Home />);
-    
-    await waitFor(() => expect(logSpy).toHaveBeenCalledWith('Error message'))
+    render(
+        <>
+            <ToastContainer/>
+            <Home />
+        </>
+    );    
+    expect(await screen.findByText('Internal Server Error')).toBeInTheDocument();
 
 
 });
