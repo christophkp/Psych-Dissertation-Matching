@@ -23,6 +23,7 @@ Download MySQL + Workbench: https://www.mysql.com/downloads/
 Download: https://nodejs.org/en/download
 
 - Verify your download by opening terminal and writing
+
 ```
 node -v
 npm -v
@@ -32,19 +33,25 @@ npm -v
 Install Dependencies:
 
 - Change to the client directory by pasting the following code into the project's terminal
+
 ```cd ./client```
 - Once you are in the client directory, paste the following code into the project's terminal
+
 ```npm install```
 - Now you must change to the server directory by pasting the following code into the project's terminal
+
 ```cd ../server``` 
 - Once you are in the server directory, paste the following code into the project's terminal
+
 ```npm install```
 - You have successfully installed the dependencies
 
 # How to Run
 - From the client directory paste the following code into the project's terminal
+
 ```npm start```
 - From the server directory, paste the following code into the project's terminal
+
 ```npm start```
 - You will automatically be redirected to "http://localhost:3000"
 - If for any reason you are not redirected, simply open your browser and visit "http://localhost:3000"
