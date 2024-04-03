@@ -1,34 +1,28 @@
 import { Button, Form } from "react-bootstrap";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 export const Login = () => {
   const username = useRef();
   const password = useRef();
   const [errorMessage, setErrorMessage] = useState("");
-
+  const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:3001/auth/login",
-        {
-          username: username.current.value,
-          password: password.current.value,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      console.log(response.data.username);
+      await login(username.current.value, password.current.value);
+      navigate("/");
+      //console.log(response.data.username);
     } catch (error) {
       if (error.response) {
         setErrorMessage(error.response.data.message);
       }
     }
   };
-
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
       <div
@@ -48,7 +42,6 @@ export const Login = () => {
           >
             Login
           </h2>
-
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email</Form.Label>
             <Form.Control

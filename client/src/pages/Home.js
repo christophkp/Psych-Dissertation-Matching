@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import img from "../assets/pfp.png";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 function Home() {
   const [listofFaculty, setListOfFaculty] = useState([]);
+  const navigate = useNavigate();
 
+  const { user } = useContext(AuthContext);
+
+  console.log(user?.id);
   useEffect(() => {
     axios
       .get("http://localhost:3001/faculty", { withCredentials: true })
@@ -12,7 +18,8 @@ function Home() {
         setListOfFaculty(response.data);
       })
       .catch((err) => {
-        console.log(err?.response?.data.Error);
+        navigate("/login");
+        //console.log(err?.response?.data.Error);
       });
   }, []);
   return (

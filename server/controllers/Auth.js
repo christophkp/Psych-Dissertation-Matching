@@ -17,7 +17,15 @@ async function login(req, res) {
       if (passwordMatch) {
         //move secret to env file later
         const token = jwt.sign({ id: user.id }, "jwtSecret");
-
+        const userData = {
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          username: user.username,
+          role: user.role,
+          information: user.information,
+          research: user.research,
+        };
         res
           .cookie("access_token", token, {
             httpOnly: true,
@@ -26,7 +34,7 @@ async function login(req, res) {
             path: "/",
           })
           .status(200)
-          .json({ username: user.username });
+          .json({ userData });
       } else {
         return res.status(401).json({ message: "Incorrect Username/Password" });
       }
