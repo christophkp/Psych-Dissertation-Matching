@@ -2,13 +2,25 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 import Button from "react-bootstrap/Button";
 
 export const NavbarComponent = () => {
-  const { user,logout } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/login");
+    } catch (error) {
+      if (error.response) {
+        console.error(error.response?.data?.message);
+      }
+    }
+  };
 
   return (
     <div>
@@ -40,11 +52,13 @@ export const NavbarComponent = () => {
                 {" "}
                 Register{" "}
               </Link>
-
+            </Nav>
+            <Nav className="ms-auto">
               {user ? (
                 <NavDropdown
                   title={user.firstName + " " + user.lastName}
                   id="basic-nav-dropdown"
+                  className="px-3"
                 >
                   <NavDropdown.Item href="#action/3.1">
                     Profile
@@ -54,19 +68,15 @@ export const NavbarComponent = () => {
                   </NavDropdown.Item>
 
                   <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
+                  <NavDropdown.Item onClick={handleLogout}>
+                    Logout
+                  </NavDropdown.Item>
                 </NavDropdown>
-                
               ) : (
                 <Link to="/login" className="nav-link px-3">
                   Login
                 </Link>
               )}
-            </Nav>
-            <Nav className="ms-auto">
-              <Link to="/settings" className="nav-link px-3">
-                Profile
-              </Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

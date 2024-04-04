@@ -23,12 +23,10 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    try {
-      await axios.post("http://localhost:3001/auth/logout");
-      //setUser(null);
-    } catch (error) {
-      console.error(error.response?.data?.message);
-    }
+    await axios.get("http://localhost:3001/auth/logout", {
+      withCredentials: true,
+    });
+    setUser(null);
   };
 
   useEffect(() => {
