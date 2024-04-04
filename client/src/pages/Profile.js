@@ -137,4 +137,3 @@ export const Profile = () => {
     </Container>
   );
 };
-document.body.style.backgroundColor = "#d3d3d3";
