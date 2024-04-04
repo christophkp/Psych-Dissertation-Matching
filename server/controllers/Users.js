@@ -25,7 +25,7 @@ async function authRegister(req, res) {
 
 async function getFaculty(req, res) {
   try {
-    const faculty = await Users.findAll({ where: { role: "faculty" } });
+    const faculty = await Users.findAll({ where: { role: "student" } });
     res.json(faculty);
   } catch (err) {
     res.status(500);
