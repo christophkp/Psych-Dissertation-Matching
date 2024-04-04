@@ -44,4 +44,18 @@ async function login(req, res) {
   }
 }
 
-module.exports = { login };
+async function logout(req, res) {
+  try {
+    res
+      .clearCookie("access_token", {
+        secure: true,
+        sameSite: "none",
+      })
+      .status(200)
+      .json({ message: "User logout successful" });
+  } catch (error) {
+    return res.status(500).json({ message: "Error during logout" });
+  }
+}
+
+module.exports = { login, logout };

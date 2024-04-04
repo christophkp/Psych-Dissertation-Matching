@@ -22,12 +22,21 @@ export const AuthContextProvider = ({ children }) => {
     setUser(response.data.userData);
   };
 
+  const logout = async () => {
+    try {
+      await axios.post("http://localhost:3001/auth/logout");
+      //setUser(null);
+    } catch (error) {
+      console.error(error.response?.data?.message);
+    }
+  };
+
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ user, login }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

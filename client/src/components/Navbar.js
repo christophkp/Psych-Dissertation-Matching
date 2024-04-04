@@ -1,10 +1,15 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-// import NavDropdown from "react-bootstrap/NavDropdown";
+import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import { useContext } from "react";
+import Button from "react-bootstrap/Button";
 
 export const NavbarComponent = () => {
+  const { user,logout } = useContext(AuthContext);
+
   return (
     <div>
       <Navbar expand="lg" variant="dark" style={{ backgroundColor: "#013220" }}>
@@ -36,17 +41,27 @@ export const NavbarComponent = () => {
                 Register{" "}
               </Link>
 
-              {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown> */}
+              {user ? (
+                <NavDropdown
+                  title={user.firstName + " " + user.lastName}
+                  id="basic-nav-dropdown"
+                >
+                  <NavDropdown.Item href="#action/3.1">
+                    Profile
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.2">
+                    Schedule
+                  </NavDropdown.Item>
+
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
+                </NavDropdown>
+                
+              ) : (
+                <Link to="/login" className="nav-link px-3">
+                  Login
+                </Link>
+              )}
             </Nav>
             <Nav className="ms-auto">
               <Link to="/settings" className="nav-link px-3">

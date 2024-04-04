@@ -19,7 +19,7 @@ export const Login = () => {
       //console.log(response.data.username);
     } catch (error) {
       if (error.response) {
-        setErrorMessage(error.response.data.message);
+        setErrorMessage(error.response?.data?.message);
       }
     }
   };
