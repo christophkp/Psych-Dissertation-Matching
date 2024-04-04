@@ -48,10 +48,6 @@ export const NavbarComponent = () => {
                 {" "}
                 Meeting Request{" "}
               </Link>
-              <Link to="/registration" className="nav-link px-3">
-                {" "}
-                Register{" "}
-              </Link>
             </Nav>
             <Nav className="ms-auto">
               {user ? (
@@ -60,8 +56,13 @@ export const NavbarComponent = () => {
                   id="basic-nav-dropdown"
                   className="px-3"
                 >
-                  <NavDropdown.Item href="#action/3.1">
-                    Profile
+                  <NavDropdown.Item>
+                    <Link
+                      to="/profile"
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      Profile
+                    </Link>
                   </NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.2">
                     Schedule
@@ -73,9 +74,14 @@ export const NavbarComponent = () => {
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (
-                <Link to="/login" className="nav-link px-3">
-                  Login
-                </Link>
+                <>
+                  <Link to="/registration" className="nav-link px-3">
+                    Register
+                  </Link>
+                  <Link to="/login" className="nav-link px-3">
+                    Login
+                  </Link>
+                </>
               )}
             </Nav>
           </Navbar.Collapse>

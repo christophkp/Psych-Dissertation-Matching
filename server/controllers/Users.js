@@ -33,4 +33,27 @@ async function getFaculty(req, res) {
   }
 }
 
-module.exports = { authRegister, getFaculty };
+async function update(req, res) {
+  const userID = req.params.id;
+  try {
+    const user = await Users.findByPk(userID);
+    if (!user) {
+      return res.status(404).json({ message: "User does not exist" });
+    } else {
+      user.set({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        username: req.body.username,
+        information: req.body.information,
+        research: req.body.research,
+      });
+
+      await user.save();
+      res.json({message: "Update successful"});
+    }
+  } catch (err) {
+    res.status(500).json({ message: "Error updating user" });
+  }
+}
+
+module.exports = { authRegister, getFaculty, update };

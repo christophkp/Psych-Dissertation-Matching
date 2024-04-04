@@ -5,7 +5,9 @@ import Schedule from "./pages/Schedule";
 import Rank from "./pages/Rank";
 import Registration from "./pages/Registration";
 import {UserSettings} from "./pages/UserSettings";
-import {Login} from "./pages/Login";
+import { Login } from "./pages/Login";
+import { Profile } from "./pages/Profile";
+
 
 import {MeetingRequest} from "./pages/MeetingRequest";
 
@@ -18,7 +20,7 @@ function App() {
     <div className="App">
       <Router>
         <NavbarComponent />
-        <ToastContainer toastStyle={{ marginTop: '50px' }}/>
+        <ToastContainer toastStyle={{ marginTop: "50px" }} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/schedule" element={<Schedule />} />
@@ -27,6 +29,7 @@ function App() {
           <Route path="/registration" element={<Registration />} />
           <Route path="/settings" element={<UserSettings />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>
     </div>
