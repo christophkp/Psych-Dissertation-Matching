@@ -8,12 +8,12 @@ import {UserSettings} from "./pages/UserSettings";
 import { Login } from "./pages/Login";
 import { Profile } from "./pages/Profile";
 
-
 import {MeetingRequest} from "./pages/MeetingRequest";
 
 import { NavbarComponent } from "./components/Navbar";
 
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
+import { ProtectedRoute } from "./ProtectedRoutes/ProtectedRoute";
 
 function App() {
   return (
@@ -23,13 +23,15 @@ function App() {
         <ToastContainer toastStyle={{ marginTop: "50px" }} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/schedule" element={<Schedule />} />
-          <Route path="/rank" element={<Rank />} />
-          <Route path="/meetingRequest" element={<MeetingRequest />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/settings" element={<UserSettings />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/meetingRequest" element={<MeetingRequest />} />
+            <Route path="/rank" element={<Rank />} />
+            <Route path="/schedule" element={<Schedule />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
         </Routes>
       </Router>
     </div>
