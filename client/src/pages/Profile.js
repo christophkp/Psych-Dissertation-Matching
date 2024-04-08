@@ -52,11 +52,11 @@ export const Profile = () => {
         <h2 className="pb-3" style={{ position: "relative" }}>
           General Info
         </h2>
-        <Form>
+        <Form as="form" encType="multipart/form-data">
           <Row>
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>Upload Profile Picture:</Form.Label>
-              <Form.Control type="file" />
+              <Form.Control type="file" name="profilepic" />
             </Form.Group>
             <Form.Group as={Col} controlId="formFirstName">
               <Form.Label>First Name</Form.Label>
