@@ -19,15 +19,20 @@ export const Profile = () => {
   );
   const [research, setResearch] = useState((user && user.research) || "");
 
+  const [file, setFile] = useState();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("profilepic", file);
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
+    formData.append("username", username);
+
     try {
-      await axios.put(`http://localhost:3001/update/${user.id}`, {
-        firstName,
-        lastName,
-        username,
-        information,
-        research,
+      await axios.put(`http://localhost:3001/update/${user.id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
     } catch (error) {
       if (error.response) {
@@ -52,11 +57,17 @@ export const Profile = () => {
         <h2 className="pb-3" style={{ position: "relative" }}>
           General Info
         </h2>
-        <Form as="form" encType="multipart/form-data">
+        <Form encType="multipart/form-data">
           <Row>
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>Upload Profile Picture:</Form.Label>
-              <Form.Control type="file" name="profilepic" />
+              <Form.Control
+                type="file"
+                name="profilepic"
+                onChange={(e) => {
+                  setFile(e.target.files[0]);
+                }}
+              />
             </Form.Group>
             <Form.Group as={Col} controlId="formFirstName">
               <Form.Label>First Name</Form.Label>

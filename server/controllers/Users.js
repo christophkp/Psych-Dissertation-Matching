@@ -35,6 +35,8 @@ async function getFaculty(req, res) {
 
 async function update(req, res) {
   const userID = req.params.id;
+  const image = req.file.filename;
+
   try {
     const user = await Users.findByPk(userID);
     if (!user) {
@@ -46,10 +48,13 @@ async function update(req, res) {
         username: req.body.username,
         information: req.body.information,
         research: req.body.research,
+        profilepic: image,
       });
 
+
+
       await user.save();
-      res.json({message: "Update successful"});
+      res.json({ message: "Update successful" });
     }
   } catch (err) {
     res.status(500).json({ message: "Error updating user" });

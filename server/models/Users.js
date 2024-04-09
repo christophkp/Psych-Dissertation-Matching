@@ -33,6 +33,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         defaultValue: "",
       },
+      profilepic: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: "",
+      },
     });
 
     Users.associate = (models) => {
