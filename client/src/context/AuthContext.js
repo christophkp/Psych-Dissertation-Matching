@@ -4,9 +4,8 @@ import axios from "axios";
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("user")) || null
-  );
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const login = async (username, password) => {
     const response = await axios.post(
@@ -29,13 +28,28 @@ export const AuthContextProvider = ({ children }) => {
     setUser(null);
   };
 
+  const fetchUser = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/auth/user", {
+        withCredentials: true,
+      });
+      setUser(response.data.userData);
+      console.log("User succesfully fetched");
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(user));
-  }, [user]);
+    fetchUser();
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
-      {children}
+    <AuthContext.Provider value={{ user, login, logout, fetchUser }}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 };

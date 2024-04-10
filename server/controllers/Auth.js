@@ -58,4 +58,23 @@ async function logout(req, res) {
   }
 }
 
-module.exports = { login, logout };
+async function getUser(req, res) {
+  try {
+    const id = req.user.id;
+    const user = await Users.findByPk(id);
+    const userData = {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      username: user.username,
+      role: user.role,
+      information: user.information,
+      research: user.research,
+    };
+    res.status(200).json({ userData });
+  } catch (error) {
+    return res.status(500).json({ message: "Error geting user" });
+  }
+}
+
+module.exports = { login, logout, getUser };

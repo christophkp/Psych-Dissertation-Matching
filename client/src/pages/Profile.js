@@ -1,18 +1,24 @@
 import { AuthContext } from "../context/AuthContext";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const Profile = () => {
-  const { user } = useContext(AuthContext);
+  const { user, fetchUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   const [firstName, setFirstName] = useState((user && user.firstName) || "");
   const [lastName, setLastName] = useState((user && user.lastName) || "");
   const [username, setUsername] = useState((user && user.username) || "");
-  //   const [password, setPassword] = useState((user && user.password) || "");
+  //const [password, setPassword] = useState((user && user.password) || "");
 
   const [information, setInformation] = useState(
     (user && user.information) || ""
@@ -28,15 +34,25 @@ export const Profile = () => {
     formData.append("lastName", lastName);
     formData.append("username", username);
 
+    if (user.role === "faculty") {
+      formData.append("information", information);
+      formData.append("research", research);
+    }
     try {
-      await axios.put(`http://localhost:3001/update/${user.id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(
+        `http://localhost:3001/update/${user.id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      await fetchUser();
+      toast.success(response.data.message);
     } catch (error) {
       if (error.response) {
-        console.error(error.response?.data?.message);
+        toast.error(error.response?.data?.message);
       }
     }
   };
@@ -109,32 +125,34 @@ export const Profile = () => {
               <Form.Control />
             </Form.Group>
           </Row>
-          <Row className="mt-4">
-            <Form.Group as={Col} controlId="formInformation">
-              <Form.Label>Information</Form.Label>
+          {user && user.role === "faculty" && (
+            <Row className="mt-4">
+              <Form.Group as={Col} controlId="formInformation">
+                <Form.Label>Information</Form.Label>
 
-              <Form.Control
-                as="textarea"
-                value={information}
-                onChange={(e) => {
-                  setInformation(e.target.value);
-                }}
-                style={{ height: "150px", width: "350px" }}
-              />
-            </Form.Group>
-            <Form.Group as={Col} controlId="formResearch">
-              <Form.Label>Research</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  value={information}
+                  onChange={(e) => {
+                    setInformation(e.target.value);
+                  }}
+                  style={{ height: "150px", width: "350px" }}
+                />
+              </Form.Group>
+              <Form.Group as={Col} controlId="formResearch">
+                <Form.Label>Research</Form.Label>
 
-              <Form.Control
-                as="textarea"
-                value={research}
-                onChange={(e) => {
-                  setResearch(e.target.value);
-                }}
-                style={{ height: "150px", width: "350px" }}
-              />
-            </Form.Group>
-          </Row>
+                <Form.Control
+                  as="textarea"
+                  value={research}
+                  onChange={(e) => {
+                    setResearch(e.target.value);
+                  }}
+                  style={{ height: "150px", width: "350px" }}
+                />
+              </Form.Group>
+            </Row>
+          )}
           <Button
             className="mt-3"
             variant="primary"

@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import img from "../assets/pfp.png";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 function Home() {
   const [listofFaculty, setListOfFaculty] = useState([]);
-
 
   useEffect(() => {
     axios
@@ -35,7 +33,7 @@ function Home() {
               >
                 <div className="d-flex justify-content-center align-items-center">
                   <img
-                    src={img}
+                    src={`/assets/profilepics/${value.profilepic}`}
                     className="card-img-top rounded-circle mt-3"
                     style={{ width: "100px" }}
                     alt="card"
