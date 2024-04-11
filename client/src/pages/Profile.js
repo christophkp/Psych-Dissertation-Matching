@@ -29,7 +29,6 @@ export const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("profilepic", file);
     formData.append("firstName", firstName);
     formData.append("lastName", lastName);
     formData.append("username", username);
@@ -37,6 +36,7 @@ export const Profile = () => {
     if (user.role === "faculty") {
       formData.append("information", information);
       formData.append("research", research);
+      formData.append("profilepic", file);
     }
     try {
       const response = await axios.put(
@@ -75,16 +75,18 @@ export const Profile = () => {
         </h2>
         <Form encType="multipart/form-data">
           <Row>
-            <Form.Group controlId="formFile" className="mb-3">
-              <Form.Label>Upload Profile Picture:</Form.Label>
-              <Form.Control
-                type="file"
-                name="profilepic"
-                onChange={(e) => {
-                  setFile(e.target.files[0]);
-                }}
-              />
-            </Form.Group>
+            {user && user.role === "faculty" && (
+              <Form.Group controlId="formFile" className="mb-3">
+                <Form.Label>Upload Profile Picture:</Form.Label>
+                <Form.Control
+                  type="file"
+                  name="profilepic"
+                  onChange={(e) => {
+                    setFile(e.target.files[0]);
+                  }}
+                />
+              </Form.Group>
+            )}
             <Form.Group as={Col} controlId="formFirstName">
               <Form.Label>First Name</Form.Label>
 
