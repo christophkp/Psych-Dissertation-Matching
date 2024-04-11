@@ -9,6 +9,7 @@ async function scheduleMeeting(req, res) {
             studentId: req.user.id,
             facultyId: facultyId
         });
+        res.status(200);
         res.json(meeting);
     } catch(error){
         res.status(500);
