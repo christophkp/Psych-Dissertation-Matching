@@ -36,22 +36,31 @@ async function getFaculty(req, res) {
 async function update(req, res) {
   const userID = req.params.id;
   const image = req.file?.filename;
-
   try {
     const user = await Users.findByPk(userID);
     if (!user) {
       return res.status(404).json({ message: "User does not exist" });
     } else {
-      user.set({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        username: req.body.username,
-        information: req.body.information,
-        research: req.body.research,
-        profilepic: image,
-      });
-
-
+      if (user.role === "student" || user.role === "admin") {
+        console.log(user.role);
+        user.set({
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          username: req.body.username,
+        });
+      } else if (user.role === "faculty") {
+        const updatedFields = {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          username: req.body.username,
+          information: req.body.information,
+          research: req.body.research,
+        };
+        if (image) {
+          updatedFields.profilepic = image;
+        }
+        user.set(updatedFields);
+      }
 
       await user.save();
       res.status(200).json({ message: "Profile Updated Successfully" });
