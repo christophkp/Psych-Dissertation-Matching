@@ -26,16 +26,21 @@ function Rank() {
   }
 
   const submitRankings = async () => {
+    if(rankedFaculty.length === 0){
+      toast.error("Please select a faculty/student")
+      return;
+    }
     try {
-      const rankingData = rankedFaculty.map((faculty, index) => ({
-        facultyId: faculty.id, 
+      const rankingData = rankedFaculty.map((value, index) => ({
+        rankedId: value.id, 
         rank: index + 1,
       }));
 
-      const response = await axios.post('http://localhost:3001/rank/submit', rankingData);
+      await axios.post('http://localhost:3001/rank/submit', rankingData,  {withCredentials: true});
+      toast.success("Rank Submitted Successfully")
 
     } catch (error) {
-      console.error('Error submitting rankings:', error);
+      toast.error(error?.response?.data.Error);
     }
   };
 
@@ -53,7 +58,7 @@ function Rank() {
         >
           <h3 className="flex-basis-100 w-100">Faculty List</h3>
           <p className="flex-basis-100 w-100">Select a Faculty</p>
-          <i class="bi bi-arrow-down w-100"></i>
+          <i className="bi bi-arrow-down w-100"></i>
           {listofFaculty.map((value, key) => {
             return (
               <div
@@ -96,12 +101,12 @@ function Rank() {
             <button
               type="submit"
               className="btn btn-primary"
-              onclick={submitRankings}
+              onClick={submitRankings}
             >
               Submit Rankings
             </button>
           </div>
-          <hr class="border border-success" />
+          <hr className="border border-success" />
           <ol className="list-unstyled">
             {rankedFaculty.map((faculty, index) => (
               <li
