@@ -2,6 +2,9 @@ const {scheduleMeeting} = require('./Meeting');
 const { Meetings } = require('../models');
 
 jest.mock('../models');
+afterEach(() => {
+    jest.clearAllMocks();
+});
 
 const req = {
     body: {
