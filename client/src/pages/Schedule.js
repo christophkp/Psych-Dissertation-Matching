@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
-import img from "../assets/pfp.png"
 import Calender from "react-calendar"
 import 'react-calendar/dist/Calendar.css';
 import { toast } from 'react-toastify';
@@ -70,12 +69,30 @@ function Schedule() {
         <div className="col-md-3 border border-dark d-flex flex-wrap text-center" style={{ maxHeight: "600px", overflowY: "auto", borderRadius: "8px",  boxShadow: "0 12px 24px rgba(0, 0, 0, 0.2)"}}>
           <h3 className="flex-basis-100 w-100">Faculty List</h3>
           {listofFaculty.map((value, key) => {
-            return(
-              <div key={key} style={{ width: "50%", cursor: "pointer" }} onClick={() => handleItemClick(value)}>
-                <img src={img} className="rounded-circle mt-3 p-3" style={{ width: "125px", backgroundColor: selectedItem === value ? '#59E659' : '' }} alt="pfp" onMouseEnter={(e) => e.target.style.boxShadow = "0 0 5px 2px green"} onMouseLeave={(e) => e.target.style.boxShadow = ""}/>
-                <p className='mb-2' style={{ overflowWrap: 'break-word' }}>{value.firstName} {value.lastName}</p>
+            return (
+              <div
+                key={key}
+                style={{ width: "50%", cursor: "pointer" }}
+                onClick={() => handleItemClick(value)}
+              >
+                <img
+                  src={`/assets/profilepics/${value.profilepic}`}
+                  className="rounded-circle mt-3 p-3"
+                  style={{
+                    width: "125px",
+                    backgroundColor: selectedItem === value ? "#59E659" : "",
+                  }}
+                  alt="pfp"
+                  onMouseEnter={(e) =>
+                    (e.target.style.boxShadow = "0 0 5px 2px green")
+                  }
+                  onMouseLeave={(e) => (e.target.style.boxShadow = "")}
+                />
+                <p className="mb-2" style={{ overflowWrap: "break-word" }}>
+                  {value.firstName} {value.lastName}
+                </p>
               </div>
-          )})}
+            );})}
         </div>
         <div className="col-md-5">
           <Calender onChange={setDate}/>
