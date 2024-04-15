@@ -1,5 +1,6 @@
 const { Users } = require("../models");
 const bcrypt = require("bcrypt");
+const { Op } = require("sequelize");
 
 async function authRegister(req, res) {
   const { firstName, lastName, username, password } = req.body;
@@ -70,4 +71,25 @@ async function update(req, res) {
   }
 }
 
-module.exports = { authRegister, getFaculty, update };
+async function getUsers(req, res) {
+  try {
+    const id = req.user.id;
+    const user = await Users.findByPk(id);
+    const users = await Users.findAll({
+      where: {
+        [Op.or]: [{ role: "student" }, { role: "faculty" }],
+      },
+      order: [["id", "ASC"]],
+    });
+
+    if (user.role === "admin") {
+      return res.status(200).json(users);
+    } else {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: "Error Getting Users" });
+  }
+}
+
+module.exports = { authRegister, getFaculty, update, getUsers };
