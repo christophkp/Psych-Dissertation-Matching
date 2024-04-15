@@ -72,13 +72,21 @@ export const Profile = () => {
       return;
     }
     try {
-      const response = await axios.post("http://localhost:3001/user/pass", {
-        currentPassword,
-        newPassword,
-      });
-      toast.success("Password Changed!");
+      const response = await axios.post(
+        "http://localhost:3001/auth/pass",
+        {
+          currentPassword,
+          newPassword,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      toast.success(response.data.message);
     } catch (error) {
-      toast.error("Current Password Did Not Match");
+      if (error.response) {
+        toast.error(error.response?.data?.message);
+      }
     }
   };
 
