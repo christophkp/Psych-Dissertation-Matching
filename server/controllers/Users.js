@@ -33,6 +33,15 @@ async function getFaculty(req, res) {
     res.json({ Error: "Error Retrieving Faculty" });
   }
 }
+async function getStudents(req, res) {
+  try {
+    const students = await Users.findAll({ where: { role: "student" } });
+    res.json(students);
+  } catch (err) {
+    res.status(500);
+    res.json({ Error: "Error Retrieving Students" });
+  }
+}
 
 async function update(req, res) {
   const userID = req.params.id;
@@ -80,4 +89,25 @@ async function update(req, res) {
   }
 }
 
-module.exports = { authRegister, getFaculty, update };
+async function getUsers(req, res) {
+  try {
+    const id = req.user.id;
+    const user = await Users.findByPk(id);
+    const users = await Users.findAll({
+      where: {
+        [Op.or]: [{ role: "student" }, { role: "faculty" }],
+      },
+      order: [["id", "ASC"]],
+    });
+
+    if (user.role === "admin") {
+      return res.status(200).json(users);
+    } else {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: "Error Getting Users" });
+  }
+}
+
+module.exports = { authRegister, getFaculty, update, getUsers, getStudents };
