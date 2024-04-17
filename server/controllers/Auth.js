@@ -77,4 +77,25 @@ async function getUser(req, res) {
   }
 }
 
-module.exports = { login, logout, getUser };
+async function changePass(req, res) {
+  try {
+    const id = req.user.id;
+    const currentPassword = req.body.currentPassword;
+    const newPassword = req.body.newPassword;
+    const user = await Users.findByPk(id);
+
+    const passwordMatch = await bcrypt.compare(currentPassword, user.password);
+    if (passwordMatch) {
+      const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+      await user.update({ password: hashedNewPassword });
+      await user.save();
+      return res.status(200).json({ message: "Password Changed Successfully" });
+    } else {
+      return res.status(401).json({ message: "Current Password Is Incorrect" });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: "Error Changing Password" });
+  }
+}
+
+module.exports = { login, logout, getUser, changePass };

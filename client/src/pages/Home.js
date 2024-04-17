@@ -70,7 +70,7 @@ function Home() {
                   >
                     Information{" "}
                   </h6>
-                  <p>{value.information}</p>
+                  <p> {value.information}</p>
                   <h6
                     className=" border border-success rounded"
                     style={{ padding: "5px", display: "inline-block" }}

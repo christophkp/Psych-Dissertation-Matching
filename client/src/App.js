@@ -7,6 +7,8 @@ import Registration from "./pages/Registration";
 import {UserSettings} from "./pages/UserSettings";
 import { Login } from "./pages/Login";
 import { Profile } from "./pages/Profile";
+import { Admin } from "./pages/Admin";
+
 
 import {MeetingRequest} from "./pages/MeetingRequest";
 
@@ -26,6 +28,7 @@ function App() {
           <Route path="/registration" element={<Registration />} />
           <Route path="/settings" element={<UserSettings />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/adminpanel" element={<Admin />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/meetingRequest" element={<MeetingRequest />} />
             <Route path="/rank" element={<Rank />} />

@@ -71,25 +71,4 @@ async function update(req, res) {
   }
 }
 
-async function getUsers(req, res) {
-  try {
-    const id = req.user.id;
-    const user = await Users.findByPk(id);
-    const users = await Users.findAll({
-      where: {
-        [Op.or]: [{ role: "student" }, { role: "faculty" }],
-      },
-      order: [["id", "ASC"]],
-    });
-
-    if (user.role === "admin") {
-      return res.status(200).json(users);
-    } else {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
-  } catch (error) {
-    return res.status(500).json({ message: "Error Getting Users" });
-  }
-}
-
-module.exports = { authRegister, getFaculty, update, getUsers };
+module.exports = { authRegister, getFaculty, update };
