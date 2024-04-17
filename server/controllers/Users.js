@@ -25,11 +25,20 @@ async function authRegister(req, res) {
 
 async function getFaculty(req, res) {
   try {
-    const faculty = await Users.findAll({ where: { role: "student" } });
+    const faculty = await Users.findAll({ where: { role: "faculty" } });
     res.json(faculty);
   } catch (err) {
     res.status(500);
     res.json({ Error: "Error Retrieving Faculty" });
+  }
+}
+async function getStudents(req, res) {
+  try {
+    const students = await Users.findAll({ where: { role: "student" } });
+    res.json(students);
+  } catch (err) {
+    res.status(500);
+    res.json({ Error: "Error Retrieving Students" });
   }
 }
 
@@ -61,4 +70,4 @@ async function update(req, res) {
   }
 }
 
-module.exports = { authRegister, getFaculty, update };
+module.exports = { authRegister, getFaculty, getStudents, update };
