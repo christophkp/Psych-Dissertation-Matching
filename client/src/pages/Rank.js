@@ -33,6 +33,7 @@ function Rank() {
 
   const submitRankings = async (event) => {
     event.preventDefault();
+    console.log(selectedUsers);
     if(selectedUsers.length === 0){
       toast.error("Please select a faculty/student")
       return;
@@ -44,7 +45,6 @@ function Rank() {
       }));
 
       await axios.post('http://localhost:3001/rank/submit', rankingData,  {withCredentials: true});
-      console.log("test")
       toast.success("Rank Submitted Successfully")
 
     } catch (error) {
