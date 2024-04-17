@@ -1,5 +1,6 @@
 const { Users } = require("../models");
 const bcrypt = require("bcrypt");
+const { Op } = require("sequelize");
 
 async function authRegister(req, res) {
   const { firstName, lastName, username, password } = req.body;
@@ -25,42 +26,42 @@ async function authRegister(req, res) {
 
 async function getFaculty(req, res) {
   try {
-    const faculty = await Users.findAll({ where: { role: "faculty" } });
+    const faculty = await Users.findAll({ where: { role: "student" } });
     res.json(faculty);
   } catch (err) {
     res.status(500);
     res.json({ Error: "Error Retrieving Faculty" });
   }
 }
-async function getStudents(req, res) {
-  try {
-    const students = await Users.findAll({ where: { role: "student" } });
-    res.json(students);
-  } catch (err) {
-    res.status(500);
-    res.json({ Error: "Error Retrieving Students" });
-  }
-}
 
 async function update(req, res) {
   const userID = req.params.id;
   const image = req.file?.filename;
-
   try {
     const user = await Users.findByPk(userID);
     if (!user) {
       return res.status(404).json({ message: "User does not exist" });
     } else {
-      user.set({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        username: req.body.username,
-        information: req.body.information,
-        research: req.body.research,
-        profilepic: image,
-      });
-
-
+      if (user.role === "student" || user.role === "admin") {
+        console.log(user.role);
+        user.set({
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          username: req.body.username,
+        });
+      } else if (user.role === "faculty") {
+        const updatedFields = {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          username: req.body.username,
+          information: req.body.information,
+          research: req.body.research,
+        };
+        if (image) {
+          updatedFields.profilepic = image;
+        }
+        user.set(updatedFields);
+      }
 
       await user.save();
       res.status(200).json({ message: "Profile Updated Successfully" });
@@ -70,4 +71,25 @@ async function update(req, res) {
   }
 }
 
-module.exports = { authRegister, getFaculty, getStudents, update };
+async function getUsers(req, res) {
+  try {
+    const id = req.user.id;
+    const user = await Users.findByPk(id);
+    const users = await Users.findAll({
+      where: {
+        [Op.or]: [{ role: "student" }, { role: "faculty" }],
+      },
+      order: [["id", "ASC"]],
+    });
+
+    if (user.role === "admin") {
+      return res.status(200).json(users);
+    } else {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: "Error Getting Users" });
+  }
+}
+
+module.exports = { authRegister, getFaculty, update, getUsers };
