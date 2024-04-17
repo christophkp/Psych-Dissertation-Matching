@@ -21,6 +21,16 @@ export const Admin = () => {
         }
       });
   }, []);
+
+  const formatCreatedAtDate = (createdAt) => {
+    const date = new Date(createdAt);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
   return (
     <div>
       <h1>Admin Panel:</h1>
@@ -39,6 +49,7 @@ export const Admin = () => {
             <th>Last Name</th>
             <th>Username</th>
             <th>Password</th>
+            <th>createdAt</th>
             <th>Role</th>
             <th>Action</th>
           </tr>
@@ -51,6 +62,10 @@ export const Admin = () => {
               <td style={{ maxWidth: "100px" }}>{user.lastName}</td>
               <td style={{ maxWidth: "100px" }}>{user.username}</td>
               <td>******</td>
+              <td style={{ maxWidth: "100px" }}>
+                {formatCreatedAtDate(user.createdAt)}
+              </td>
+
               <td>{user.role}</td>
               <td>
                 <div className="d-flex">

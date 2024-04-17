@@ -8,6 +8,7 @@ import Container from "react-bootstrap/Container";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Modal from "react-bootstrap/Modal";
+import Image from "react-bootstrap/Image";
 
 export const Profile = () => {
   const { user, fetchUser } = useContext(AuthContext);
@@ -90,118 +91,198 @@ export const Profile = () => {
     }
   };
 
+  const formatCreatedAtDate = (createdAt) => {
+    const date = new Date(createdAt);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
+  const uploadNewPhotoClick = () => {
+    document.getElementById("fileInput").click();
+  };
+
   return (
-    <Container className="d-flex justify-content-center align-items-center vh-100">
-      <div
-        style={{
-          width: "850px",
-          height: "650px",
-          border: "1px solid black",
-          borderRadius: "20px",
-          padding: "60px",
-          backgroundColor: "white",
-          marginBottom: "50px",
-        }}
-      >
-        <h2 className="pb-3" style={{ position: "relative" }}>
-          Profile
-        </h2>
-        <Form encType="multipart/form-data">
-          <Row>
-            {user && user.role === "faculty" && (
-              <Form.Group controlId="formFile" className="mb-3">
-                <Form.Label>Upload Profile Picture:</Form.Label>
-                <Form.Control
-                  type="file"
-                  name="profilepic"
-                  onChange={(e) => {
-                    setFile(e.target.files[0]);
-                  }}
-                />
-              </Form.Group>
-            )}
-            <Form.Group as={Col} controlId="formFirstName">
-              <Form.Label>First Name</Form.Label>
+    <Container className="mt-4 pb-5">
+      <Row>
+        <Col md={4}>
+          <div
+            className="profilecard d-flex flex-column align-items-center justify-content-center rounded"
+            style={{
+              border: "1px solid black",
+              width: "300px",
+              height: "350px",
+            }}
+          >
+            <div className="title fw-bold" style={{ fontSize: "20px" }}>
+              {user.firstName + " " + user.lastName}
+            </div>
 
-              <Form.Control
-                type="text"
-                value={firstName}
-                onChange={(e) => {
-                  setFirstName(e.target.value);
-                }}
+            <div style={{ fontSize: "15px" }}>{user.username}</div>
+
+            <div className="profilepic mt-3">
+              <Image
+                src={`/assets/profilepics/${user.profilepic}`}
+                roundedCircle
+                style={{ width: "150px" }}
               />
-            </Form.Group>
-            <Form.Group as={Col} controlId="formLastName">
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control
-                type="text"
-                value={lastName}
-                onChange={(e) => {
-                  setLastName(e.target.value);
-                }}
-              />
-            </Form.Group>
-          </Row>
-          <Row className="mt-4">
-            <Form.Group as={Col} controlId="formEmail">
-              <Form.Label>Email</Form.Label>
+            </div>
 
-              <Form.Control
-                type="email"
-                required
-                value={username}
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                }}
-              />
-            </Form.Group>
-            <Form.Group as={Col} controlId="formPassword">
-              <Form.Label>Password</Form.Label>
-              <Button
-                variant="secondary"
-                className="d-block"
-                onClick={handleShow}
-              >
-                Change Password
-              </Button>
-            </Form.Group>
-          </Row>
+            <div className="upload mt-3">
+              {user.role === "faculty" && (
+                <Form>
+                  <Form.Group>
+                    <Button
+                      variant="success"
+                      onClick={uploadNewPhotoClick}
+                      style={{ borderRadius: "0" }}
+                    >
+                      Upload New Photo
+                    </Button>
+                    <Form.Control
+                      type="file"
+                      id="fileInput"
+                      onChange={(e) => {
+                        setFile(e.target.files[0]);
+                      }}
+                      style={{ display: "none" }}
+                    />
+                  </Form.Group>
+                </Form>
+              )}
+            </div>
 
-          {user && user.role === "faculty" && (
-            <Row className="mt-4">
-              <Form.Group as={Col} controlId="formInformation">
-                <Form.Label>Information</Form.Label>
-
-                <Form.Control
-                  as="textarea"
-                  value={information}
-                  onChange={(e) => {
-                    setInformation(e.target.value);
-                  }}
-                  style={{ height: "150px", width: "350px" }}
-                />
-              </Form.Group>
-              <Form.Group as={Col} controlId="formResearch">
-                <Form.Label>Research</Form.Label>
-
-                <Form.Control
-                  as="textarea"
-                  value={research}
-                  onChange={(e) => {
-                    setResearch(e.target.value);
-                  }}
-                  style={{ height: "150px", width: "350px" }}
-                />
-              </Form.Group>
-            </Row>
-          )}
-          <div className="mt-3 text-end">
-            <Button variant="success" type="submit" onClick={handleSubmit}>
-              Update
-            </Button>
+            <div className="mt-4" style={{ fontSize: "13px", color: "grey" }}>
+              Member Since:{" "}
+              <span className="fw-bold">
+                {formatCreatedAtDate(user.createdAt)}
+              </span>
+            </div>
           </div>
-        </Form>
-      </div>
+        </Col>
+        <Col md={7}>
+          <Form className="rounded p-4" style={{ border: "1px solid black" }}>
+            <Form.Label className="fw-bold fs-2 mb-3">
+              Edit Profile ({user.role})
+            </Form.Label>
+
+            <Row>
+              <Col
+                className={
+                  user.role === "student" || user.role === "admin" ? "mt-5" : ""
+                }
+              >
+                <Form.Group className="mb-3" controlId="formFirstName">
+                  <Form.Label>First Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => {
+                      setFirstName(e.target.value);
+                    }}
+                  />
+                </Form.Group>
+              </Col>
+              <Col
+                className={
+                  user.role === "student" || user.role === "admin" ? "mt-5" : ""
+                }
+              >
+                <Form.Group className="mb-3" controlId="formLastName">
+                  <Form.Label>Last Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={lastName}
+                    onChange={(e) => {
+                      setLastName(e.target.value);
+                    }}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col
+                className={
+                  user.role === "student" || user.role === "admin" ? "mt-5" : ""
+                }
+              >
+                <Form.Group className="mb-3" controlId="formEmail">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={username}
+                    onChange={(e) => {
+                      setUsername(e.target.value);
+                    }}
+                  />
+                </Form.Group>
+              </Col>
+              <Col
+                className={
+                  user.role === "student" || user.role === "admin" ? "mt-5" : ""
+                }
+              >
+                <Form.Group className="mb-3" controlId="formPassword">
+                  <Form.Label>Password</Form.Label>
+                  <Button
+                    className="d-block"
+                    variant="secondary"
+                    onClick={handleShow}
+                  >
+                    Change Password
+                  </Button>
+                </Form.Group>
+              </Col>
+            </Row>
+            {user.role === "faculty" && (
+              <>
+                <Form.Group className="mb-3" controlId="formInfo">
+                  <Form.Label>Information</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={6}
+                    value={information}
+                    onChange={(e) => {
+                      setInformation(e.target.value);
+                    }}
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formResearch">
+                  <Form.Label>Research</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={6}
+                    value={research}
+                    onChange={(e) => {
+                      setResearch(e.target.value);
+                    }}
+                  />
+                </Form.Group>
+              </>
+            )}
+            <div
+              className={
+                user.role === "student" || user.role === "admin"
+                  ? "text-end mt-5"
+                  : "text-end mt-4"
+              }
+            >
+              <Button
+                variant="success"
+                type="submit"
+                style={{ width: "150px" }}
+                onClick={handleSubmit}
+              >
+                Save Changes
+              </Button>
+            </div>
+          </Form>
+        </Col>
+      </Row>
+
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Change Password</Modal.Title>

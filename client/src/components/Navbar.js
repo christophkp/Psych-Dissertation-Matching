@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 import Button from "react-bootstrap/Button";
+import Toast from "react-bootstrap/Toast";
+
 
 export const NavbarComponent = () => {
   const { user, logout } = useContext(AuthContext);
@@ -51,28 +53,29 @@ export const NavbarComponent = () => {
             </Nav>
             <Nav className="ms-auto">
               {user ? (
-                <NavDropdown
-                  title={user.firstName + " " + user.lastName}
-                  id="basic-nav-dropdown"
-                  className="px-3"
-                >
-                  <NavDropdown.Item>
-                    <Link
+                <>
+                  <NavDropdown
+                    title={user.firstName + " " + user.lastName}
+                    id="basic-nav-dropdown"
+                    className="px-3"
+                  >
+                    <NavDropdown.Item
+                      as={Link}
                       to="/profile"
                       style={{ textDecoration: "none", color: "inherit" }}
                     >
                       Profile
-                    </Link>
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">
-                    Schedule
-                  </NavDropdown.Item>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.2">
+                      Schedule
+                    </NavDropdown.Item>
 
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={handleLogout}>
-                    Logout
-                  </NavDropdown.Item>
-                </NavDropdown>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item onClick={handleLogout}>
+                      Logout
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </>
               ) : (
                 <>
                   <Link to="/registration" className="nav-link px-3">

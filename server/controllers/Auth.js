@@ -70,6 +70,8 @@ async function getUser(req, res) {
       role: user.role,
       information: user.information,
       research: user.research,
+      profilepic: user.profilepic,
+      createdAt: user.createdAt,
     };
     res.status(200).json({ userData });
   } catch (error) {

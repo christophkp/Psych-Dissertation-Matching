@@ -26,12 +26,10 @@ module.exports = (sequelize, DataTypes) => {
       information: {
         type: DataTypes.TEXT,
         allowNull: true,
-        defaultValue: "",
       },
       research: {
         type: DataTypes.TEXT,
         allowNull: true,
-        defaultValue: "",
       },
       profilepic: {
         type: DataTypes.STRING,
