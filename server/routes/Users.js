@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { authRegister, getFaculty, update, getStudents } = require("../controllers/Users");
+const { authRegister, getFaculty, update, getStudents, getUsers } = require("../controllers/Users");
 const bcrypt = require("bcrypt");
 const verifyToken = require("../middleware/verifyToken");
 const multer = require("multer");
@@ -24,6 +24,7 @@ router.get("/faculty", verifyToken, getFaculty);
 
 router.get("/students", verifyToken, getStudents);
 
+router.get("/users", verifyToken, getUsers);
 
 router.put("/update/:id", upload.single("profilepic"), update);
 

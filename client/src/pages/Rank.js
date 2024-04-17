@@ -38,8 +38,13 @@ function Rank() {
       toast.error("Please select a faculty/student")
       return;
     }
+
     try {
-      const rankingData = selectedUsers.map((value, index) => ({
+      const completeRankings = selectedUsers
+      .map((value, index) => ({ value, index }))
+      .filter(({ value }) => value && value.rankedId !== undefined);
+
+      const rankingData = completeRankings.map((value, index) => ({
         rankedId: value, 
         rank: index + 1,
       }));
@@ -92,3 +97,5 @@ function Rank() {
 }
 
 export default Rank
+
+
