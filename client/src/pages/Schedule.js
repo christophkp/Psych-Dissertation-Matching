@@ -1,72 +1,101 @@
-import React, {useEffect, useState} from 'react'
-import axios from 'axios'
-import Calender from "react-calendar"
-import 'react-calendar/dist/Calendar.css';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Calender from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Schedule() {
   const [listofFaculty, setListOfFaculty] = useState([]);
-  const [selectedItem, setSelectedItem] = useState(
-  {"id": 0,
-  "firstName": "Professor",
-  "lastName": "Name",
+  const [selectedItem, setSelectedItem] = useState({
+    id: 0,
+    firstName: "Professor",
+    lastName: "Name",
   });
   const [selectedTime, setSelectedTime] = useState("8:00 AM - 9:00 AM");
 
   const [date, setDate] = useState(new Date());
-  const month = date.toLocaleString('default', { month: 'long' });
-  const year = date.toLocaleString('default', { year: 'numeric' });
+  const month = date.toLocaleString("default", { month: "long" });
+  const year = date.toLocaleString("default", { year: "numeric" });
   const timeSlots = [
-    '8:00 AM - 9:00 AM', '9:00 AM - 10:00 AM', '10:00 AM - 11:00 AM', '11:00 AM - 12:00 PM',
-    '1:00 PM - 2:00 PM', '2:00 PM - 3:00 PM', '3:00 PM - 4:00 PM', '4:00 PM - 5:00 PM',
-    '5:00 PM - 6:00 PM', '6:00 PM - 7:00 PM', '7:00 PM - 8:00 PM', '8:00 PM - 9:00 PM',
+    "8:00 AM - 9:00 AM",
+    "9:00 AM - 10:00 AM",
+    "10:00 AM - 11:00 AM",
+    "11:00 AM - 12:00 PM",
+    "1:00 PM - 2:00 PM",
+    "2:00 PM - 3:00 PM",
+    "3:00 PM - 4:00 PM",
+    "4:00 PM - 5:00 PM",
+    "5:00 PM - 6:00 PM",
+    "6:00 PM - 7:00 PM",
+    "7:00 PM - 8:00 PM",
+    "8:00 PM - 9:00 PM",
   ];
-  
-  
 
   useEffect(() => {
-    axios.get('http://localhost:3001/faculty', { withCredentials: true }).then((response) => {
-      setListOfFaculty(response.data);
-    }).catch((err) => {
-      toast.error('Internal Server Error');
+    axios
+      .get("http://localhost:3001/faculty", { withCredentials: true })
+      .then((response) => {
+        setListOfFaculty(response.data);
+      })
+      .catch((err) => {
+        toast.error("Internal Server Error");
       });
   }, []);
 
   const handleItemClick = (value) => {
     setSelectedItem(value);
-  }
+  };
   const handleTimeClick = (time) => {
     setSelectedTime(time);
-  }
+  };
 
   const handleSubmit = async () => {
-    
     if (selectedItem.firstName === "Professor") {
-      toast.error('Please select a faculty');
+      toast.error("Please select a faculty");
       return;
-    }
-    else{
-      try{
-        await axios.post("http://localhost:3001/meetings/schedule", {
-          date,
-          time: selectedTime,
-          facultyId: selectedItem.id
-        }, {
-          withCredentials: true
-        });
-        toast.success('Meeting scheduled successfully!');
-      }
-      catch(err){
+    } else {
+      const [startTime, endTime] = selectedTime.split(" - ");
+
+      const startDateTime = new Date(date);
+      startDateTime.setHours(parseInt(startTime.split(":")[0], 10));
+      startDateTime.setMinutes(parseInt(startTime.split(":")[1], 10));
+
+      const endDateTime = new Date(date);
+      endDateTime.setHours(parseInt(endTime.split(":")[0], 10));
+      endDateTime.setMinutes(parseInt(endTime.split(":")[1], 10));
+
+      try {
+        await axios.post(
+          "http://localhost:3001/meetings/schedule",
+          {
+            startDate: startDateTime,
+            endDate: endDateTime,
+            facultyId: selectedItem.id,
+          },
+          {
+            withCredentials: true,
+          }
+        );
+        toast.success("Meeting scheduled successfully!");
+      } catch (err) {
         toast.error("Internal Server Error");
       }
     }
-  }
-  
+  };
+
   return (
     <div className="container mt-3">
       <div className="row">
-        <div className="col-md-3 border border-dark d-flex flex-wrap text-center" style={{ maxHeight: "600px", overflowY: "auto", borderRadius: "8px",  boxShadow: "0 12px 24px rgba(0, 0, 0, 0.2)"}}>
+        <div
+          className="col-md-3 border border-dark d-flex flex-wrap text-center"
+          style={{
+            maxHeight: "600px",
+            overflowY: "auto",
+            borderRadius: "8px",
+            boxShadow: "0 12px 24px rgba(0, 0, 0, 0.2)",
+          }}
+        >
           <h3 className="flex-basis-100 w-100">Faculty List</h3>
           {listofFaculty.map((value, key) => {
             return (
@@ -92,33 +121,66 @@ function Schedule() {
                   {value.firstName} {value.lastName}
                 </p>
               </div>
-            );})}
+            );
+          })}
         </div>
         <div className="col-md-5">
-          <Calender onChange={setDate}/>
-          <div className="border border-dark p-3 mt-3" style={{ maxHeight: '300px', overflowY: "auto", borderRadius: "8px",  boxShadow: "0 12px 24px rgba(0, 0, 0, 0.2)"}}>
-            <h5 className='text-center mb-3'>Select a time on {month} {date.getDate()}, {year}</h5>
+          <Calender onChange={setDate} />
+          <div
+            className="border border-dark p-3 mt-3"
+            style={{
+              maxHeight: "300px",
+              overflowY: "auto",
+              borderRadius: "8px",
+              boxShadow: "0 12px 24px rgba(0, 0, 0, 0.2)",
+            }}
+          >
+            <h5 className="text-center mb-3">
+              Select a time on {month} {date.getDate()}, {year}
+            </h5>
             {timeSlots.map((time, index) => {
-              return(
-                <div className="row border border-dark justify-content-center p-2 mb-1 rounded" style={{cursor: "pointer", backgroundColor: selectedTime === time ? '#59E659' : ''}} key={index} onClick={() => handleTimeClick(time)} onMouseEnter={(e) => e.target.style.boxShadow = "0 0 5px 2px green"} onMouseLeave={(e) => e.target.style.boxShadow = ""}>
+              return (
+                <div
+                  className="row border border-dark justify-content-center p-2 mb-1 rounded"
+                  style={{
+                    cursor: "pointer",
+                    backgroundColor: selectedTime === time ? "#59E659" : "",
+                  }}
+                  key={index}
+                  onClick={() => handleTimeClick(time)}
+                  onMouseEnter={(e) =>
+                    (e.target.style.boxShadow = "0 0 5px 2px green")
+                  }
+                  onMouseLeave={(e) => (e.target.style.boxShadow = "")}
+                >
                   {time}
                 </div>
-              )
+              );
             })}
           </div>
         </div>
         <div className="col-md-4 text-center d-flex flex-column justify-content-center">
           <div className="border border-dark p-3 rounded">
             <h3> Meeting Details </h3>
-            <p>Date: {month} {date.getDate()}, {year}</p>
+            <p>
+              Date: {month} {date.getDate()}, {year}
+            </p>
             <p>Time: {selectedTime}</p>
-            <p>Professor: {selectedItem.firstName} {selectedItem.lastName}</p>
-            <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Schedule</button>
+            <p>
+              Professor: {selectedItem.firstName} {selectedItem.lastName}
+            </p>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              onClick={handleSubmit}
+            >
+              Schedule
+            </button>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Schedule
+export default Schedule;

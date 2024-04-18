@@ -8,7 +8,6 @@ import { useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Toast from "react-bootstrap/Toast";
 
-
 export const NavbarComponent = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -59,14 +58,10 @@ export const NavbarComponent = () => {
                     id="basic-nav-dropdown"
                     className="px-3"
                   >
-                    <NavDropdown.Item
-                      as={Link}
-                      to="/profile"
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
+                    <NavDropdown.Item as={Link} to="/profile">
                       Profile
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.2">
+                    <NavDropdown.Item as={Link} to="/myschedule">
                       Schedule
                     </NavDropdown.Item>
 

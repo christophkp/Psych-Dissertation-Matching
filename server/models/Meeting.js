@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
 
     const Meetings = sequelize.define("Meetings", {
-      date: {
+      startDate: {
         type: DataTypes.DATE,
         allowNull: false,
       },
-      time: {
+      endDate: {
         type: DataTypes.STRING,
         allowNull: false,
       },

@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { scheduleMeeting } = require("../controllers/Meeting");
+const { scheduleMeeting, getMeetings } = require("../controllers/Meeting");
 const verifyToken = require("../middleware/verifyToken");
 
 router.post('/schedule', verifyToken, scheduleMeeting);
+
+router.get("/", verifyToken, getMeetings);
 
 
 module.exports = router;

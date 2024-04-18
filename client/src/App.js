@@ -8,6 +8,8 @@ import {UserSettings} from "./pages/UserSettings";
 import { Login } from "./pages/Login";
 import { Profile } from "./pages/Profile";
 import { Admin } from "./pages/Admin";
+import { MySchedule } from "./pages/MySchedule";
+
 
 
 import {MeetingRequest} from "./pages/MeetingRequest";
@@ -29,6 +31,8 @@ function App() {
           <Route path="/settings" element={<UserSettings />} />
           <Route path="/login" element={<Login />} />
           <Route path="/adminpanel" element={<Admin />} />
+          <Route path="/myschedule" element={<MySchedule />} />
+
           <Route element={<ProtectedRoute />}>
             <Route path="/meetingRequest" element={<MeetingRequest />} />
             <Route path="/rank" element={<Rank />} />
