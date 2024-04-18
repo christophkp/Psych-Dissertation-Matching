@@ -13,7 +13,7 @@ async function submitRanking(req, res) {
             });
             if (existingRank) {
                 res.status(400);
-                res.json({Error: "Already submitted a rank for this user"});
+                res.json({Error: "Already submitted a rank for one of the users"});
                 return;
             }
 

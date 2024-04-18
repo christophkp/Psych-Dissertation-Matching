@@ -8,6 +8,8 @@ function Rank() {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [numRankings, setNumRankings] = useState(3);
   const { user } = useContext(AuthContext);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
 
   useEffect(() => {
     if (user.role === 'faculty') {
@@ -27,7 +29,8 @@ function Rank() {
 
   const handleSelection = (event, index) => {
     const updatedSelectedUsers = [...selectedUsers];
-    updatedSelectedUsers[index] = event.target.value;
+    const value = event.target.value;
+    updatedSelectedUsers[index] = { value, index };
     setSelectedUsers(updatedSelectedUsers);
   }
 
@@ -40,18 +43,14 @@ function Rank() {
     }
 
     try {
-      const completeRankings = selectedUsers
-      .map((value, index) => ({ value, index }))
-      .filter(({ value }) => value && value.rankedId !== undefined);
-
-      const rankingData = completeRankings.map((value, index) => ({
-        rankedId: value, 
-        rank: index + 1,
+      const filteredUsers = selectedUsers.filter(user => user !== undefined);
+      const rankingData = filteredUsers.map((value) => ({
+        rankedId: value.value, 
+        rank: value.index + 1,
       }));
-
       await axios.post('http://localhost:3001/rank/submit', rankingData,  {withCredentials: true});
-      toast.success("Rank Submitted Successfully")
-
+      toast.success("Rank Submitted Successfully");
+      setIsSubmitted(true)
     } catch (error) {
       toast.error(error?.response?.data.Error);
     }
@@ -62,40 +61,49 @@ function Rank() {
 
   return (
     <div className="container mt-3">
-      <div className="row">
-        <div className="col-md-6">
-          <h3>Rank your Expierence</h3>
-          <form onSubmit={submitRankings}>
-          {[...Array(numRankings)].map((_, index) => (
-            <>
-            <div className="form-group">
-              <label htmlFor="exampleFormControlSelect1">{user.role === 'student' ? 'Select Faculty' : 'Select Student'}</label>
-              <select className="form-select" onChange={event => handleSelection(event, index)}>
-              <option selected>{user.role === 'student' ? 'Please select a faculty' : 'Please select a student'}</option>
-                {listOfUsers.map((user, key) => {
-                  return(
-                    <option key={key} value={user.id}>{user.firstName} {user.lastName}</option>
-                  )
-                }
-                )}
-              </select>
-            </div>
-            <div className="form-group">
-              <label htmlFor="exampleFormControlTextarea1">Additional Comments</label>
-              <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div>
-            </>
-            ))}
-            <button type="button" className="btn btn-primary" onClick={addRanking}>Add Ranking</button>
-            <button type="submit" className="btn btn-primary">Submit Ranking</button>
-
-          </form>
+      <div className="row justify-content-center">
+        <div className="col-md-6 border-top border-success border-4" style={{ boxShadow: "0 12px 24px rgba(0, 0, 0, 0.2)", maxHeight: "650px", overflowY: "auto" }}>
+          <div className='p-3'>
+            {isSubmitted ? (
+              <div>
+                <h3 className='mb-3 mt-3'>Thank You!</h3>
+                <p>Your rankings have been submitted successfully.</p>
+              </div>
+            ) : (
+              <div>
+                <h3 className='mb-3 mt-3'>{user.role === 'student' ? 'Faculty Ranking' : 'Student Ranking'}</h3>
+                <p>Select {user.role === 'student' ? 'faculty' : 'students'} in order of most want to work with to least. <br></br> You are not required to rank every {user.role === 'student' ? 'faculty' : 'students'}, only rank the {user.role === 'student' ? 'faculty' : 'students'} you met with.</p>
+                <hr></hr>
+                <form onSubmit={submitRankings}>
+                  {[...Array(numRankings)].map((_, index) => (
+                    <div key={index}>
+                      <div className="form-group">
+                        <label htmlFor={`select${index}`} className='mt-3 '>{user.role === 'student' ? 'Select Faculty' : 'Select Student'}</label>
+                        <select className="form-select mb-3 " id={`select${index}`} onChange={event => handleSelection(event, index)}>
+                          <option selected>{user.role === 'student' ? 'Please select a faculty' : 'Please select a student'}</option>
+                          {listOfUsers.map((user, key) => (
+                            <option key={key} value={user.id}>{user.firstName} {user.lastName}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="form-group" >
+                        <label htmlFor={`comments${index}`}>Additional Comments</label>
+                        <textarea className="form-control bg-light" id={`comments${index}`} rows="3" placeholder="Enter additional comments here..."></textarea>
+                      </div>
+                    </div>
+                  ))}
+                  <div className="d-flex justify-content-between mt-3">
+                    <button type="button" className="btn" style={{ backgroundColor: '#0f857f' }} onClick={addRanking}>Add More Rankings</button>
+                    <button type="submit text-light" className="btn" style={{ backgroundColor: '#0f857f' }}>Submit Ranking</button>
+                  </div>
+                </form>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export default Rank
-
-
+export default Rank;
