@@ -29,7 +29,7 @@ function Home() {
             <div key={key} className="col-md-3 mt-4 mb-3">
               <div
                 className="card border border-success"
-                style={{ maxHeight: "250px", overflowY: "auto" }}
+                style={{ maxHeight: "600px", overflowY: "auto" }}
               >
                 <div className="d-flex justify-content-center align-items-center">
                   <img
