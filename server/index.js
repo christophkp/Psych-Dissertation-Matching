@@ -27,6 +27,9 @@ app.use("/meetings", meetingRouter);
 const rankRouter = require("./routes/Ranks");
 app.use("/rank", rankRouter);
 
+const matchesRouter = require("./routes/Matches");
+app.use("/matches", matchesRouter);
+
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {
     console.log("HEY FROM SERVER");
