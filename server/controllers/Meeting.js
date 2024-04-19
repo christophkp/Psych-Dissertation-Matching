@@ -20,8 +20,10 @@ async function scheduleMeeting(req, res) {
 async function getMeetings(req, res) {
   try {
     const id = req.user.id;
-    const user = await Users.findByPk(id);
-    const meetings = await user.getMeetings();
+    const user = await Users.findByPk(id, {
+      include: Meetings,
+    });
+    const meetings = user.Meetings;
     res.status(200).json(meetings);
   } catch (error) {
     res.status(500).json({ message: "Could not retreive meetings" });
