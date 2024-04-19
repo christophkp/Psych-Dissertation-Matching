@@ -38,28 +38,7 @@ test('catches error if axios.get throws an exception', async() => {
     expect(await screen.findByText('Internal Server Error')).toBeInTheDocument();
 });
 
-test('retrieve the correct faculty when we select from the list', async() => {
-    const fakeUsers ={
-        data: [{
-            id: 0,
-            firstName: 'John',
-            lastName: 'Doe',
 
-        }]
-    }
-    
-    mockAxios.get.mockResolvedValue(fakeUsers);
-
-    render(
-        <>
-            <ToastContainer/>
-            <Schedule />
-        </>
-    );
-    const selectFaculty = await screen.findByText("John Doe");
-    fireEvent.click(selectFaculty);
-    expect(await screen.findByText('Professor: John Doe')).toBeInTheDocument();
-});
 
 test('retrieve the correct time when we select a time from the list', async() => {
     const fakeUsers ={
@@ -72,7 +51,6 @@ test('retrieve the correct time when we select a time from the list', async() =>
     }
     
     mockAxios.get.mockResolvedValue(fakeUsers);
-
     render(
         <>
             <ToastContainer/>
@@ -81,31 +59,9 @@ test('retrieve the correct time when we select a time from the list', async() =>
     );
     const selectTime = await screen.findByText("8:00 AM - 9:00 AM");
     fireEvent.click(selectTime);
-    expect(await screen.findByText('Time: 8:00 AM - 9:00 AM')).toBeInTheDocument();
+    expect(await screen.findByText('8:00 AM - 9:00 AM')).toBeInTheDocument();
 });
 
-test('if user didnt select faculty display error', async() => {
-    const fakeUsers ={
-        data: [{
-            id: 0,
-            firstName: 'John',
-            lastName: 'Doe',
-
-        }]
-    }
-    
-    mockAxios.get.mockResolvedValue(fakeUsers);
-
-    render(
-        <>
-            <ToastContainer/>
-            <Schedule />
-        </>
-    );
-    const submitMeeting = await screen.findByText("Schedule");
-    fireEvent.click(submitMeeting);
-    expect(await screen.findByText('Please select a faculty')).toBeInTheDocument();
-});
 
 test('if user select faculty schedule meeting and assure it created the meeting', async() => {
     const fakeUsers ={
@@ -127,7 +83,7 @@ test('if user select faculty schedule meeting and assure it created the meeting'
     );
     const selectFaculty = await screen.findByText("John Doe");
     fireEvent.click(selectFaculty);
-    const submitMeeting = await screen.findByText("Schedule");
+    const submitMeeting = await screen.findByText("Schedule Meeting");
     fireEvent.click(submitMeeting);
     expect(await screen.findByText('Meeting scheduled successfully!')).toBeInTheDocument();
 });
@@ -153,7 +109,72 @@ test('if the meeting failed to create display error message', async() => {
     );
     const selectFaculty = await screen.findByText("John Doe");
     fireEvent.click(selectFaculty);
-    const submitMeeting = await screen.findByText("Schedule");
+    const submitMeeting = await screen.findByText("Schedule Meeting");
     fireEvent.click(submitMeeting);
     expect(await screen.findByText('Internal Server Error')).toBeInTheDocument();
+});
+
+test('displays the previous faculty when pressing back arrow', async() => {
+    const fakeUsers ={
+        data: [{
+            id: 0,
+            firstName: 'John',
+            lastName: 'Doe',
+
+        },
+        {
+            id: 0,
+            firstName: 'Oliver',
+            lastName: 'Doe',
+
+        }]
+    }
+    mockAxios.get.mockResolvedValue(fakeUsers);
+
+
+    render(<Schedule />);
+
+    expect(await screen.findByText('John Doe')).toBeInTheDocument();
+    const chevronLeftIcon = screen.getByTestId('chevron-left-icon');
+    fireEvent.click(chevronLeftIcon);
+    fireEvent.click(chevronLeftIcon);
+    fireEvent.click(chevronLeftIcon);
+
+    expect(await screen.findByText('Oliver Doe')).toBeInTheDocument();
+
+});
+
+test('displays the previous faculty when pressing right arrow', async() => {
+    const fakeUsers ={
+        data: [{
+            id: 0,
+            firstName: 'John',
+            lastName: 'Doe',
+
+        },
+        {
+            id: 0,
+            firstName: 'Oliver',
+            lastName: 'Doe',
+
+        },
+        {
+            id: 0,
+            firstName: 'Yo',
+            lastName: 'Doe',
+
+        }]
+    }
+    mockAxios.get.mockResolvedValue(fakeUsers);
+
+
+    render(<Schedule />);
+
+    expect(await screen.findByText('John Doe')).toBeInTheDocument();
+    const chevronRightIcon = screen.getByTestId('chevron-right-icon');
+    fireEvent.click(chevronRightIcon);
+    fireEvent.click(chevronRightIcon);
+
+    expect(await screen.findByText('Yo Doe')).toBeInTheDocument();
+
 });

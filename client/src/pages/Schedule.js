@@ -90,8 +90,8 @@ function Schedule() {
       <div className="row mt-3 border-top border-success border-4" style={{ boxShadow: "0 12px 24px rgba(0, 0, 0, 0.2)" }}>
         <div className="col-md-4 mt-3 border-end p-4" style={{ maxHeight: "600px"}}>
           <div className="d-flex justify-content-end">
-            <i class="bi bi-chevron-left fs-5 me-4" onClick={handlePrevFaculty} style={{ cursor: 'pointer' }}></i>
-            <i class="bi bi-chevron-right fs-5" onClick={handleNextFaculty} style={{ cursor: 'pointer' }}></i>
+            <i className="bi bi-chevron-left fs-5 me-4" data-testid="chevron-left-icon" onClick={handlePrevFaculty} style={{ cursor: 'pointer' }}></i>
+            <i className="bi bi-chevron-right fs-5" data-testid="chevron-right-icon" onClick={handleNextFaculty} style={{ cursor: 'pointer' }}></i>
           </div>
           <div className="d-flex flex-column mt-3">
             <img className="rounded-circle border border-success" src={`/assets/profilepics/${listofFaculty[selectedItemIndex]?.profilepic}`} alt="Profile Pic" style={{ width: "100px" }}/>
