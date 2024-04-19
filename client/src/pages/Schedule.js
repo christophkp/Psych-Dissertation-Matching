@@ -7,16 +7,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 function Schedule() {
   const [listofFaculty, setListOfFaculty] = useState([]);
-  const [selectedItem, setSelectedItem] = useState({
-    id: 0,
-    firstName: "Professor",
-    lastName: "Name",
-  });
   const [selectedTime, setSelectedTime] = useState("8:00 AM - 9:00 AM");
-
+  const [selectedItemIndex, setSelectedItemIndex] = useState(0);
   const [date, setDate] = useState(new Date());
-  const month = date.toLocaleString("default", { month: "long" });
-  const year = date.toLocaleString("default", { year: "numeric" });
+    
+  const formattedDate = date.toLocaleString('default', {weekday: 'short', day: 'numeric', month: 'short' });
   const timeSlots = [
     "8:00 AM - 9:00 AM",
     "9:00 AM - 10:00 AM",
@@ -43,144 +38,95 @@ function Schedule() {
       });
   }, []);
 
-  const handleItemClick = (value) => {
-    setSelectedItem(value);
-  };
   const handleTimeClick = (time) => {
     setSelectedTime(time);
   };
 
+
+
+  
+
   const handleSubmit = async () => {
-    if (selectedItem.firstName === "Professor") {
-      toast.error("Please select a faculty");
-      return;
-    } else {
-      const [startTime, endTime] = selectedTime.split(" - ");
+    const [startTime, endTime] = selectedTime.split(" - ");
 
-      const startDateTime = new Date(date);
-      startDateTime.setHours(parseInt(startTime.split(":")[0], 10));
-      startDateTime.setMinutes(parseInt(startTime.split(":")[1], 10));
+    const startDateTime = new Date(date);
+    startDateTime.setHours(parseInt(startTime.split(":")[0], 10));
+    startDateTime.setMinutes(parseInt(startTime.split(":")[1], 10));
 
-      const endDateTime = new Date(date);
-      endDateTime.setHours(parseInt(endTime.split(":")[0], 10));
-      endDateTime.setMinutes(parseInt(endTime.split(":")[1], 10));
+    const endDateTime = new Date(date);
+    endDateTime.setHours(parseInt(endTime.split(":")[0], 10));
+    endDateTime.setMinutes(parseInt(endTime.split(":")[1], 10));
 
-      try {
-        await axios.post(
-          "http://localhost:3001/meetings/schedule",
-          {
-            startDate: startDateTime,
-            endDate: endDateTime,
-            facultyId: selectedItem.id,
-          },
-          {
-            withCredentials: true,
-          }
-        );
-        toast.success("Meeting scheduled successfully!");
-      } catch (err) {
-        toast.error("Internal Server Error");
-      }
+    try {
+      await axios.post(
+        "http://localhost:3001/meetings/schedule",
+        {
+          startDate: startDateTime,
+          endDate: endDateTime,
+          facultyId: listofFaculty[selectedItemIndex].id,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      toast.success("Meeting scheduled successfully!");
+    } catch (err) {
+      toast.error("Internal Server Error");
     }
   };
 
+  const handleNextFaculty = () => {
+    setSelectedItemIndex((prevIndex) => (prevIndex + 1) % listofFaculty.length);
+  };
+
+  const handlePrevFaculty = () => {
+    setSelectedItemIndex((prevIndex) =>
+      prevIndex === 0 ? listofFaculty.length - 1 : prevIndex - 1
+    );
+  };
+
   return (
-    <div className="container mt-3">
-      <div className="row">
-        <div
-          className="col-md-3 border border-dark d-flex flex-wrap text-center"
-          style={{
-            maxHeight: "600px",
-            overflowY: "auto",
-            borderRadius: "8px",
-            boxShadow: "0 12px 24px rgba(0, 0, 0, 0.2)",
-          }}
-        >
-          <h3 className="flex-basis-100 w-100">Faculty List</h3>
-          {listofFaculty.map((value, key) => {
-            return (
-              <div
-                key={key}
-                style={{ width: "50%", cursor: "pointer" }}
-                onClick={() => handleItemClick(value)}
-              >
-                <img
-                  src={`/assets/profilepics/${value.profilepic}`}
-                  className="rounded-circle mt-3 p-3"
-                  style={{
-                    width: "125px",
-                    backgroundColor: selectedItem === value ? "#59E659" : "",
-                  }}
-                  alt="pfp"
-                  onMouseEnter={(e) =>
-                    (e.target.style.boxShadow = "0 0 5px 2px green")
-                  }
-                  onMouseLeave={(e) => (e.target.style.boxShadow = "")}
-                />
-                <p className="mb-2" style={{ overflowWrap: "break-word" }}>
-                  {value.firstName} {value.lastName}
-                </p>
-              </div>
-            );
-          })}
+    <div className="container">
+      <div className="row mt-3 border-top border-success border-4" style={{ boxShadow: "0 12px 24px rgba(0, 0, 0, 0.2)" }}>
+        <div className="col-md-4 mt-3 border-end p-4" style={{ maxHeight: "600px"}}>
+          <div className="d-flex justify-content-end">
+            <i class="bi bi-chevron-left fs-5 me-4" onClick={handlePrevFaculty} style={{ cursor: 'pointer' }}></i>
+            <i class="bi bi-chevron-right fs-5" onClick={handleNextFaculty} style={{ cursor: 'pointer' }}></i>
+          </div>
+          <div className="d-flex flex-column mt-3">
+            <img className="rounded-circle border border-success" src={`/assets/profilepics/${listofFaculty[selectedItemIndex]?.profilepic}`} alt="Profile Pic" style={{ width: "100px" }}/>
+            <h3 className="mt-3">{listofFaculty[selectedItemIndex]?.firstName} {listofFaculty[selectedItemIndex]?.lastName}</h3>
+          </div>
+          <div style={{ maxHeight: "150px", overflowY: "auto" }}>
+            <hr />
+            <p className="text-secondary"style={{ fontSize: "14px", lineHeight: "1.5"}}>{listofFaculty[selectedItemIndex]?.information}</p>
+          </div>
+          <hr />
         </div>
-        <div className="col-md-5">
+        <div className="col-md-4 mt-3 border-end p-4" style={{ maxHeight: "600px"}}>
+          <h4 className="text-uppercase text-center">Select a Date & Time</h4>
           <Calender onChange={setDate} />
-          <div
-            className="border border-dark p-3 mt-3"
-            style={{
-              maxHeight: "300px",
-              overflowY: "auto",
-              borderRadius: "8px",
-              boxShadow: "0 12px 24px rgba(0, 0, 0, 0.2)",
-            }}
-          >
-            <h5 className="text-center mb-3">
-              Select a time on {month} {date.getDate()}, {year}
-            </h5>
-            {timeSlots.map((time, index) => {
+        </div>
+        <div className="col-md-4 mt-2 border-end p-4" style={{ maxHeight: "600px", overflow: "auto"}}>
+          <div className="d-flex justify-content-end mb-3">
+              <button className="btn btn-success" onClick={handleSubmit}>Schedule Meeting</button>
+            </div>
+          <p className="mt-1 text-center mb-4" style={{ color: '#008000' }}>{formattedDate} ({selectedTime})</p>
+          <hr></hr>
+          {timeSlots.map((time, index) => {
               return (
                 <div
-                  className="row border border-dark justify-content-center p-2 mb-1 rounded"
-                  style={{
-                    cursor: "pointer",
-                    backgroundColor: selectedTime === time ? "#59E659" : "",
-                  }}
-                  key={index}
-                  onClick={() => handleTimeClick(time)}
-                  onMouseEnter={(e) =>
-                    (e.target.style.boxShadow = "0 0 5px 2px green")
-                  }
-                  onMouseLeave={(e) => (e.target.style.boxShadow = "")}
-                >
-                  {time}
-                </div>
+                className={`time-slot ${selectedTime === time ? "selected" : ""}`}
+                key={index}
+                onClick={() => handleTimeClick(time)}
+              >
+                {time}
+              </div>
               );
             })}
-          </div>
-        </div>
-        <div className="col-md-4 text-center d-flex flex-column justify-content-center">
-          <div className="border border-dark p-3 rounded">
-            <h3> Meeting Details </h3>
-            <p>
-              Date: {month} {date.getDate()}, {year}
-            </p>
-            <p>Time: {selectedTime}</p>
-            <p>
-              Professor: {selectedItem.firstName} {selectedItem.lastName}
-            </p>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              onClick={handleSubmit}
-            >
-              Schedule
-            </button>
-          </div>
         </div>
       </div>
     </div>
-  );
-}
+    )}
 
 export default Schedule;

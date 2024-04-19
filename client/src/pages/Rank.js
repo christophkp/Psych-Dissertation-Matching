@@ -93,8 +93,8 @@ function Rank() {
                     </div>
                   ))}
                   <div className="d-flex justify-content-between mt-3">
-                    <button type="button" className="btn" style={{ backgroundColor: '#0f857f' }} onClick={addRanking}>Add More Rankings</button>
-                    <button type="submit text-light" className="btn" style={{ backgroundColor: '#0f857f' }}>Submit Ranking</button>
+                    <button type="button" className="btn btn-success" onClick={addRanking}>Add More Rankings</button>
+                    <button type="submit text-light" className="btn btn-success">Submit Ranking</button>
                   </div>
                 </form>
               </div>

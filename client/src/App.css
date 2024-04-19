@@ -2,8 +2,9 @@
 .react-calendar {
   width: 100% !important;
   max-height: 300px !important;
-  border-radius: 8px;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  
+  border: none !important;
+  box-shadow: none !important;
   font-family: Arial, Helvetica, sans-serif;
   overflow-y: auto;
 }
@@ -33,4 +34,24 @@
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
   background: #1087ff;
+}
+.time-slot {
+  cursor: pointer;
+  border: 1px solid #28a745;
+  padding: 8px;
+  margin-bottom: 20px;
+  color: #008000;
+  border-radius: 20px;
+  text-align: center; 
+  font-weight: bold; 
+}
+
+.time-slot:hover {
+  background-color: #008000;
+  color: #ffffff;
+}
+
+.time-slot.selected {
+  background-color: #008000;
+  color: #ffffff;
 }
