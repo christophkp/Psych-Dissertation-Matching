@@ -1,6 +1,6 @@
 const { Users } = require("../models");
 const { Ranks } = require("../models");
-const galeShapley = require("../utils/galeShapley");
+const { galeShapley } = require("../utils/galeShapley");
 
 async function getMatches(req, res) {
   try {
@@ -40,10 +40,13 @@ async function getMatches(req, res) {
       ],
     });
     const studentRankings = organizeRankings(studentRankingsData);
-    const facultyRankings = organizeRankings(studentRankingsData);
+    const facultyRankings = organizeRankings(facultyRankingsData);
 
-    //res.json(studentRankings);
-  } catch (error) {}
+    const matches = galeShapley(studentRankings, facultyRankings);
+    res.json(matches);
+  } catch (error) {
+    res.status(500).json({ message: "Error getting matches" });
+  }
 }
 
 function organizeRankings(rankingData) {
