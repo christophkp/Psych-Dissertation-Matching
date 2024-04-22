@@ -9,7 +9,7 @@ function Rank() {
   const [numRankings, setNumRankings] = useState(3);
   const { user } = useContext(AuthContext);
   const [isSubmitted, setIsSubmitted] = useState(false);
-
+  const [commentBody, setCommentBody] = useState([]);
 
   useEffect(() => {
     if (user.role === 'faculty') {
@@ -38,6 +38,12 @@ function Rank() {
     updatedSelectedUsers[index] = { value, index };
     setSelectedUsers(updatedSelectedUsers);
   }
+  const handleComment = (event, index) => {
+    const updatedComments = [...commentBody];
+    const value = event.target.value;
+    updatedComments[index] = value;
+    setCommentBody(updatedComments);
+  }
 
   const submitRankings = async (event) => {
     event.preventDefault();
@@ -52,7 +58,9 @@ function Rank() {
       const rankingData = filteredUsers.map((value) => ({
         rankedId: value.value, 
         rank: value.index + 1,
+        comments: commentBody[value.index]
       }));
+      console.log(commentBody)
       await axios.post('http://localhost:3001/rank/submit', rankingData,  {withCredentials: true});
       setIsSubmitted(true);
       toast.success("Rank Submitted Successfully");
@@ -93,7 +101,7 @@ function Rank() {
                       </div>
                       <div className="form-group" >
                         <label htmlFor={`comments${index}`}>Additional Comments</label>
-                        <textarea className="form-control bg-light" id={`comments${index}`} rows="3" placeholder="Enter additional comments here..."></textarea>
+                        <textarea className="form-control bg-light" onChange={event => handleComment(event, index)} id={`comments${index}`} rows="3" placeholder="Enter additional comments here..."></textarea>
                       </div>
                     </div>
                   ))}

@@ -5,15 +5,22 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useContext, useEffect } from "react";
-
+import axios from "axios";
 
 export const NavbarComponent = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-
-  })
+    axios
+      .get("http://localhost:3001/meetings", { withCredentials: true })
+      .then((response) => {
+        const meetings = response.data;
+        console.log(meetings)
+      }).catch((err) => {
+        console.log("ERROR");
+      });
+  }, []);
 
   const handleLogout = async () => {
     try {

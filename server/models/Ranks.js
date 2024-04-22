@@ -4,6 +4,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    commentBody: {
+      type: DataTypes.STRING
+    }
   });
 
   Ranks.associate = (models) => {

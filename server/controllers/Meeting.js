@@ -24,13 +24,11 @@ async function getMeetings(req, res) {
       include: Meetings,
     });
     const meetings = user.Meetings;
+    console.log(meetings)
     res.status(200).json(meetings);
   } catch (error) {
     res.status(500).json({ message: "Could not retreive meetings" });
   }
 }
-
-
-
 
 module.exports = { scheduleMeeting, getMeetings };

@@ -21,6 +21,7 @@ async function submitRanking(req, res) {
                 rankedId: data.rankedId,
                 rank: data.rank,
                 rankerId: req.user.id,
+                commentBody: data.comments
             });
         }
         res.status(200);
