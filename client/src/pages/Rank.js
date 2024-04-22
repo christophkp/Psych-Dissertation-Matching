@@ -25,6 +25,8 @@ function Rank() {
           toast.error('Internal Server Error');
         });
     }
+    axios.get('http://localhost:3001/rank/isSubmitted', { withCredentials: true }).then((response) => {
+      setIsSubmitted(response.data.hasRankSubmitted)});
   }, [user.role]);
 
   const handleSelection = (event, index) => {
@@ -50,7 +52,6 @@ function Rank() {
       }));
       await axios.post('http://localhost:3001/rank/submit', rankingData,  {withCredentials: true});
       toast.success("Rank Submitted Successfully");
-      setIsSubmitted(true)
     } catch (error) {
       toast.error(error?.response?.data.Error);
     }

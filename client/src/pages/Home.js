@@ -16,7 +16,7 @@ function Home() {
       });
   }, []);
   return (
-    <div className="container">
+    <div className="container" >
       <div className="row">
         <h1
           className="text-center mt-4"

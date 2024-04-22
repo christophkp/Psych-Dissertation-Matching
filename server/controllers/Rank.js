@@ -30,5 +30,24 @@ async function submitRanking(req, res) {
     }
 }
 
+async function rankSubmitted(req, res){
+    try {
+        const isRankedSubmitted = await Ranks.findOne({
+            where: {
+                rankerId: req.user.id 
+            }
+        });
+        if (isRankedSubmitted) {
+            res.status(200)
+            res.json({ hasRankSubmitted: true });
+        } else {
+            res.status(200)
+            res.json({ hasRankSubmitted: false });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500);
+    }
+}
 
-module.exports = {submitRanking};
+module.exports = {submitRanking, rankSubmitted};
