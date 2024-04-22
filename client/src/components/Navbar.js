@@ -4,13 +4,16 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { useContext } from "react";
-import Button from "react-bootstrap/Button";
-import Toast from "react-bootstrap/Toast";
+import { useContext, useEffect } from "react";
+
 
 export const NavbarComponent = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+
+  })
 
   const handleLogout = async () => {
     try {
@@ -53,6 +56,9 @@ export const NavbarComponent = () => {
             <Nav className="ms-auto">
               {user ? (
                 <>
+                  <NavDropdown>
+                    <i className="bi bi-bell-fill text-white me-3" style={{ cursor: "pointer" }}></i>
+                  </NavDropdown>
                   <NavDropdown
                     title={user.firstName + " " + user.lastName}
                     id="basic-nav-dropdown"

@@ -45,7 +45,6 @@ async function rankSubmitted(req, res){
             res.json({ hasRankSubmitted: false });
         }
     } catch (error) {
-        console.error(error);
         res.status(500);
     }
 }
