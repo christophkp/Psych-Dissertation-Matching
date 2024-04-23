@@ -84,6 +84,7 @@ export const Profile = () => {
         }
       );
       toast.success(response.data.message);
+      handleClose();
     } catch (error) {
       if (error.response) {
         toast.error(error.response?.data?.message);

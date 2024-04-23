@@ -30,6 +30,9 @@ app.use("/rank", rankRouter);
 const matchesRouter = require("./routes/Matches");
 app.use("/matches", matchesRouter);
 
+const adminRouter = require("./routes/Admin");
+app.use("/admin", adminRouter);
+
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {
     console.log("HEY FROM SERVER");

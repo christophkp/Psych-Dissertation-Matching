@@ -20,16 +20,13 @@ export const Admin = () => {
     information: "",
     research: "",
   });
-  const [currentUser, setCurrentUser] = useState();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = (user) => {
     setFormData({ ...user, password: "" });
     setShow(true);
-    console.log(user);
   };
-
-  useEffect(() => {
+  const fetchUsers = () => {
     axios
       .get("http://localhost:3001/users", {
         withCredentials: true,
@@ -42,6 +39,9 @@ export const Admin = () => {
           console.error(error.response?.data?.message);
         }
       });
+  };
+  useEffect(() => {
+    fetchUsers();
   }, []);
 
   const formatCreatedAtDate = (createdAt) => {
@@ -55,14 +55,21 @@ export const Admin = () => {
 
   const handleSubmit = async () => {
     try {
-      const res = axios.put(
+      const response = await axios.put(
         "http://localhost:3001/admin/updateuser",
         formData,
         {
           withCredentials: true,
         }
       );
-    } catch (error) {}
+      toast.success(response.data.message);
+      handleClose();
+      fetchUsers();
+    } catch (error) {
+      if (error.response) {
+        toast.error(error.response?.data?.message);
+      }
+    }
   };
   return (
     <div>
@@ -201,7 +208,7 @@ export const Admin = () => {
                       <Form.Control
                         as="textarea"
                         rows={6}
-                        value={formData.information}
+                        value={formData.information || ""}
                         type="text"
                         onChange={(e) =>
                           setFormData((prevData) => ({
@@ -216,7 +223,7 @@ export const Admin = () => {
                       <Form.Control
                         as="textarea"
                         rows={6}
-                        value={formData.research}
+                        value={formData.research || ""}
                         type="text"
                         onChange={(e) =>
                           setFormData((prevData) => ({
@@ -228,20 +235,13 @@ export const Admin = () => {
                     </Form.Group>
                   </>
                 )}
-                {/* <p
-                  className={
-                    matchPassword ? "text-danger text-center mt-3" : "d-none"
-                  }
-                >
-                  {matchPassword}
-                </p> */}
               </Form>
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
                 Close
               </Button>
-              <Button variant="primary" onClick={handleClose}>
+              <Button variant="primary" onClick={handleSubmit}>
                 Save Changes
               </Button>
             </Modal.Footer>
