@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1713726365130" clover="3.2.0">
-  <project timestamp="1713726365130" name="All files">
-    <metrics statements="260" coveredstatements="60" conditionals="91" coveredconditionals="6" methods="90" coveredmethods="23" elements="441" coveredelements="89" complexity="0" loc="260" ncloc="260" packages="5" files="17" classes="17"/>
+<coverage generated="1713870180757" clover="3.2.0">
+  <project timestamp="1713870180757" name="All files">
+    <metrics statements="277" coveredstatements="60" conditionals="91" coveredconditionals="6" methods="98" coveredmethods="23" elements="466" coveredelements="89" complexity="0" loc="277" ncloc="277" packages="5" files="17" classes="17"/>
     <package name="src">
       <metrics statements="12" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="0"/>
       <file name="App.js" path="/Users/oliverkochpaiz/Desktop/Psych-Dissertation-Matching/client/src/App.js">
@@ -36,23 +36,30 @@
       </file>
     </package>
     <package name="src.components">
-      <metrics statements="11" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="0"/>
+      <metrics statements="18" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="7" coveredmethods="0"/>
       <file name="ExampleCard.js" path="/Users/oliverkochpaiz/Desktop/Psych-Dissertation-Matching/client/src/components/ExampleCard.js">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="6" count="0" type="stmt"/>
       </file>
       <file name="Navbar.js" path="/Users/oliverkochpaiz/Desktop/Psych-Dissertation-Matching/client/src/components/Navbar.js">
-        <metrics statements="10" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <metrics statements="17" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="6" coveredmethods="0"/>
+        <line num="10" count="0" type="stmt"/>
         <line num="11" count="0" type="stmt"/>
         <line num="12" count="0" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
         <line num="15" count="0" type="stmt"/>
         <line num="16" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="21" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
         <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="31" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="71" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.context">
@@ -83,7 +90,7 @@
       </file>
     </package>
     <package name="src.pages">
-      <metrics statements="213" coveredstatements="60" conditionals="79" coveredconditionals="6" methods="78" coveredmethods="23"/>
+      <metrics statements="223" coveredstatements="60" conditionals="79" coveredconditionals="6" methods="82" coveredmethods="23"/>
       <file name="Admin.js" path="/Users/oliverkochpaiz/Desktop/Psych-Dissertation-Matching/client/src/pages/Admin.js">
         <metrics statements="13" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="6" coveredmethods="0"/>
         <line num="6" count="0" type="stmt"/>
@@ -222,12 +229,13 @@
         <line num="315" count="0" type="stmt"/>
       </file>
       <file name="Rank.js" path="/Users/oliverkochpaiz/Desktop/Psych-Dissertation-Matching/client/src/pages/Rank.js">
-        <metrics statements="37" coveredstatements="0" conditionals="18" coveredconditionals="0" methods="15" coveredmethods="0"/>
+        <metrics statements="47" coveredstatements="0" conditionals="18" coveredconditionals="0" methods="19" coveredmethods="0"/>
         <line num="7" count="0" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
         <line num="9" count="0" type="stmt"/>
         <line num="10" count="0" type="stmt"/>
         <line num="11" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
         <line num="14" count="0" type="stmt"/>
         <line num="15" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="16" count="0" type="stmt"/>
@@ -236,30 +244,39 @@
         <line num="22" count="0" type="stmt"/>
         <line num="23" count="0" type="stmt"/>
         <line num="25" count="0" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
         <line num="31" count="0" type="stmt"/>
-        <line num="32" count="0" type="stmt"/>
-        <line num="33" count="0" type="stmt"/>
-        <line num="34" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
         <line num="37" count="0" type="stmt"/>
         <line num="38" count="0" type="stmt"/>
         <line num="39" count="0" type="stmt"/>
-        <line num="40" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="41" count="0" type="stmt"/>
         <line num="42" count="0" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
         <line num="45" count="0" type="stmt"/>
-        <line num="46" count="0" type="stmt"/>
-        <line num="47" count="0" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="50" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="51" count="0" type="stmt"/>
         <line num="52" count="0" type="stmt"/>
-        <line num="53" count="0" type="stmt"/>
         <line num="55" count="0" type="stmt"/>
-        <line num="58" count="0" type="stmt"/>
-        <line num="59" count="0" type="stmt"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="57" count="0" type="stmt"/>
         <line num="62" count="0" type="stmt"/>
-        <line num="79" count="0" type="stmt"/>
-        <line num="82" count="0" type="stmt"/>
-        <line num="85" count="0" type="stmt"/>
+        <line num="63" count="0" type="stmt"/>
+        <line num="64" count="0" type="stmt"/>
+        <line num="65" count="0" type="stmt"/>
+        <line num="67" count="0" type="stmt"/>
+        <line num="70" count="0" type="stmt"/>
+        <line num="71" count="0" type="stmt"/>
+        <line num="74" count="0" type="stmt"/>
+        <line num="91" count="0" type="stmt"/>
+        <line num="94" count="0" type="stmt"/>
+        <line num="97" count="0" type="stmt"/>
+        <line num="103" count="0" type="stmt"/>
       </file>
       <file name="Registration.js" path="/Users/oliverkochpaiz/Desktop/Psych-Dissertation-Matching/client/src/pages/Registration.js">
         <metrics statements="21" coveredstatements="21" conditionals="2" coveredconditionals="2" methods="6" coveredmethods="6"/>

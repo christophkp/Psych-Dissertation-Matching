@@ -4,23 +4,13 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { useContext, useEffect } from "react";
-import axios from "axios";
+import { useContext, useState } from "react";
+import Notifications from "./Notifications";
 
 export const NavbarComponent = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:3001/meetings", { withCredentials: true })
-      .then((response) => {
-        const meetings = response.data;
-        console.log(meetings)
-      }).catch((err) => {
-        console.log("ERROR");
-      });
-  }, []);
 
   const handleLogout = async () => {
     try {
@@ -63,9 +53,7 @@ export const NavbarComponent = () => {
             <Nav className="ms-auto">
               {user ? (
                 <>
-                  <NavDropdown>
-                    <i className="bi bi-bell-fill text-white me-3" style={{ cursor: "pointer" }}></i>
-                  </NavDropdown>
+                  <Notifications />
                   <NavDropdown
                     title={user.firstName + " " + user.lastName}
                     id="basic-nav-dropdown"

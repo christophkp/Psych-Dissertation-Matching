@@ -15,7 +15,6 @@ import { MySchedule } from "./pages/MySchedule";
 import {MeetingRequest} from "./pages/MeetingRequest";
 
 import { NavbarComponent } from "./components/Navbar";
-
 import { ToastContainer } from "react-toastify";
 import { ProtectedRoute } from "./ProtectedRoutes/ProtectedRoute";
 

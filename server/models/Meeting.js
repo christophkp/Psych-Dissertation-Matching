@@ -14,10 +14,6 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  Meetings.associate = (models) => {
-    Meetings.belongsTo(models.Users, { foreignKey: "studentId" });
-    Meetings.belongsTo(models.Users, { foreignKey: "facultyId" });
-  };
 
   return Meetings;
 };

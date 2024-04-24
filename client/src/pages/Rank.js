@@ -47,7 +47,6 @@ function Rank() {
 
   const submitRankings = async (event) => {
     event.preventDefault();
-    console.log(selectedUsers);
     if(selectedUsers.length === 0){
       toast.error("Please select a faculty/student")
       return;
