@@ -7,6 +7,9 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { toast } from "react-toastify";
 import Modal from "react-bootstrap/Modal";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 export const Admin = () => {
   const [users, setUsers] = useState([]);
@@ -20,6 +23,17 @@ export const Admin = () => {
     information: "",
     research: "",
   });
+  const [createUserForm, setCreateUserForm] = useState({
+    firstName: "",
+    lastName: "",
+    username: "",
+    password: "",
+    role: "student",
+    information: "",
+    research: "",
+  });
+  console.log(createUserForm);
+
   const [selectedUser, setSelectedUser] = useState({
     id: "",
     firstName: "",
@@ -38,6 +52,23 @@ export const Admin = () => {
   const handleShowSecondModal = (user) => {
     setSelectedUser(user);
     setShowSecondModal(true);
+  };
+
+  const [showUserCreateModal, setShowUserCreateModal] = useState(false);
+  const handleCloseUserCreateModal = () => {
+    setCreateUserForm({
+      firstName: "",
+      lastName: "",
+      username: "",
+      password: "",
+      role: "student",
+      information: "",
+      research: "",
+    });
+    setShowUserCreateModal(false);
+  };
+  const handleShowCreateUserModal = () => {
+    setShowUserCreateModal(true);
   };
   const fetchUsers = () => {
     axios
@@ -103,43 +134,87 @@ export const Admin = () => {
     }
   };
 
-  return (
-    <div>
-      <Tabs defaultActiveKey="users" id="admin-tabs" className="mb-3" justify>
-        <Tab eventKey="users" title="Users">
-          <Table
-            striped
-            bordered
-            hover
-            variant="dark"
-            className="mx-auto"
-            style={{ width: "100%" }}
-          >
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Username</th>
-                <th>Password</th>
-                <th>createdAt</th>
-                <th>Role</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user, key) => (
-                <tr className="table-secondary" key={key}>
-                  <td>{user?.id}</td>
-                  <td>{user?.firstName}</td>
-                  <td>{user?.lastName}</td>
-                  <td>{user?.username}</td>
-                  <td>******</td>
-                  <td>{formatCreatedAtDate(user?.createdAt)}</td>
-                  <td>{user?.role}</td>
+  const handleUserCreate = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/admin/createuser",
+        createUserForm,
+        {
+          withCredentials: true,
+        }
+      );
+      toast.success(response.data.message);
+      handleCloseUserCreateModal();
+      fetchUsers();
+    } catch (error) {
+      if (error.response) {
+        toast.error(error.response?.data?.message);
+      }
+    }
+  };
 
-                  <td>
-                    <div className="d-flex">
+  return (
+    <Container fluid className="mt-3">
+      <Row>
+        <Col>
+          <div
+            className="d-flex align-items-center rounded-top"
+            style={{ backgroundColor: "#013220" }}
+          >
+            <span className="text-light p-3 ms-3" style={{ fontSize: "30px" }}>
+              User Managment
+            </span>
+            <Button
+              variant="light"
+              className="ms-auto me-4"
+              onClick={handleShowCreateUserModal}
+            >
+              <i
+                className="bi bi-plus-circle-fill"
+                style={{ color: "grey" }}
+              ></i>{" "}
+              Create New User
+            </Button>
+          </div>
+          <div
+            className="rounded-bottom"
+            style={{
+              border: "1px solid",
+              maxHeight: "500px",
+              height: "500px",
+              overflowY: "scroll",
+            }}
+          >
+            <Table
+              hover
+              striped
+              className="mx-auto mt-3"
+              style={{ width: "97%" }}
+            >
+              <thead style={{ fontSize: "15px", fontWeight: "normal" }}>
+                <tr>
+                  <th>ID</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Username</th>
+                  <th>Password</th>
+                  <th>Date Created</th>
+                  <th>Role</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((user, key) => (
+                  <tr className="table-light align-middle" key={key}>
+                    <td>{user?.id}</td>
+                    <td>{user?.firstName}</td>
+                    <td>{user?.lastName}</td>
+                    <td>{user?.username}</td>
+                    <td>******</td>
+                    <td>{formatCreatedAtDate(user?.createdAt)}</td>
+                    <td>{user?.role}</td>
+
+                    <td>
                       <Button
                         variant="outline-success"
                         className="me-3"
@@ -153,158 +228,281 @@ export const Admin = () => {
                       >
                         Delete
                       </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-          <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>Edit Account</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <Form>
-                <Form.Group controlId="CurrentPassword">
-                  <Form.Label>First Name:</Form.Label>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+        </Col>
+      </Row>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Account</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="editFirstName" className="mb-2">
+              <Form.Label>First Name:</Form.Label>
+              <Form.Control
+                value={formData.firstName}
+                type="text"
+                onChange={(e) =>
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    firstName: e.target.value,
+                  }))
+                }
+              />
+            </Form.Group>
+            <Form.Group controlId="editLastName" className="mb-2">
+              <Form.Label>Last Name:</Form.Label>
+              <Form.Control
+                value={formData.lastName}
+                type="text"
+                onChange={(e) =>
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    lastName: e.target.value,
+                  }))
+                }
+              />
+            </Form.Group>
+            <Form.Group controlId="editUsername" className="mb-2">
+              <Form.Label>Username:</Form.Label>
+              <Form.Control
+                value={formData.username}
+                type="email"
+                onChange={(e) =>
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    username: e.target.value,
+                  }))
+                }
+              />
+            </Form.Group>
+            <Form.Group controlId="editPassword" className="mb-2">
+              <Form.Label>Password:</Form.Label>
+              <Form.Control
+                value={formData.password}
+                type="password"
+                onChange={(e) =>
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    password: e.target.value,
+                  }))
+                }
+              />
+            </Form.Group>
+            <Form.Group controlId="editRole" className="mb-2">
+              <Form.Label>Role:</Form.Label>
+              <Form.Select
+                value={formData.role}
+                onChange={(e) =>
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    role: e.target.value,
+                  }))
+                }
+              >
+                <option value="student">student</option>
+                <option value="faculty">faculty</option>
+                <option value="admin">admin</option>
+              </Form.Select>
+            </Form.Group>
+            {formData.role === "faculty" && (
+              <>
+                <Form.Group controlId="editInfo" className="mb-2">
+                  <Form.Label>Information:</Form.Label>
                   <Form.Control
-                    value={formData.firstName}
+                    as="textarea"
+                    rows={6}
+                    value={formData.information || ""}
                     type="text"
                     onChange={(e) =>
                       setFormData((prevData) => ({
                         ...prevData,
-                        firstName: e.target.value,
+                        information: e.target.value,
                       }))
                     }
                   />
                 </Form.Group>
-                <Form.Group controlId="NewPassword">
-                  <Form.Label>Last Name:</Form.Label>
+                <Form.Group controlId="editResearch" className="mb-2">
+                  <Form.Label>Research:</Form.Label>
                   <Form.Control
-                    value={formData.lastName}
+                    as="textarea"
+                    rows={6}
+                    value={formData.research || ""}
                     type="text"
                     onChange={(e) =>
                       setFormData((prevData) => ({
                         ...prevData,
-                        lastName: e.target.value,
+                        research: e.target.value,
                       }))
                     }
                   />
                 </Form.Group>
-                <Form.Group controlId="ConfirmPassword">
-                  <Form.Label>Username:</Form.Label>
+              </>
+            )}
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSubmit}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={showSecondModal} onHide={handleCloseSecondModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to delete the following user? This action cannot
+          be undone.
+          <p className="mb-2 mt-3">
+            <span className="fw-bold">ID:</span> {selectedUser.id},&nbsp;
+            <span className="fw-bold">Username:</span> {selectedUser.username}
+            ,&nbsp;
+            <span className="fw-bold">Role:</span> {selectedUser.role}
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseSecondModal}>
+            Close
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Delete Account
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={showUserCreateModal} onHide={handleCloseUserCreateModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Create User</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="createFirstName" className="mb-2">
+              <Form.Label>First Name:</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                value={createUserForm.firstName}
+                onChange={(e) =>
+                  setCreateUserForm((prevData) => ({
+                    ...prevData,
+                    firstName: e.target.value,
+                  }))
+                }
+              />
+            </Form.Group>
+            <Form.Group controlId="createLastName" className="mb-2">
+              <Form.Label>Last Name:</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                value={createUserForm.lastName}
+                onChange={(e) =>
+                  setCreateUserForm((prevData) => ({
+                    ...prevData,
+                    lastName: e.target.value,
+                  }))
+                }
+              />
+            </Form.Group>
+            <Form.Group controlId="createUsername" className="mb-2">
+              <Form.Label>Username:</Form.Label>
+              <Form.Control
+                required
+                type="email"
+                value={createUserForm.username}
+                onChange={(e) =>
+                  setCreateUserForm((prevData) => ({
+                    ...prevData,
+                    username: e.target.value,
+                  }))
+                }
+              />
+            </Form.Group>
+            <Form.Group controlId="createPassword" className="mb-2">
+              <Form.Label>Password:</Form.Label>
+              <Form.Control
+                required
+                type="password"
+                value={createUserForm.password}
+                onChange={(e) =>
+                  setCreateUserForm((prevData) => ({
+                    ...prevData,
+                    password: e.target.value,
+                  }))
+                }
+              />
+            </Form.Group>
+            <Form.Group controlId="createRole" className="mb-2">
+              <Form.Label>Role:</Form.Label>
+              <Form.Select
+                value={createUserForm.role}
+                onChange={(e) =>
+                  setCreateUserForm((prevData) => ({
+                    ...prevData,
+                    role: e.target.value,
+                  }))
+                }
+              >
+                <option value="student">student</option>
+                <option value="faculty">faculty</option>
+                <option value="admin">admin</option>
+              </Form.Select>
+            </Form.Group>
+            {createUserForm.role === "faculty" && (
+              <>
+                <Form.Group controlId="createInfo" className="mb-2">
+                  <Form.Label>Information:</Form.Label>
                   <Form.Control
-                    value={formData.username}
-                    type="email"
+                    required
+                    as="textarea"
+                    rows={6}
+                    type="text"
+                    value={createUserForm.information}
                     onChange={(e) =>
-                      setFormData((prevData) => ({
+                      setCreateUserForm((prevData) => ({
                         ...prevData,
-                        username: e.target.value,
+                        information: e.target.value,
                       }))
                     }
                   />
                 </Form.Group>
-                <Form.Group controlId="ConfirmPassword">
-                  <Form.Label>Password:</Form.Label>
+                <Form.Group controlId="createResearch" className="mb-2">
+                  <Form.Label>Research:</Form.Label>
                   <Form.Control
-                    value={formData.password}
+                    required
+                    as="textarea"
+                    rows={6}
+                    type="text"
+                    value={createUserForm.research}
                     onChange={(e) =>
-                      setFormData((prevData) => ({
+                      setCreateUserForm((prevData) => ({
                         ...prevData,
-                        password: e.target.value,
+                        research: e.target.value,
                       }))
                     }
                   />
                 </Form.Group>
-                <Form.Group controlId="ConfirmPassword">
-                  <Form.Label>Role:</Form.Label>
-                  <Form.Select
-                    value={formData.role}
-                    onChange={(e) =>
-                      setFormData((prevData) => ({
-                        ...prevData,
-                        role: e.target.value,
-                      }))
-                    }
-                  >
-                    <option value="student">student</option>
-                    <option value="faculty">faculty</option>
-                    <option value="admin">admin</option>
-                  </Form.Select>
-                </Form.Group>
-                {formData.role === "faculty" && (
-                  <>
-                    <Form.Group controlId="formInfo">
-                      <Form.Label>Information:</Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        rows={6}
-                        value={formData.information || ""}
-                        type="text"
-                        onChange={(e) =>
-                          setFormData((prevData) => ({
-                            ...prevData,
-                            information: e.target.value,
-                          }))
-                        }
-                      />
-                    </Form.Group>
-                    <Form.Group controlId="formInfo">
-                      <Form.Label>Research:</Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        rows={6}
-                        value={formData.research || ""}
-                        type="text"
-                        onChange={(e) =>
-                          setFormData((prevData) => ({
-                            ...prevData,
-                            research: e.target.value,
-                          }))
-                        }
-                      />
-                    </Form.Group>
-                  </>
-                )}
-              </Form>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                Close
-              </Button>
-              <Button variant="primary" onClick={handleSubmit}>
-                Save Changes
-              </Button>
-            </Modal.Footer>
-          </Modal>
-          <Modal show={showSecondModal} onHide={handleCloseSecondModal}>
-            <Modal.Header closeButton>
-              <Modal.Title>Confirm Delete</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              Are you sure you want to delete the following user? This action
-              cannot be undone.
-              <p className="mb-2 mt-3">
-                <span className="fw-bold">ID:</span> {selectedUser.id},&nbsp;
-                <span className="fw-bold">Username:</span>{" "}
-                {selectedUser.username},&nbsp;
-                <span className="fw-bold">Role:</span> {selectedUser.role}
-              </p>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleCloseSecondModal}>
-                Close
-              </Button>
-              <Button variant="danger" onClick={handleDelete}>
-                Delete Account
-              </Button>
-            </Modal.Footer>
-          </Modal>
-        </Tab>
-        <Tab eventKey="srankings" title="Student Rankings"></Tab>
-        <Tab eventKey="frankings" title="Faculty Rankings"></Tab>
-        <Tab eventKey="matches" title="Matches"></Tab>
-      </Tabs>
-    </div>
+              </>
+            )}
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseUserCreateModal}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleUserCreate}>
+            Create User
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </Container>
   );
 };
