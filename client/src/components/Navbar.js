@@ -53,7 +53,9 @@ export const NavbarComponent = () => {
             <Nav className="ms-auto">
               {user ? (
                 <>
-                  <Notifications />
+                  {user && (user.role === 'student' || user.role === 'faculty') && (
+                    <Notifications />
+                  )}                  
                   <NavDropdown
                     title={user.firstName + " " + user.lastName}
                     id="basic-nav-dropdown"
