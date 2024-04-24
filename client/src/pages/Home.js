@@ -15,21 +15,16 @@ function Home() {
         toast.error("Internal Server Error");
       });
   }, []);
+  
   return (
-    <div className="container" >
-      <div className="row">
-        <h1
-          className="text-center mt-4"
-          style={{ textTransform: "uppercase", color: "#007b5e" }}
-        >
-          Faculty
-        </h1>
+    <div className="container-fluid" >
+      <div className="row" style={{ maxHeight: "100vh", overflowY: "auto"}}>
         {listofFaculty.map((value, key) => {
           return (
             <div key={key} className="col-md-3 mt-4 mb-3">
               <div
-                className="card border border-success"
-                style={{ maxHeight: "600px", overflowY: "auto" }}
+                className="card border-0 border-top border-success border-4"
+                style={{ maxHeight: "400px", overflowY: "auto", boxShadow: "0 12px 24px rgba(0, 0, 0, 0.2)" }}
               >
                 <div className="d-flex justify-content-center align-items-center">
                   <img
@@ -65,17 +60,33 @@ function Home() {
                     </div>
                   </div>
                   <h6
-                    className="mt-4 border border-success rounded"
-                    style={{ padding: "5px", display: "inline-block" }}
+                    className="mt-4 font-weight-bold"
+                    style={{
+                      padding: "5px",
+                      display: "inline-block",
+                      fontSize: "18px", // Increase font size
+                      backgroundColor: "#f0f0f0", // Add background color
+                      color: "#333", // Change text color
+                      borderBottom: "2px solid #007b5e", // Add underline
+                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)" // Apply text shadow
+                    }}
                   >
-                    Information{" "}
+                    Information
                   </h6>
-                  <p> {value.information}</p>
+                  <p>{value.information}</p>
                   <h6
-                    className=" border border-success rounded"
-                    style={{ padding: "5px", display: "inline-block" }}
+                    className="mt-4 font-weight-bold"
+                    style={{
+                      padding: "5px",
+                      display: "inline-block",
+                      fontSize: "18px", 
+                      backgroundColor: "#f0f0f0", 
+                      color: "#333",
+                      borderBottom: "2px solid #007b5e",
+                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)"
+                    }}
                   >
-                    Research{" "}
+                    Research
                   </h6>
                   <p>{value.research}</p>
                 </div>
