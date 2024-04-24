@@ -62,6 +62,9 @@ async function getUser(req, res) {
   try {
     const id = req.user.id;
     const user = await Users.findByPk(id);
+    if (!user) {
+      return res.status(404).json({ message: "User does not exist" });
+    }
     const userData = {
       id: user.id,
       firstName: user.firstName,

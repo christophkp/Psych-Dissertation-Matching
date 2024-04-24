@@ -14,7 +14,6 @@ async function updateUser(req, res) {
   } = req.body;
   try {
     const user = await Users.findByPk(id);
-    console.log("TEST" + user);
     if (!user) {
       return res.status(404).json({ message: "User does not exist" });
     }
@@ -47,4 +46,19 @@ async function updateUser(req, res) {
   }
 }
 
-module.exports = { updateUser };
+async function deleteUser(req, res) {
+  const userID = req.params.id;
+  try {
+    const user = await Users.findByPk(userID);
+    if (!user) {
+      return res.status(404).json({ message: "User does not exist" });
+    }
+
+    await user.destroy();
+    res.status(200).json({ message: "User Deleted Successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting user" });
+  }
+}
+
+module.exports = { updateUser, deleteUser };

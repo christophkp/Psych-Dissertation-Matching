@@ -20,11 +20,24 @@ export const Admin = () => {
     information: "",
     research: "",
   });
+  const [selectedUser, setSelectedUser] = useState({
+    id: "",
+    firstName: "",
+    lastName: "",
+    username: "",
+    role: "",
+  });
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = (user) => {
     setFormData({ ...user, password: "" });
     setShow(true);
+  };
+  const [showSecondModal, setShowSecondModal] = useState(false);
+  const handleCloseSecondModal = () => setShowSecondModal(false);
+  const handleShowSecondModal = (user) => {
+    setSelectedUser(user);
+    setShowSecondModal(true);
   };
   const fetchUsers = () => {
     axios
@@ -71,15 +84,28 @@ export const Admin = () => {
       }
     }
   };
+
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3001/admin/deleteuser/${selectedUser.id}`,
+        {
+          withCredentials: true,
+        }
+      );
+      toast.success(response.data.message);
+      handleCloseSecondModal();
+      fetchUsers();
+    } catch (error) {
+      if (error.response) {
+        toast.error(error.response?.data?.message);
+      }
+    }
+  };
+
   return (
     <div>
-      <Tabs
-        defaultActiveKey="users"
-        id="admin-tabs"
-        className="mb-3"
-        fill
-        justify
-      >
+      <Tabs defaultActiveKey="users" id="admin-tabs" className="mb-3" justify>
         <Tab eventKey="users" title="Users">
           <Table
             striped
@@ -104,13 +130,13 @@ export const Admin = () => {
             <tbody>
               {users.map((user, key) => (
                 <tr className="table-secondary" key={key}>
-                  <td>{user.id}</td>
-                  <td>{user.firstName}</td>
-                  <td>{user.lastName}</td>
-                  <td>{user.username}</td>
+                  <td>{user?.id}</td>
+                  <td>{user?.firstName}</td>
+                  <td>{user?.lastName}</td>
+                  <td>{user?.username}</td>
                   <td>******</td>
-                  <td>{formatCreatedAtDate(user.createdAt)}</td>
-                  <td>{user.role}</td>
+                  <td>{formatCreatedAtDate(user?.createdAt)}</td>
+                  <td>{user?.role}</td>
 
                   <td>
                     <div className="d-flex">
@@ -121,7 +147,12 @@ export const Admin = () => {
                       >
                         Edit
                       </Button>
-                      <Button variant="outline-danger">Delete</Button>
+                      <Button
+                        variant="outline-danger"
+                        onClick={() => handleShowSecondModal(user)}
+                      >
+                        Delete
+                      </Button>
                     </div>
                   </td>
                 </tr>
@@ -243,6 +274,29 @@ export const Admin = () => {
               </Button>
               <Button variant="primary" onClick={handleSubmit}>
                 Save Changes
+              </Button>
+            </Modal.Footer>
+          </Modal>
+          <Modal show={showSecondModal} onHide={handleCloseSecondModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Delete</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are you sure you want to delete the following user? This action
+              cannot be undone.
+              <p className="mb-2 mt-3">
+                <span className="fw-bold">ID:</span> {selectedUser.id},&nbsp;
+                <span className="fw-bold">Username:</span>{" "}
+                {selectedUser.username},&nbsp;
+                <span className="fw-bold">Role:</span> {selectedUser.role}
+              </p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseSecondModal}>
+                Close
+              </Button>
+              <Button variant="danger" onClick={handleDelete}>
+                Delete Account
               </Button>
             </Modal.Footer>
           </Modal>
