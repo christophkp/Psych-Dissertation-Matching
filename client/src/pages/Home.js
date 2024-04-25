@@ -7,7 +7,7 @@ function Home() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/faculty", { withCredentials: true })
+      .get("http://localhost:3001/faculty")
       .then((response) => {
         setListOfFaculty(response.data);
       })
@@ -15,16 +15,20 @@ function Home() {
         toast.error("Internal Server Error");
       });
   }, []);
-  
+
   return (
-    <div className="container-fluid" >
-      <div className="row" style={{ maxHeight: "100vh", overflowY: "auto"}}>
+    <div className="container-fluid">
+      <div className="row" style={{ maxHeight: "100vh", overflowY: "auto" }}>
         {listofFaculty.map((value, key) => {
           return (
             <div key={key} className="col-md-3 mt-4 mb-3">
               <div
                 className="card border-0 border-top border-success border-4"
-                style={{ maxHeight: "400px", overflowY: "auto", boxShadow: "0 12px 24px rgba(0, 0, 0, 0.2)" }}
+                style={{
+                  maxHeight: "400px",
+                  overflowY: "auto",
+                  boxShadow: "0 12px 24px rgba(0, 0, 0, 0.2)",
+                }}
               >
                 <div className="d-flex justify-content-center align-items-center">
                   <img
@@ -68,7 +72,7 @@ function Home() {
                       backgroundColor: "#f0f0f0", // Add background color
                       color: "#333", // Change text color
                       borderBottom: "2px solid #007b5e", // Add underline
-                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)" // Apply text shadow
+                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Apply text shadow
                     }}
                   >
                     Information
@@ -79,11 +83,11 @@ function Home() {
                     style={{
                       padding: "5px",
                       display: "inline-block",
-                      fontSize: "18px", 
-                      backgroundColor: "#f0f0f0", 
+                      fontSize: "18px",
+                      backgroundColor: "#f0f0f0",
                       color: "#333",
                       borderBottom: "2px solid #007b5e",
-                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)"
+                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                     }}
                   >
                     Research

@@ -36,7 +36,9 @@ export const AuthContextProvider = ({ children }) => {
       setUser(response.data.userData);
       console.log("User succesfully fetched");
     } catch (error) {
-      console.error("Error fetching user:", error);
+      if (error.response) {
+        console.log(error.response?.data?.message);
+      }
       setUser(null);
     } finally {
       setLoading(false);

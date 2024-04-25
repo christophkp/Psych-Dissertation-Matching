@@ -11,7 +11,6 @@ export const NavbarComponent = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
-
   const handleLogout = async () => {
     try {
       await logout();
@@ -37,25 +36,36 @@ export const NavbarComponent = () => {
                 {" "}
                 Home{" "}
               </Link>
-              <Link to="/schedule" className="nav-link px-3">
-                {" "}
-                Schedule{" "}
-              </Link>
-              <Link to="/rank" className="nav-link px-3">
-                {" "}
-                Rank{" "}
-              </Link>
-              <Link to="/meetingRequest" className="nav-link px-3">
+              {user && user.role === "student" && (
+                <Link to="/schedule" className="nav-link px-3">
+                  {" "}
+                  Schedule{" "}
+                </Link>
+              )}
+              {user && (user.role === "student" || user.role === "faculty") && (
+                <Link to="/rank" className="nav-link px-3">
+                  {" "}
+                  Rank{" "}
+                </Link>
+              )}
+              {user && user.role === "admin" && (
+                <Link to="/adminpanel" className="nav-link px-3">
+                  {" "}
+                  AdminPanel{" "}
+                </Link>
+              )}
+              {/* <Link to="/meetingRequest" className="nav-link px-3">
                 {" "}
                 Meeting Request{" "}
-              </Link>
+              </Link> */}
             </Nav>
             <Nav className="ms-auto">
               {user ? (
                 <>
-                  {user && (user.role === 'student' || user.role === 'faculty') && (
-                    <Notifications />
-                  )}                  
+                  {user &&
+                    (user.role === "student" || user.role === "faculty") && (
+                      <Notifications />
+                    )}
                   <NavDropdown
                     title={user.firstName + " " + user.lastName}
                     id="basic-nav-dropdown"
@@ -64,9 +74,12 @@ export const NavbarComponent = () => {
                     <NavDropdown.Item as={Link} to="/profile">
                       Profile
                     </NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/myschedule">
-                      Schedule
-                    </NavDropdown.Item>
+                    {user &&
+                      (user.role === "student" || user.role === "faculty") && (
+                        <NavDropdown.Item as={Link} to="/myschedule">
+                          My Schedule
+                        </NavDropdown.Item>
+                      )}
 
                     <NavDropdown.Divider />
                     <NavDropdown.Item onClick={handleLogout}>

@@ -20,7 +20,7 @@ const upload = multer({ storage: storage });
 
 router.post("/register", authRegister);
 
-router.get("/faculty", verifyToken, getFaculty);
+router.get("/faculty", getFaculty);
 
 router.get("/students", verifyToken, getStudents);
 
