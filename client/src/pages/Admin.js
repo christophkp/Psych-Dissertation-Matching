@@ -5,11 +5,13 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import Nav from "react-bootstrap/Nav";
 import { toast } from "react-toastify";
 import Modal from "react-bootstrap/Modal";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { StudentRankings } from "../components/StudentRankings";
 
 export const Admin = () => {
   const [users, setUsers] = useState([]);
@@ -32,7 +34,6 @@ export const Admin = () => {
     information: "",
     research: "",
   });
-  console.log(createUserForm);
 
   const [selectedUser, setSelectedUser] = useState({
     id: "",
@@ -155,90 +156,136 @@ export const Admin = () => {
 
   return (
     <Container fluid className="mt-3">
-      <Row>
-        <Col>
-          <div
-            className="d-flex align-items-center rounded-top"
-            style={{ backgroundColor: "#013220" }}
-          >
-            <span className="text-light p-3 ms-3" style={{ fontSize: "30px" }}>
-              User Managment
-            </span>
-            <Button
-              variant="light"
-              className="ms-auto me-4"
-              onClick={handleShowCreateUserModal}
-            >
-              <i
-                className="bi bi-plus-circle-fill"
-                style={{ color: "grey" }}
-              ></i>{" "}
-              Create New User
-            </Button>
-          </div>
-          <div
-            className="rounded-bottom"
-            style={{
-              border: "1px solid",
-              maxHeight: "500px",
-              height: "500px",
-              overflowY: "scroll",
-            }}
-          >
-            <Table
-              hover
-              striped
-              className="mx-auto mt-3"
-              style={{ width: "97%" }}
-            >
-              <thead style={{ fontSize: "15px", fontWeight: "normal" }}>
-                <tr>
-                  <th>ID</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Username</th>
-                  <th>Password</th>
-                  <th>Date Created</th>
-                  <th>Role</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((user, key) => (
-                  <tr className="table-light align-middle" key={key}>
-                    <td>{user?.id}</td>
-                    <td>{user?.firstName}</td>
-                    <td>{user?.lastName}</td>
-                    <td>{user?.username}</td>
-                    <td>******</td>
-                    <td>{formatCreatedAtDate(user?.createdAt)}</td>
-                    <td>{user?.role}</td>
+      <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+        <Row>
+          <Col xs="auto">
+            <Nav variant="tabs" className="flex-column">
+              <Nav.Item>
+                <Nav.Link
+                  eventKey="first"
+                  className="p-3"
+                  style={{
+                    fontSize: "17px",
+                    color: "black",
+                  }}
+                >
+                  <i className="bi bi-person-fill"></i> User Management
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link
+                  eventKey="second"
+                  className="p-3"
+                  style={{ fontSize: "17px", color: "black" }}
+                >
+                  <i className="bi bi-list-stars"></i> View Rankings
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link
+                  eventKey="third"
+                  className="p-3"
+                  style={{ fontSize: "17px", color: "black" }}
+                >
+                  <i class="bi bi-people-fill"></i> View Matches
+                </Nav.Link>
+              </Nav.Item>
+            </Nav>
+          </Col>
+          <Col>
+            <Tab.Content>
+              <Tab.Pane eventKey="first">
+                <div
+                  className="d-flex align-items-center rounded-top"
+                  style={{ backgroundColor: "#013220" }}
+                >
+                  <span
+                    className="text-light p-3 ms-3"
+                    style={{ fontSize: "30px" }}
+                  >
+                    User Management
+                  </span>
+                  <Button
+                    variant="light"
+                    className="ms-auto me-4"
+                    onClick={handleShowCreateUserModal}
+                  >
+                    <i
+                      className="bi bi-plus-circle-fill"
+                      style={{ color: "grey" }}
+                    ></i>{" "}
+                    Create New User
+                  </Button>
+                </div>
+                <div
+                  className="rounded-bottom"
+                  style={{
+                    border: "1px solid",
+                    maxHeight: "500px",
+                    height: "500px",
+                    overflowY: "scroll",
+                  }}
+                >
+                  <Table
+                    hover
+                    striped
+                    className="mx-auto mt-3"
+                    style={{ width: "97%" }}
+                  >
+                    <thead style={{ fontSize: "15px", fontWeight: "normal" }}>
+                      <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>Date Created</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {users.map((user, key) => (
+                        <tr className="table-light align-middle" key={key}>
+                          <td>{user?.id}</td>
+                          <td>{user?.firstName}</td>
+                          <td>{user?.lastName}</td>
+                          <td>{user?.username}</td>
+                          <td>********</td>
+                          <td>{formatCreatedAtDate(user?.createdAt)}</td>
+                          <td>{user?.role}</td>
 
-                    <td>
-                      <Button
-                        variant="outline-success"
-                        className="me-3"
-                        onClick={() => handleShow(user)}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        variant="outline-danger"
-                        onClick={() => handleShowSecondModal(user)}
-                      >
-                        Delete
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </div>
-        </Col>
-      </Row>
+                          <td>
+                            <Button
+                              variant="outline-success"
+                              className="me-3"
+                              onClick={() => handleShow(user)}
+                            >
+                              Edit
+                            </Button>
+                            <Button
+                              variant="outline-danger"
+                              onClick={() => handleShowSecondModal(user)}
+                            >
+                              Delete
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </div>
+              </Tab.Pane>
+              <Tab.Pane eventKey="second">
+                <StudentRankings />
+              </Tab.Pane>
+            </Tab.Content>
+          </Col>
+        </Row>
+      </Tab.Container>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Account</Modal.Title>
+          <Modal.Title>Edit User</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
