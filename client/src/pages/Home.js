@@ -77,9 +77,18 @@ function Home() {
                   >
                     Information
                   </h6>
-                  <p>{value.information}</p>
+                  <p
+                    className="mx-auto"
+                    style={{
+                      textAlign: "justify",
+                      width: "85%",
+                      hyphens: "auto",
+                    }}
+                  >
+                    {value.information}
+                  </p>
                   <h6
-                    className="mt-4 font-weight-bold"
+                    className="mt-2 font-weight-bold"
                     style={{
                       padding: "5px",
                       display: "inline-block",
@@ -92,7 +101,16 @@ function Home() {
                   >
                     Research
                   </h6>
-                  <p>{value.research}</p>
+                  <p
+                    className="mb-3 mx-auto"
+                    style={{
+                      textAlign: "justify",
+                      width: "85%",
+                      hyphens: "auto",
+                    }}
+                  >
+                    {value.research}
+                  </p>
                 </div>
               </div>
             </div>

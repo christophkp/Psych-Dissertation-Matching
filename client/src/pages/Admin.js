@@ -156,7 +156,7 @@ export const Admin = () => {
 
   return (
     <Container fluid className="mt-3">
-      <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+      <Tab.Container id="left-tabs" defaultActiveKey="first">
         <Row>
           <Col xs="auto">
             <Nav variant="tabs" className="flex-column">
