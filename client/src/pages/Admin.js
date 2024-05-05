@@ -11,7 +11,7 @@ import Modal from "react-bootstrap/Modal";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { StudentRankings } from "../components/StudentRankings";
+import { Rankings } from "../components/Rankings";
 
 export const Admin = () => {
   const [users, setUsers] = useState([]);
@@ -277,7 +277,7 @@ export const Admin = () => {
                 </div>
               </Tab.Pane>
               <Tab.Pane eventKey="second">
-                <StudentRankings />
+                <Rankings />
               </Tab.Pane>
             </Tab.Content>
           </Col>

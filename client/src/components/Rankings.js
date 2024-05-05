@@ -2,7 +2,7 @@ import Table from "react-bootstrap/Table";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export const StudentRankings = () => {
+export const Rankings = () => {
   const [studentRankings, setStudentRankings] = useState([]);
   const [facultyRankings, setFacultyRankings] = useState([]);
 
