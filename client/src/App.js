@@ -4,15 +4,12 @@ import Home from "./pages/Home";
 import Schedule from "./pages/Schedule";
 import Rank from "./pages/Rank";
 import Registration from "./pages/Registration";
-import {UserSettings} from "./pages/UserSettings";
 import { Login } from "./pages/Login";
 import { Profile } from "./pages/Profile";
 import { Admin } from "./pages/Admin";
 import { MySchedule } from "./pages/MySchedule";
 
-
-
-import {MeetingRequest} from "./pages/MeetingRequest";
+import { MeetingRequest } from "./pages/MeetingRequest";
 
 import { NavbarComponent } from "./components/Navbar";
 import { ToastContainer } from "react-toastify";
@@ -27,7 +24,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/registration" element={<Registration />} />
-          <Route path="/settings" element={<UserSettings />} />
           <Route path="/login" element={<Login />} />
           <Route path="/adminpanel" element={<Admin />} />
           <Route path="/myschedule" element={<MySchedule />} />

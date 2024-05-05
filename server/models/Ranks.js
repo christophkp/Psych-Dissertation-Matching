@@ -5,15 +5,17 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     commentBody: {
-      type: DataTypes.STRING
-    }
+      type: DataTypes.STRING,
+    },
   });
 
   Ranks.associate = (models) => {
     Ranks.belongsTo(models.Users, {
+      as: "Ranker",
       foreignKey: "rankerId",
     });
     Ranks.belongsTo(models.Users, {
+      as: "Ranked",
       foreignKey: "rankedId",
     });
   };

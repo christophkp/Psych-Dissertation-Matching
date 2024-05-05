@@ -187,7 +187,7 @@ export const Admin = () => {
                   className="p-3"
                   style={{ fontSize: "17px", color: "black" }}
                 >
-                  <i class="bi bi-people-fill"></i> View Matches
+                  <i className="bi bi-people-fill"></i> View Matches
                 </Nav.Link>
               </Nav.Item>
             </Nav>

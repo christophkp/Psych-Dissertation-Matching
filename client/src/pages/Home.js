@@ -68,11 +68,11 @@ function Home() {
                     style={{
                       padding: "5px",
                       display: "inline-block",
-                      fontSize: "18px", // Increase font size
-                      backgroundColor: "#f0f0f0", // Add background color
-                      color: "#333", // Change text color
-                      borderBottom: "2px solid #007b5e", // Add underline
-                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Apply text shadow
+                      fontSize: "18px",
+                      backgroundColor: "#f0f0f0", 
+                      color: "#333", 
+                      borderBottom: "2px solid #007b5e", 
+                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", 
                     }}
                   >
                     Information

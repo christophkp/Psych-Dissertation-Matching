@@ -51,7 +51,7 @@ export const NavbarComponent = () => {
               {user && user.role === "admin" && (
                 <Link to="/adminpanel" className="nav-link px-3">
                   {" "}
-                  AdminPanel{" "}
+                  Admin Panel{" "}
                 </Link>
               )}
               {/* <Link to="/meetingRequest" className="nav-link px-3">

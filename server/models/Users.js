@@ -47,13 +47,15 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "cascade",
     });
     Users.hasMany(models.Ranks, {
+      as: "GivenRanks",
       foreignKey: "rankerId",
       onDelete: "cascade",
     });
-     Users.hasMany(models.Ranks, {
-       foreignKey: "rankedId",
-       onDelete: "cascade",
-     });
+    Users.hasMany(models.Ranks, {
+      as: "ReceivedRanks",
+      foreignKey: "rankedId",
+      onDelete: "cascade",
+    });
   };
 
   return Users;
