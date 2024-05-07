@@ -28,7 +28,7 @@ function Rank() {
     axios.get('http://localhost:3001/rank/isSubmitted', { withCredentials: true }).then((response) => {
       setIsSubmitted(response.data.hasRankSubmitted)
     }).catch((err) => {
-      toast.error('Internal Server Error')
+      toast.error('Internal Server Error.')
     });
   }, [user.role]);
 

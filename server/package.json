@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage  --watchAll",
+    "test": "jest --coverage --watchAll --collectCoverageFrom=**/*.js",
     "start": "nodemon index.js"
   },
   "author": "",

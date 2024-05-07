@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/17</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>0/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/17</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
@@ -169,11 +169,7 @@
 <a name='L104'></a><a href='#L104'>104</a>
 <a name='L105'></a><a href='#L105'>105</a>
 <a name='L106'></a><a href='#L106'>106</a>
-<a name='L107'></a><a href='#L107'>107</a>
-<a name='L108'></a><a href='#L108'>108</a>
-<a name='L109'></a><a href='#L109'>109</a>
-<a name='L110'></a><a href='#L110'>110</a>
-<a name='L111'></a><a href='#L111'>111</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L107'></a><a href='#L107'>107</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -185,18 +181,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -243,7 +227,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -289,24 +281,12 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { useContext, useEffect, useState } from "react";
-import axios from "axios";
+import { useContext, useState } from "react";
+import Notifications from "./Notifications";
 &nbsp;
 export const NavbarComponent = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
   const { user, logout } = <span class="cstat-no" title="statement not covered" >useContext(AuthContext);</span>
-  const [meetings, setMeetings] = <span class="cstat-no" title="statement not covered" >useState([]);</span>
   const navigate = <span class="cstat-no" title="statement not covered" >useNavigate();</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    axios</span>
-      .get("http://localhost:3001/meetings/byRole", { withCredentials: true })
-      .then(<span class="fstat-no" title="function not covered" >(r</span>esponse) =&gt; {
-<span class="cstat-no" title="statement not covered" >        setMeetings(response.data)</span>
-<span class="cstat-no" title="statement not covered" >        console.log(response.data)</span>
-      }).catch(<span class="fstat-no" title="function not covered" >(e</span>rr) =&gt; {
-<span class="cstat-no" title="statement not covered" >        console.log("ERROR");</span>
-      });
-  }, []);
 &nbsp;
   const handleLogout = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    try {</span>
@@ -333,31 +313,36 @@ export const NavbarComponent = <span class="cstat-no" title="statement not cover
                 {" "}
                 Home{" "}
               &lt;/Link&gt;
-              &lt;Link to="/schedule" className="nav-link px-3"&gt;
-                {" "}
-                Schedule{" "}
-              &lt;/Link&gt;
-              &lt;Link to="/rank" className="nav-link px-3"&gt;
-                {" "}
-                Rank{" "}
-              &lt;/Link&gt;
-              &lt;Link to="/meetingRequest" className="nav-link px-3"&gt;
+              {user &amp;&amp; user.role === "student" &amp;&amp; (
+                &lt;Link to="/schedule" className="nav-link px-3"&gt;
+                  {" "}
+                  Schedule{" "}
+                &lt;/Link&gt;
+              )}
+              {user &amp;&amp; (user.role === "student" || user.role === "faculty") &amp;&amp; (
+                &lt;Link to="/rank" className="nav-link px-3"&gt;
+                  {" "}
+                  Rank{" "}
+                &lt;/Link&gt;
+              )}
+              {user &amp;&amp; user.role === "admin" &amp;&amp; (
+                &lt;Link to="/adminpanel" className="nav-link px-3"&gt;
+                  {" "}
+                  Admin Panel{" "}
+                &lt;/Link&gt;
+              )}
+              {/* &lt;Link to="/meetingRequest" className="nav-link px-3"&gt;
                 {" "}
                 Meeting Request{" "}
-              &lt;/Link&gt;
+              &lt;/Link&gt; */}
             &lt;/Nav&gt;
             &lt;Nav className="ms-auto"&gt;
               {user ? (
                 &lt;&gt;
-                 &lt;NavDropdown
-  title={&lt;i className="bi bi-bell-fill text-white me-3" style={{ cursor: "pointer" }}&gt;&lt;/i&gt;}
-&gt;
-  {meetings.map(<span class="fstat-no" title="function not covered" >(m</span>eeting, index) =&gt; (
-<span class="cstat-no" title="statement not covered" >    &lt;NavDropdown.Item key={index} href="#"&gt;Meeting Request From {meeting.facultyUser.firstName}&lt;/NavDropdown.Item&gt;</span>
-    // Assuming 'title' is the property of each meeting object that you want to display
-  ))}
-&lt;/NavDropdown&gt;
-&nbsp;
+                  {user &amp;&amp;
+                    (user.role === "student" || user.role === "faculty") &amp;&amp; (
+                      &lt;Notifications /&gt;
+                    )}
                   &lt;NavDropdown
                     title={user.firstName + " " + user.lastName}
                     id="basic-nav-dropdown"
@@ -366,9 +351,12 @@ export const NavbarComponent = <span class="cstat-no" title="statement not cover
                     &lt;NavDropdown.Item as={Link} to="/profile"&gt;
                       Profile
                     &lt;/NavDropdown.Item&gt;
-                    &lt;NavDropdown.Item as={Link} to="/myschedule"&gt;
-                      Schedule
-                    &lt;/NavDropdown.Item&gt;
+                    {user &amp;&amp;
+                      (user.role === "student" || user.role === "faculty") &amp;&amp; (
+                        &lt;NavDropdown.Item as={Link} to="/myschedule"&gt;
+                          My Schedule
+                        &lt;/NavDropdown.Item&gt;
+                      )}
 &nbsp;
                     &lt;NavDropdown.Divider /&gt;
                     &lt;NavDropdown.Item onClick={handleLogout}&gt;
@@ -400,7 +388,7 @@ export const NavbarComponent = <span class="cstat-no" title="statement not cover
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-23T11:03:00.730Z
+                at 2024-05-07T21:37:32.305Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
