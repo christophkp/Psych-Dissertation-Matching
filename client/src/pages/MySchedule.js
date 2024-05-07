@@ -15,8 +15,7 @@ export const MySchedule = () => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/meetings", { withCredentials: true })
+    axios.get("http://localhost:3001/meetings/byRole", { withCredentials: true })
       .then((response) => {
         const meetings = response.data;
         const formattedEvents = meetings.map((meeting) => ({
@@ -24,7 +23,7 @@ export const MySchedule = () => {
           title: "Meet with Faculty",
           start: new Date(meeting.startDate),
           end: new Date(meeting.endDate),
-          desc: "Test description",
+          desc: meeting.zoom,
         }));
         setEvents(formattedEvents);
       })

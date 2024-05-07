@@ -44,7 +44,9 @@ async function getMeetingsByRole(req, res) {
         const meeting = meetings[i];
         const meetingData = meeting.toJSON(); 
         const facultyUser = await Users.findByPk(meeting.facultyId);
+        const zoomLink = facultyUser.zoom;
         meetingData.faculty = facultyUser;
+        meetingData.zoom = zoomLink;
         meetings[i] = meetingData;
       }
     } else if (user.role === 'faculty') {
@@ -54,6 +56,7 @@ async function getMeetingsByRole(req, res) {
         const meetingData = meeting.toJSON(); 
         const studentUser = await Users.findByPk(meeting.studentId);
         meetingData.student = studentUser;
+        meetingData.zoom = user.zoom;
         meetings[i] = meetingData;
       }
     }
@@ -64,6 +67,8 @@ async function getMeetingsByRole(req, res) {
     res.status(500).json({ message: "Could not retrieve meetings" });
   }
 }
+
+
 
 async function acceptMeeting(req, res) {
   const { meetingId } = req.body;

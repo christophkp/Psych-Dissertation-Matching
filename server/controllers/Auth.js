@@ -25,6 +25,7 @@ async function login(req, res) {
           role: user.role,
           information: user.information,
           research: user.research,
+          zoom: user.zoom
         };
         res
           .cookie("access_token", token, {
@@ -75,6 +76,7 @@ async function getUser(req, res) {
       research: user.research,
       profilepic: user.profilepic,
       createdAt: user.createdAt,
+      zoom: user.zoom
     };
     res.status(200).json({ userData });
   } catch (error) {

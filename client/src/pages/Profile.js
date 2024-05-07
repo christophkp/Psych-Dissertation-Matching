@@ -25,7 +25,7 @@ export const Profile = () => {
   );
   const [research, setResearch] = useState((user && user.research) || "");
   const [file, setFile] = useState();
-
+  const [zoom, setZoom] = useState((user && user.zoom) || "");
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -46,6 +46,8 @@ export const Profile = () => {
       formData.append("information", information);
       formData.append("research", research);
       formData.append("profilepic", file);
+      formData.append("zoom", zoom);
+
     }
     try {
       const response = await axios.put(
@@ -259,6 +261,18 @@ export const Profile = () => {
                     value={research}
                     onChange={(e) => {
                       setResearch(e.target.value);
+                    }}
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formZoom">
+                  <Form.Label>Zoom</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={1}
+                    value={zoom}
+                    onChange={(e) => {
+                      setZoom(e.target.value);
                     }}
                   />
                 </Form.Group>

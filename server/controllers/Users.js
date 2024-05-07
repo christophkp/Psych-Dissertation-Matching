@@ -75,6 +75,8 @@ async function update(req, res) {
         username: req.body.username,
         information: req.body.information,
         research: req.body.research,
+        zoom: req.body.zoom,
+        
       };
       if (image) {
         updatedFields.profilepic = image;

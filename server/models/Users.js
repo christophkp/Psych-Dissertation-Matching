@@ -35,6 +35,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       defaultValue: "defaultprofile.png",
     },
+    zoom: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: "zoom.com",
+    },
   });
 
   Users.associate = (models) => {
