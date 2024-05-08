@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { AuthContext } from "../context/AuthContext";
 
 function Home() {
   const [listofFaculty, setListOfFaculty] = useState([]);
+  const { fetchUser } = useContext(AuthContext);
 
   useEffect(() => {
+    fetchUser();
     axios
       .get("http://localhost:3001/faculty")
       .then((response) => {
@@ -69,10 +72,10 @@ function Home() {
                       padding: "5px",
                       display: "inline-block",
                       fontSize: "18px",
-                      backgroundColor: "#f0f0f0", 
-                      color: "#333", 
-                      borderBottom: "2px solid #007b5e", 
-                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", 
+                      backgroundColor: "#f0f0f0",
+                      color: "#333",
+                      borderBottom: "2px solid #007b5e",
+                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                     }}
                   >
                     Information
