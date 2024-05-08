@@ -8,6 +8,7 @@ import { Login } from "./pages/Login";
 import { Profile } from "./pages/Profile";
 import { Admin } from "./pages/Admin";
 import { MySchedule } from "./pages/MySchedule";
+import { Unauthorized } from "./pages/Unauthorized";
 
 import { MeetingRequest } from "./pages/MeetingRequest";
 
@@ -25,14 +26,17 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/adminpanel" element={<Admin />} />
-          <Route path="/myschedule" element={<MySchedule />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path="/meetingRequest" element={<MeetingRequest />} />
             <Route path="/rank" element={<Rank />} />
             <Route path="/schedule" element={<Schedule />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/myschedule" element={<MySchedule />} />
+          </Route>
+          <Route element={<ProtectedRoute isAdminRoute={true} />}>
+            <Route path="/adminpanel" element={<Admin />} />
           </Route>
         </Routes>
       </Router>
