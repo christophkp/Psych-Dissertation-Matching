@@ -246,8 +246,14 @@ export const Profile = () => {
             </Row>
             {user.role === "faculty" && (
               <>
-                <Form.Group className="mb-3" controlId="formNumStudents">
-                  <Form.Label>Number of Advisees</Form.Label>
+                <Form.Group
+                  className="mb-3"
+                  controlId="formNumStudents"
+                  style={{ width: "50%" }}
+                >
+                  <Form.Label className="fw-bold">
+                    Number of Advisees:
+                  </Form.Label>
                   <Form.Select
                     value={numStudents}
                     onChange={(e) =>

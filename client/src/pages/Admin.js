@@ -22,6 +22,7 @@ export const Admin = () => {
     username: "",
     password: "",
     role: "",
+    numStudents: 1,
     information: "",
     research: "",
   });
@@ -31,6 +32,7 @@ export const Admin = () => {
     username: "",
     password: "",
     role: "student",
+    numStudents: 1, 
     information: "",
     research: "",
   });
@@ -63,6 +65,7 @@ export const Admin = () => {
       username: "",
       password: "",
       role: "student",
+      numStudents: 1,
       information: "",
       research: "",
     });
@@ -359,6 +362,25 @@ export const Admin = () => {
             </Form.Group>
             {formData.role === "faculty" && (
               <>
+                <Form.Group className="mb-3" controlId="editNumStudents">
+                  <Form.Label>Number of Advisees:</Form.Label>
+                  <Form.Select
+                    value={formData.numStudents}
+                    onChange={(e) =>
+                      setFormData((prevData) => ({
+                        ...prevData,
+                        numStudents: parseInt(e.target.value, 10),
+                      }))
+                    }
+                  >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </Form.Select>
+                </Form.Group>
+
                 <Form.Group controlId="editInfo" className="mb-2">
                   <Form.Label>Information:</Form.Label>
                   <Form.Control
@@ -505,6 +527,25 @@ export const Admin = () => {
             </Form.Group>
             {createUserForm.role === "faculty" && (
               <>
+                <Form.Group className="mb-3" controlId="createNumStudents">
+                  <Form.Label>Number of Advisees:</Form.Label>
+                  <Form.Select
+                    value={createUserForm.numStudents}
+                    onChange={(e) =>
+                      setCreateUserForm((prevData) => ({
+                        ...prevData,
+                        numStudents: parseInt(e.target.value, 10),
+                      }))
+                    }
+                  >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </Form.Select>
+                </Form.Group>
+
                 <Form.Group controlId="createInfo" className="mb-2">
                   <Form.Label>Information:</Form.Label>
                   <Form.Control

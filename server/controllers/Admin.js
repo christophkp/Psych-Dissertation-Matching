@@ -9,6 +9,7 @@ async function updateUser(req, res) {
     username,
     password,
     role,
+    numStudents,
     information,
     research,
   } = req.body;
@@ -44,6 +45,7 @@ async function updateUser(req, res) {
         lastName,
         username,
         role,
+        numStudents,
         information,
         research,
       });
@@ -78,6 +80,7 @@ async function createUser(req, res) {
     username,
     password,
     role,
+    numStudents,
     information,
     research,
   } = req.body;
@@ -98,6 +101,7 @@ async function createUser(req, res) {
     };
 
     if (role === "faculty") {
+      userData.numStudents = numStudents;
       userData.information = information;
       userData.research = research;
     }
