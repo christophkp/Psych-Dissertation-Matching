@@ -8,6 +8,11 @@ Client: Traci Martino<br />
 
 # Project Description
 
+Our client Traci Martino works in the Department of Psychology and every year she is responsible for matching doctoral students with a dissertation chair (faculty member). The dissertation chair acts as a major reader/advisor for the student and usually works with 1 or 2 students for their dissertations. Each year the students will meet with up to 8 different faculty members in a process similar to speed dating. Both the students and faculty members rank each other (from most want to work with to least). Essentially, this software allows students and faculty members to rank each other, and generates the matches based on these rankings using the Gale-Shapley algorithm.
+
+# User Manual
+[User Manual] (UserManual.md)
+
 # Installation Instructions
 
 Download: https://code.visualstudio.com/

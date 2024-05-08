@@ -12,6 +12,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Rankings } from "../components/Rankings";
+import { Matches } from "../components/Matches";
 
 export const Admin = () => {
   const [users, setUsers] = useState([]);
@@ -281,6 +282,9 @@ export const Admin = () => {
               </Tab.Pane>
               <Tab.Pane eventKey="second">
                 <Rankings />
+              </Tab.Pane>
+              <Tab.Pane eventKey="third">
+                <Matches />
               </Tab.Pane>
             </Tab.Content>
           </Col>

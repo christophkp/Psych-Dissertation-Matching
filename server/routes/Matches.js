@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { getMatches } = require("../controllers/Matches");
+const { generateMatches } = require("../controllers/Matches");
 
-router.get("/", getMatches);
+router.get("/", generateMatches);
 
 
 module.exports = router;

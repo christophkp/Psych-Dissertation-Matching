@@ -2,11 +2,11 @@ const { Users } = require("../models");
 const { Ranks } = require("../models");
 const { galeShapley } = require("../utils/galeShapley");
 
-async function getMatches(req, res) {
+async function generateMatches(req, res) {
   try {
     const studentRankings = await Users.findAll({
       where: { role: "student" },
-      attributes: ["id"],
+      attributes: ["id", "firstName", "lastName"],
       include: [
         {
           model: Ranks,
@@ -16,7 +16,7 @@ async function getMatches(req, res) {
             {
               model: Users,
               as: "Ranked",
-              attributes: ["id"],
+              attributes: ["id", "firstName", "lastName"],
               where: { role: "faculty" },
             },
           ],
@@ -28,7 +28,7 @@ async function getMatches(req, res) {
 
     const facultyRankings = await Users.findAll({
       where: { role: "faculty" },
-      attributes: ["id", "numStudents"],
+      attributes: ["id", "firstName", "lastName", "numStudents"],
       include: [
         {
           model: Ranks,
@@ -38,7 +38,7 @@ async function getMatches(req, res) {
             {
               model: Users,
               as: "Ranked",
-              attributes: ["id"],
+              attributes: ["id", "firstName", "lastName"],
               where: { role: "student" },
             },
           ],
@@ -49,13 +49,14 @@ async function getMatches(req, res) {
     });
 
     const studentPreferences = new Map();
+    const facultyPreferences = new Map();
+    const facultyCapacities = new Map();
+
     studentRankings.forEach((student) => {
       const preferences = student.GivenRanks.map((rank) => rank.Ranked.id);
       studentPreferences.set(student.id, preferences);
     });
 
-    const facultyPreferences = new Map();
-    const facultyCapacities = new Map();
     facultyRankings.forEach((faculty) => {
       const preferences = faculty.GivenRanks.map((rank) => rank.Ranked.id);
       facultyPreferences.set(faculty.id, preferences);
@@ -85,10 +86,36 @@ async function getMatches(req, res) {
       facultyPreferences,
       facultyCapacities
     );
-    return res.json(matches);
+
+    let response = [];
+    matches.forEach((matchedStudentIds, matchedFacultyId) => {
+      const matchedFaculty = facultyRankings.find(
+        (faculty) => faculty.id === matchedFacultyId
+      );
+      const facultyName = `${matchedFaculty.firstName} ${matchedFaculty.lastName}`;
+      const numStudents = matchedFaculty.numStudents;
+
+      const studentInfo = matchedStudentIds.map((studentId) => {
+        const matchedStudent = studentRankings.find(
+          (student) => student.id === studentId
+        );
+        return {
+          studentId: matchedStudent.id,
+          studentName: `${matchedStudent.firstName} ${matchedStudent.lastName}`,
+        };
+      });
+      response.push({
+        facultyId: matchedFacultyId,
+        facultyName: facultyName,
+        numStudents: numStudents,
+        matchedStudents: studentInfo,
+      });
+    });
+
+    return res.json(response);
   } catch (error) {
-    res.status(500).json({ message: "Error getting matches" });
+    res.status(500).json({ message: "Error generating matches" });
   }
 }
 
-module.exports = { getMatches };
+module.exports = { generateMatches };
