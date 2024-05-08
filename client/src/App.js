@@ -9,9 +9,6 @@ import { Profile } from "./pages/Profile";
 import { Admin } from "./pages/Admin";
 import { MySchedule } from "./pages/MySchedule";
 import { Unauthorized } from "./pages/Unauthorized";
-
-import { MeetingRequest } from "./pages/MeetingRequest";
-
 import { NavbarComponent } from "./components/Navbar";
 import { ToastContainer } from "react-toastify";
 import { ProtectedRoute } from "./ProtectedRoutes/ProtectedRoute";
@@ -29,7 +26,6 @@ function App() {
           <Route path="/unauthorized" element={<Unauthorized />} />
 
           <Route element={<ProtectedRoute />}>
-            <Route path="/meetingRequest" element={<MeetingRequest />} />
             <Route path="/rank" element={<Rank />} />
             <Route path="/schedule" element={<Schedule />} />
             <Route path="/profile" element={<Profile />} />
