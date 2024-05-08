@@ -17,13 +17,13 @@ export const MySchedule = () => {
   useEffect(() => {
     axios.get("http://localhost:3001/meetings/byRole", { withCredentials: true })
       .then((response) => {
-        const meetings = response.data;
+        const meetings = response.data.filter(meeting => meeting.status === "Accepted");
         const formattedEvents = meetings.map((meeting) => ({
           id: meeting.id,
-          title: "Meet with Faculty",
+          title: `Meeting with ${meeting.student}`,
           start: new Date(meeting.startDate),
           end: new Date(meeting.endDate),
-          desc: meeting.zoom,
+          desc: meeting.meetingLink,
         }));
         setEvents(formattedEvents);
       })
@@ -69,9 +69,6 @@ export const MySchedule = () => {
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
           </Button>
         </Modal.Footer>
       </Modal>
