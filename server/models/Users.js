@@ -35,10 +35,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       defaultValue: "defaultprofile.png",
     },
-    zoom: {
+    meetingLink: {
       type: DataTypes.STRING,
       allowNull: true,
-      defaultValue: "zoom.com",
+    },
+    numStudents: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1,
     },
   });
 

@@ -73,10 +73,10 @@ async function update(req, res) {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         username: req.body.username,
+        numStudents: req.body.numStudents,
         information: req.body.information,
         research: req.body.research,
-        zoom: req.body.zoom,
-        
+        meetingLink: req.body.meetingLink,
       };
       if (image) {
         updatedFields.profilepic = image;

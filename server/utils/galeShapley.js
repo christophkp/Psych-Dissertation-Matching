@@ -1,83 +1,91 @@
-function galeShapley(studentRankings, facultyRankings) {
-  const freeStudents = Object.keys(studentRankings).map(Number);
+function galeShapley(
+  studentPreferences,
+  facultyPreferences,
+  facultyCapacities
+) {
+  console.log("Starting Gale Shapley Algorithm:");
+
+  let freeStudents = Array.from(studentPreferences.keys());
+
   console.log("Initial free students", freeStudents);
 
-  const proposals = {};
-  const engagements = {};
-  console.log("Student Preferences:");
-  Object.keys(studentRankings).forEach((student) => {
-    console.log(`Student ${student}: ${studentRankings[student].join(", ")}`);
-  });
+  let studentMatches = new Map();
+  let facultyMatches = new Map();
 
-  console.log("Faculty Preferences:");
-  Object.keys(facultyRankings).forEach((faculty) => {
-    console.log(`Faculty ${faculty}: ${facultyRankings[faculty].join(", ")}`);
-  });
-
-  Object.keys(facultyRankings).forEach((faculty) => {
-    engagements[faculty] = null;
-  });
-
-  freeStudents.forEach((student) => {
-    proposals[student] = [];
-  });
+  for (let facultyId of facultyPreferences.keys()) {
+    facultyMatches.set(facultyId, []);
+  }
 
   while (freeStudents.length > 0) {
-    let student = freeStudents[0];
-    let studentPreferences = studentRankings[student];
-    let engaged = false;
+    let studentId = freeStudents.shift();
+    console.log("Proposing student id:", studentId);
+    let preferences = studentPreferences.get(studentId);
+    console.log(`Preferences for student ${studentId}: ${preferences}`);
 
-    for (let faculty of studentPreferences) {
-      if (!proposals[student].includes(faculty)) {
-        proposals[student].push(faculty);
-        console.log(`Student ${student} proposes to faculty ${faculty}`);
+    if (preferences.length > 0) {
+      let facultyId = preferences.shift();
+      console.log(`Student ${studentId} proposes to Faculty ${facultyId}`);
+      let facultyList = facultyMatches.get(facultyId);
+      let capacity = facultyCapacities.get(facultyId);
+      let studentIndex = facultyPreferences.get(facultyId).indexOf(studentId);
 
-        if (!engagements[faculty]) {
-          engagements[faculty] = student;
-          console.log(`Faculty ${faculty} engages with student ${student}`);
-          engaged = true;
-          break;
-        } else {
-          let currentEngagement = engagements[faculty];
+      if (studentIndex === -1) {
+        console.log(
+          `Faculty ${facultyId} does not have Student ${studentId} in their preference list. Proposal ignored.`
+        );
+        if (preferences.length > 0) {
+          freeStudents.push(studentId);
+        }
+        continue;
+      }
+
+      if (facultyList.length < capacity) {
+        facultyList.push(studentId);
+        studentMatches.set(studentId, facultyId);
+        console.log(`Faculty ${facultyId} matches with Student ${studentId}`);
+      } else {
+        let leastPreferred = facultyList.reduce((least, current) => {
+          return facultyPreferences.get(facultyId).indexOf(current) >
+            facultyPreferences.get(facultyId).indexOf(least)
+            ? current
+            : least;
+        });
+        console.log(
+          `Least preferred Faculty match student id: ${leastPreferred}`
+        );
+
+        if (
+          facultyPreferences.get(facultyId).indexOf(studentId) <
+          facultyPreferences.get(facultyId).indexOf(leastPreferred)
+        ) {
+          facultyList.splice(facultyList.indexOf(leastPreferred), 1);
+          facultyList.push(studentId);
+          freeStudents.push(leastPreferred);
+          studentMatches.delete(leastPreferred);
+          studentMatches.set(studentId, facultyId);
           console.log(
-            `Comparing current engagement ${currentEngagement} with new proposal ${student}. Current preference index: ${facultyRankings[
-              faculty
-            ].indexOf(
-              currentEngagement
-            )}, New preference index: ${facultyRankings[faculty].indexOf(
-              student
-            )}`
+            `Faculty ${facultyId} prefers Student ${studentId} over Student ${leastPreferred}`
           );
+          console.log(`Student ${leastPreferred} is now free`);
+        } else {
+          console.log(`Faculty ${facultyId} rejects Student ${studentId}`);
 
-          if (
-            facultyRankings[faculty].indexOf(student) <
-            facultyRankings[faculty].indexOf(currentEngagement)
-          ) {
-            console.log(
-              `Faculty ${faculty} switches from ${currentEngagement} to ${student}`
-            );
-            freeStudents.push(currentEngagement); // Add student from current engagement back to free list
-            engagements[faculty] = student;
-            engaged = true;
-            break;
+          if (preferences.length > 0) {
+            freeStudents.push(studentId);
+            console.log(`Student ${studentId} is free`);
           }
         }
       }
     }
-    if (engaged) {
+    if (preferences.length === 0 && !studentMatches.has(studentId)) {
       console.log(
-        `Student ${student} is now engaged and removed from free list.`
+        `Student ${studentId} remains unmatched and has no preferences left`
       );
-
-      freeStudents.shift(); 
-    } else {
-      console.log(`Student ${student} remains unengaged, moved to the end.`);
-
-      freeStudents.push(freeStudents.shift());
     }
   }
-  console.log("Final engagements:", engagements);
-  return engagements;
+
+  console.log("Final matches", facultyMatches);
+  return facultyMatches;
 }
 
 module.exports = { galeShapley };

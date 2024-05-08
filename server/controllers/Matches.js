@@ -4,61 +4,91 @@ const { galeShapley } = require("../utils/galeShapley");
 
 async function getMatches(req, res) {
   try {
-    const students = await Users.findAll({
-      where: {
-        role: "student",
-      },
+    const studentRankings = await Users.findAll({
+      where: { role: "student" },
       attributes: ["id"],
-    });
-
-    const faculties = await Users.findAll({
-      where: {
-        role: "faculty",
-      },
-      attributes: ["id"],
-    });
-
-    const studentIds = students.map((student) => student.id);
-    const facultyIds = faculties.map((faculty) => faculty.id);
-
-    const studentRankingsData = await Ranks.findAll({
-      where: {
-        rankerId: studentIds,
-      },
-      order: [
-        ["rankerId", "ASC"],
-        ["rank", "ASC"],
+      include: [
+        {
+          model: Ranks,
+          as: "GivenRanks",
+          attributes: ["rank"],
+          include: [
+            {
+              model: Users,
+              as: "Ranked",
+              attributes: ["id"],
+              where: { role: "faculty" },
+            },
+          ],
+          order: [["rank", "ASC"]],
+        },
       ],
+      order: [["id", "ASC"]],
     });
-    const facultyRankingsData = await Ranks.findAll({
-      where: {
-        rankerId: facultyIds,
-      },
-      order: [
-        ["rankerId", "ASC"],
-        ["rank", "ASC"],
-      ],
-    });
-    const studentRankings = organizeRankings(studentRankingsData);
-    const facultyRankings = organizeRankings(facultyRankingsData);
 
-    const matches = galeShapley(studentRankings, facultyRankings);
-    res.json(matches);
+    const facultyRankings = await Users.findAll({
+      where: { role: "faculty" },
+      attributes: ["id", "numStudents"],
+      include: [
+        {
+          model: Ranks,
+          as: "GivenRanks",
+          attributes: ["rank"],
+          include: [
+            {
+              model: Users,
+              as: "Ranked",
+              attributes: ["id"],
+              where: { role: "student" },
+            },
+          ],
+          order: [["rank", "ASC"]],
+        },
+      ],
+      order: [["id", "ASC"]],
+    });
+
+    const studentPreferences = new Map();
+    studentRankings.forEach((student) => {
+      const preferences = student.GivenRanks.map((rank) => rank.Ranked.id);
+      studentPreferences.set(student.id, preferences);
+    });
+
+    const facultyPreferences = new Map();
+    const facultyCapacities = new Map();
+    facultyRankings.forEach((faculty) => {
+      const preferences = faculty.GivenRanks.map((rank) => rank.Ranked.id);
+      facultyPreferences.set(faculty.id, preferences);
+      facultyCapacities.set(faculty.id, faculty.numStudents);
+    });
+    // const studentPreferencesFake = new Map([
+    //   [1, [4, 5]],
+    //   [2, [5, 4]],
+    //   [3, [5, 4]],
+    // ]);
+
+    // const facultyPreferencesFake = new Map([
+    //   [4, [1, 2, 3]],
+    //   [5, [3, 2, 1]],
+    // ]);
+
+    // const facultyCapacitiesFake = new Map([
+    //   [4, 1],
+    //   [5, 1],
+    // ]);
+    // console.log(studentPreferencesFake);
+    // console.log(facultyPreferencesFake);
+    // console.log(facultyCapacitiesFake);
+
+    const matches = galeShapley(
+      studentPreferences,
+      facultyPreferences,
+      facultyCapacities
+    );
+    return res.json(matches);
   } catch (error) {
     res.status(500).json({ message: "Error getting matches" });
   }
-}
-
-function organizeRankings(rankingData) {
-  const organizedRankings = {};
-  rankingData.forEach((rank) => {
-    const rankerId = rank.rankerId;
-    if (!organizedRankings[rankerId]) {
-      organizedRankings[rankerId] = [];
-    }
-    organizedRankings[rankerId].push(rank.rankedId);
-  });
-  return organizedRankings;
 }
 
 module.exports = { getMatches };

@@ -17,16 +17,19 @@ async function login(req, res) {
       if (passwordMatch) {
         //move secret to env file later
         const token = jwt.sign({ id: user.id }, "jwtSecret");
-        const userData = {
-          id: user.id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          username: user.username,
-          role: user.role,
-          information: user.information,
-          research: user.research,
-          zoom: user.zoom
-        };
+         const userData = {
+           id: user.id,
+           firstName: user.firstName,
+           lastName: user.lastName,
+           username: user.username,
+           role: user.role,
+           numStudents: user.numStudents,
+           information: user.information,
+           research: user.research,
+           profilepic: user.profilepic,
+           createdAt: user.createdAt,
+           meetingLink: user.meetingLink,
+         };
         res
           .cookie("access_token", token, {
             httpOnly: true,
@@ -72,11 +75,12 @@ async function getUser(req, res) {
       lastName: user.lastName,
       username: user.username,
       role: user.role,
+      numStudents: user.numStudents,
       information: user.information,
       research: user.research,
       profilepic: user.profilepic,
       createdAt: user.createdAt,
-      zoom: user.zoom
+      meetingLink: user.meetingLink,
     };
     res.status(200).json({ userData });
   } catch (error) {

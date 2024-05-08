@@ -20,12 +20,17 @@ export const Profile = () => {
   const [firstName, setFirstName] = useState((user && user.firstName) || "");
   const [lastName, setLastName] = useState((user && user.lastName) || "");
   const [username, setUsername] = useState((user && user.username) || "");
+  const [numStudents, setNumStudents] = useState(
+    (user && user.numStudents) || ""
+  );
   const [information, setInformation] = useState(
     (user && user.information) || ""
   );
   const [research, setResearch] = useState((user && user.research) || "");
   const [file, setFile] = useState();
-  const [zoom, setZoom] = useState((user && user.zoom) || "");
+  const [meetingLink, setMeetingLink] = useState(
+    (user && user.meetingLink) || ""
+  );
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -43,11 +48,11 @@ export const Profile = () => {
     formData.append("username", username);
 
     if (user.role === "faculty") {
+      formData.append("numStudents", numStudents);
       formData.append("information", information);
       formData.append("research", research);
       formData.append("profilepic", file);
-      formData.append("zoom", zoom);
-
+      formData.append("meetingLink", meetingLink);
     }
     try {
       const response = await axios.put(
@@ -241,6 +246,21 @@ export const Profile = () => {
             </Row>
             {user.role === "faculty" && (
               <>
+                <Form.Group className="mb-3" controlId="formNumStudents">
+                  <Form.Label>Number of Advisees</Form.Label>
+                  <Form.Select
+                    value={numStudents}
+                    onChange={(e) =>
+                      setNumStudents(parseInt(e.target.value, 10))
+                    }
+                  >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </Form.Select>
+                </Form.Group>
                 <Form.Group className="mb-3" controlId="formInfo">
                   <Form.Label>Information</Form.Label>
                   <Form.Control
@@ -265,14 +285,14 @@ export const Profile = () => {
                   />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formZoom">
-                  <Form.Label>Zoom</Form.Label>
+                <Form.Group className="mb-3" controlId="formMeetingLink">
+                  <Form.Label>Meeting Link:</Form.Label>
                   <Form.Control
                     as="textarea"
                     rows={1}
-                    value={zoom}
+                    value={meetingLink}
                     onChange={(e) => {
-                      setZoom(e.target.value);
+                      setMeetingLink(e.target.value);
                     }}
                   />
                 </Form.Group>
