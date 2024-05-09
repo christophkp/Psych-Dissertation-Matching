@@ -84,7 +84,7 @@ function Rank() {
             ) : (
               <div>
                 <h3 className='mb-3 mt-3'>{user.role === 'student' ? 'Faculty Ranking' : 'Student Ranking'}</h3>
-                <p>Select {user.role === 'student' ? 'faculty' : 'students'} in order of most want to work with to least. <br></br> You are not required to rank every {user.role === 'student' ? 'faculty' : 'students'}, only rank the {user.role === 'student' ? 'faculty' : 'students'} you met with.</p>
+                <p>Select {user.role === 'student' ? 'faculty' : 'students'} in order of most want to work with to least. <br></br> You are not required to rank every {user.role === 'student' ? 'faculty' : 'student'}, only rank the {user.role === 'student' ? 'faculty' : 'students'} you met with.</p>
                 <hr></hr>
                 <form onSubmit={submitRankings}>
                   {[...Array(numRankings)].map((_, index) => (

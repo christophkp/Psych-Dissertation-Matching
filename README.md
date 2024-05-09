@@ -63,3 +63,19 @@ npm -v
 
 
 # How to Test
+
+- Change to the client directory by pasting the following code into the project's terminal
+
+```cd ./client```
+- Once you are in the client directory, paste the following code into the project's terminal
+
+```npm test```
+- You have successfully ran the test's for the client
+
+- Change to the server directory by pasting the following code into the project's terminal
+
+```cd ../server```
+- Once you are in the server directory, paste the following code into the project's terminal
+
+```npm test```
+- You have successfully ran the test's for the server
