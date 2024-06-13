@@ -24,4 +24,4 @@ hs_err_pid*
 replay_pid*
 
 # dependencies
-/node_modules
+node_modules/
